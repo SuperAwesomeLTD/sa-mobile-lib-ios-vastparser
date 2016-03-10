@@ -217,9 +217,9 @@
 
 - (void) didGoToURL {
     // send event to URL
-    for (NSString *ctracking in __cCreative.ClickTracking) {
-        [SAEvents sendEventToURL:ctracking];
-    }
+//    for (NSString *ctracking in __cCreative.ClickTracking) {
+//        [SAEvents sendEventToURL:ctracking];
+//    }
     
     // setup the current click URL
     NSString *url = @"";
@@ -228,8 +228,8 @@
     }
     
     // call delegate
-    if (_delegate && [_delegate respondsToSelector:@selector(didGoToURL:)]) {
-        [_delegate didGoToURL:[NSURL URLWithString:url]];
+    if (_delegate && [_delegate respondsToSelector:@selector(didGoToURL:withTrackingArray:)]) {
+        [_delegate didGoToURL:[NSURL URLWithString:url] withTrackingArray:__cCreative.ClickTracking];
     }
 }
 

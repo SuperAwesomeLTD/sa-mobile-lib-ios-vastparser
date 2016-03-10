@@ -61,7 +61,7 @@
 - (void) didEndAllAds;
 
 // Goto URL
-- (void) didGoToURL:(NSURL*)url;
+- (void) didGoToURL:(NSURL*)url withTrackingArray:(NSArray*)clickTarcking;
 
 @end
 
