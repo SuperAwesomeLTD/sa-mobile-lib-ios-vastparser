@@ -75,7 +75,14 @@
 
 #pragma mark <SAVASTParserProtocol>
 
-- (void) didParseVASTAndHasAdsResponse:(NSArray*)ads {
+- (void) didParseVAST:(NSArray *)ads {
+    if (ads.count < 1) {
+        if (_delegate && [_delegate respondsToSelector:@selector(didNotFindAds)]){
+            [_delegate didNotFindAds];
+        }
+        return;
+    }
+    
     // copy a ref to the ads
     _adQueue = ads;
     
@@ -86,10 +93,6 @@
     // setup current ad
     __cAd = _adQueue[_currentAdIndex];
     
-    // call delegates for parse vast
-    if (_delegate && [_delegate respondsToSelector:@selector(didParseVASTAndFindAds)]) {
-        [_delegate didParseVASTAndFindAds];
-    }
     // and start ad
     if (_delegate && [_delegate respondsToSelector:@selector(didStartAd)]) {
         [_delegate didStartAd];
@@ -97,24 +100,6 @@
     
     // call the standard progress thriugh ads func
     [self progressThroughAds];
-}
-
-- (void) didNotFindAnyValidAds {
-    NSLog(@"[AA :: ERROR] didNotFindAnyValidAds");
-    
-    // call delegate
-    if (_delegate && [_delegate respondsToSelector:@selector(didParseVASTButDidNotFindAnyAds)]) {
-        [_delegate didParseVASTButDidNotFindAnyAds];
-    }
-}
-
-- (void) didFindInvalidVASTResponse {
-    NSLog(@"[AA :: ERROR] didFindInvalidVASTResponse");
-    
-    // call delegate
-    if (_delegate && [_delegate respondsToSelector:@selector(didNotParseVAST)]) {
-        [_delegate didNotParseVAST];
-    }
 }
 
 #pragma mark <SAVASTPlayerProtocol>

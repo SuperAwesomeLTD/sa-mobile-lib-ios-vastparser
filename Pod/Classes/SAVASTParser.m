@@ -41,16 +41,11 @@
         
         // long running stuff
         dispatch_async(dispatch_get_main_queue(), ^{
-                       
-            if (adsArray.count >= 1 ) {
-                if (_delegate && [_delegate respondsToSelector:@selector(didParseVASTAndHasAdsResponse:)]) {
-                    [_delegate didParseVASTAndHasAdsResponse:adsArray];
-                }
-            } else {
-                if (_delegate && [_delegate respondsToSelector:@selector(didNotFindAnyValidAds)]) {
-                    [_delegate didNotFindAnyValidAds];
-                }
+            
+            if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]) {
+                [_delegate didParseVAST:adsArray];
             }
+
         });
     });
 }
@@ -72,7 +67,12 @@
     // step 2. get the correct reference to the root XML element
     __block TBXMLElement *root = tbxml.rootXMLElement;
     
-    // step 3. start finding ads and parsing them
+    // step 3. if no "Ad" elements are found, just don't continue
+    if (![TBXML checkSiblingsAndChildrenOf:root forName:@"Ad"]){
+        return ads;
+    }
+    
+    // step 4. start finding ads and parsing them
     [TBXML searchSiblingsAndChildrenOf:root forName:@"Ad" andInterate:^(TBXMLElement *adElement) {
         
         // check ad type

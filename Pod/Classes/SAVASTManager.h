@@ -24,14 +24,8 @@
 
 @optional
 
-// Called when the VAST data is parsed and is valid and there are ads
-- (void) didParseVASTAndFindAds;
-
-// Called when the VAST data is parsed and valid but there are no ads
-- (void) didParseVASTButDidNotFindAnyAds;
-
 // Called when the VAST data could not be parsed at all
-- (void) didNotParseVAST;
+- (void) didNotFindAds;
 
 // Called when an Ad from a group of Ads has just started playing
 - (void) didStartAd;

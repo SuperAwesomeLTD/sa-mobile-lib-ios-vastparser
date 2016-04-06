@@ -16,13 +16,7 @@
 @protocol SAVASTParserProtocol <NSObject>
 
 // Called as a callback when there are valid ads to be displayed
-- (void) didParseVASTAndHasAdsResponse:(NSArray*)ads;
-
-// Called as a callback when there are no valid ads to be displayed
-- (void) didNotFindAnyValidAds;
-
-// This should be called when the VAST response is entirely corrupted
-- (void) didFindInvalidVASTResponse;
+- (void) didParseVAST:(NSArray*)ads;
 
 @end
 
