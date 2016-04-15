@@ -71,6 +71,9 @@
 // custom init
 - (id) initWithPlayer:(SAVideoPlayer*)player;
 
+// function to manage ads
+- (void) manageWithAds:(NSArray*)ads;
+
 // parse VAST
 - (void) parseVASTURL:(NSString*)urlString;
 

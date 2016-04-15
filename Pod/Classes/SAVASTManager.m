@@ -69,13 +69,7 @@
     return self;
 }
 
-- (void) parseVASTURL:(NSString *)urlString {
-    [_parser parseVASTURL:urlString];
-}
-
-#pragma mark <SAVASTParserProtocol>
-
-- (void) didParseVAST:(NSArray *)ads {
+- (void) manageWithAds:(NSArray *)ads {
     if (ads.count < 1) {
         if (_delegate && [_delegate respondsToSelector:@selector(didNotFindAds)]){
             [_delegate didNotFindAds];
@@ -100,6 +94,16 @@
     
     // call the standard progress thriugh ads func
     [self progressThroughAds];
+}
+
+- (void) parseVASTURL:(NSString *)urlString {
+    [_parser parseVASTURL:urlString];
+}
+
+#pragma mark <SAVASTParserProtocol>
+
+- (void) didParseVAST:(NSArray *)ads {
+    [self manageWithAds:ads];
 }
 
 #pragma mark <SAVASTPlayerProtocol>
