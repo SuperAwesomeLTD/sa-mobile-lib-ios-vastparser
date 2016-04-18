@@ -19,6 +19,8 @@
 @property (nonatomic, strong) NSString *Duration;
 @property (nonatomic, strong) NSString *ClickThrough;
 @property (nonatomic, strong) NSString *playableMediaURL;
+@property (nonatomic, assign) BOOL isOnDisk;
+@property (nonatomic, strong) NSString *playableDiskURL;
 @property (nonatomic, strong) NSMutableArray *MediaFiles;
 @property (nonatomic, strong) NSMutableArray *TrackingEvents;
 @property (nonatomic, strong) NSMutableArray *ClickTracking;

@@ -45,7 +45,6 @@
             if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]) {
                 [_delegate didParseVAST:adsArray];
             }
-
         });
     });
 }

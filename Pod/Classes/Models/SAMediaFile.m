@@ -11,7 +11,7 @@
 @implementation SAMediaFile
 
 - (void) print {
-    NSLog(@"\t\tMediaFile [%@x%@] %@", _width, _height, _URL);
+    NSLog(@"\t\tMediaFile [%@x%@] %@ => %@", _width, _height, _URL, _diskURL);
 }
 
 @end

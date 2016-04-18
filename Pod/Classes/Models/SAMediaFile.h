@@ -16,4 +16,5 @@
 @property (nonatomic, strong) NSString *height;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, strong) NSString *URL;
+@property (nonatomic, strong) NSString *diskURL;
 @end

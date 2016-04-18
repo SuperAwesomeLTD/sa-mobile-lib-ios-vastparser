@@ -18,6 +18,7 @@
     NSLog(@"\t\tSequence: %@", _sequence);
     NSLog(@"\t\tDuration: %@", _Duration);
     NSLog(@"\t\tplayable: %@", _playableMediaURL);
+    NSLog(@"\t\tplayableDisk: %d %@", _isOnDisk, _playableDiskURL);
     if (_ClickThrough) NSLog(@"\t\tClickThrough: OK %@", _ClickThrough);
     else NSLog(@"\t\tClickThrough: NOK");
     NSLog(@"\t\tClickTracking[%ld]", (long)_ClickTracking.count);
