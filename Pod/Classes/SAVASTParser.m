@@ -24,6 +24,7 @@
 
 // import Utils
 #import "SAUtils.h"
+#import "SAFileDownloader.h"
 #import "SAExtensions.h"
 
 @implementation SAVASTParser
@@ -242,6 +243,13 @@
         // get the designated playable Media File
         if (_creative.MediaFiles > 0){
             _creative.playableMediaURL = [(SAMediaFile*)_creative.MediaFiles.firstObject URL];
+            if (_creative.playableMediaURL != NULL) {
+                _creative.playableDiskURL = [[SAFileDownloader getInstance] downloadFileSync:_creative.playableMediaURL];
+                if (_creative.playableDiskURL != NULL) {
+                    NSLog(@"Downloaded %@ on %@", _creative.playableMediaURL, _creative.playableDiskURL);
+                    _creative.isOnDisk = true;
+                }
+            }
         }
         
         // return creative

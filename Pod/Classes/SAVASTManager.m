@@ -277,9 +277,14 @@
 // to be included in a function
 - (void) playCurrentAdWithCurrentCreative {
     // play the current creative
-    NSURL *url = [NSURL URLWithString:__cCreative.playableMediaURL];
-    [_playerRef playWithMediaURL:url];
     _playerRef.delegate = self;
+    if (__cCreative.isOnDisk) {
+        [_playerRef playWithMediaFile:__cCreative.playableDiskURL];
+    }
+    else {
+        NSURL *url = [NSURL URLWithString:__cCreative.playableMediaURL];
+        [_playerRef playWithMediaURL:url];
+    }
 }
 
 #pragma mark <Aux functions>
