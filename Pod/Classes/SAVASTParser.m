@@ -64,9 +64,6 @@
         return ads;
     }
     
-    // print levels - just for show
-    [parser printLevels];
-    
     // step 3. if no "Ad" elements are found, just don't continue
     if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]){
         return ads;
