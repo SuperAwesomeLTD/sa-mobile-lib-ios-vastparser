@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SAGenericVAST.h"
 
 //
 // @brief: media file implementation
-@interface SAMediaFile : SAGenericVAST
+@interface SAMediaFile : NSObject
 @property (nonatomic, strong) NSString *width;
 @property (nonatomic, strong) NSString *height;
 @property (nonatomic, strong) NSString *type;

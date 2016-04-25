@@ -14,10 +14,6 @@
 // import helpes
 #import "SAVASTAd.h"
 #import "SAVASTCreative.h"
-#import "SALinearCreative.h"
-#import "SANonLinearCreative.h"
-#import "SACompanionAdsCreative.h"
-#import "SAImpression.h"
 #import "SATracking.h"
 #import "SAMediaFile.h"
 
@@ -141,17 +137,14 @@
     }];
     
     // get impressions
+    ad.isImpressionSent = false;
     [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Impression" andInterate:^(SAXMLElement *impElement) {
-        // the impression object is now a more complex one
-        SAImpression *impr = [[SAImpression alloc] init];
-        impr.isSent = false;
-        impr.URL = [SAUtils decodeHTMLEntitiesFrom:[impElement value]];
-        [ad.Impressions addObject:impr];
+        [ad.Impressions addObject:[SAUtils decodeHTMLEntitiesFrom:[impElement value]]];
     }];
     
     // get creatives
     [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Creative" andInterate:^(SAXMLElement *creativeElement) {
-        SALinearCreative *linear = [self parseCreativeXML:creativeElement];
+        SAVASTCreative *linear = [self parseCreativeXML:creativeElement];
         if (linear) {
             [ad.Creatives addObject:linear];
         }
@@ -162,7 +155,7 @@
     return ad;
 }
 
-- (SALinearCreative*) parseCreativeXML:(SAXMLElement *)element {
+- (SAVASTCreative*) parseCreativeXML:(SAXMLElement *)element {
     // first find out what kind of content this creative has
     // is it Linear, NonLinear or CompanionAds?
     BOOL isLinear = [SAXMLParser checkSiblingsAndChildrenOf:element forName:@"Linear"];
@@ -170,7 +163,7 @@
     // init as a linear Creative
     if (isLinear) {
         // create linear creative
-        SALinearCreative *_creative = [[SALinearCreative alloc] init];
+        SAVASTCreative *_creative = [[SAVASTCreative alloc] init];
         
         // get attributes
         _creative.type = Linear;

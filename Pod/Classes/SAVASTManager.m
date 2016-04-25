@@ -17,10 +17,6 @@
 // import modelspace
 #import "SAVASTAd.h"
 #import "SAVASTCreative.h"
-#import "SALinearCreative.h"
-#import "SANonLinearCreative.h"
-#import "SACompanionAdsCreative.h"
-#import "SAImpression.h"
 #import "SATracking.h"
 #import "SAMediaFile.h"
 
@@ -28,6 +24,9 @@
 #import "SAUtils.h"
 #import "SAExtensions.h"
 #import "SAEvents.h"
+
+// import Json printing
+#import "NSObject+ModelToString.h"
 
 //
 // @brief: private interface
@@ -46,7 +45,7 @@
 @property (nonatomic, assign) NSInteger currentCreativeIndex;
 // refs to ad and creative
 @property (nonatomic, weak) SAVASTAd *_cAd;
-@property (nonatomic, weak) SALinearCreative *_cCreative;
+@property (nonatomic, weak) SAVASTCreative *_cCreative;
 
 @end
 
@@ -79,6 +78,9 @@
     
     // copy a ref to the ads
     _adQueue = ads;
+    
+    // print the resulting ads
+     NSLog(@"%@", [_adQueue jsonStringPreetyRepresentation]);
     
     // set the playhead
     _currentAdIndex = 0;
@@ -113,11 +115,17 @@
     
     // in case this is the first creative in the Ad, and it <can play>,
     // send Ad impressions
-    NSArray *impressionsToSend = [__cAd.Impressions filterBy:@"isSent" withBool:false];
-    for (SAImpression *impression in impressionsToSend) {
-        impression.isSent = true;
-        [SAEvents sendEventToURL:impression.URL];
+    if (!__cAd.isImpressionSent) {
+        for (NSString *impression in __cAd.Impressions) {
+            [SAEvents sendEventToURL:impression];
+        }
+        __cAd.isImpressionSent = true;
     }
+//    NSArray *impressionsToSend = [__cAd.Impressions filterBy:@"isSent" withBool:false];
+//    for (SAImpression *impression in impressionsToSend) {
+//        impression.isSent = true;
+//        [SAEvents sendEventToURL:impression.URL];
+//    }
 }
 
 - (void) didStartPlayer {

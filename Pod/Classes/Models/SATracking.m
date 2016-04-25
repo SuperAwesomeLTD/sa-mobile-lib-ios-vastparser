@@ -9,9 +9,4 @@
 #import "SATracking.h"
 
 @implementation SATracking
-
-- (void) print {
-    NSLog(@"\t\tTracking [%@] %@", _event, _URL);
-}
-
 @end

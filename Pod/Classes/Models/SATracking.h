@@ -7,11 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SAGenericVAST.h"
 
 //
 // @brief: the tracking object
-@interface SATracking : SAGenericVAST
+@interface SATracking : NSObject
 @property (nonatomic, strong) NSString *event;
 @property (nonatomic, strong) NSString *URL;
 @end
