@@ -14,8 +14,8 @@
 // import helpes
 #import "SAVASTAd.h"
 #import "SAVASTCreative.h"
-#import "SATracking.h"
-#import "SAMediaFile.h"
+#import "SAVASTTracking.h"
+#import "SAVASTMediaFile.h"
 
 // import Utils
 #import "SAUtils.h"
@@ -205,7 +205,7 @@
             // since this is a more "complex" object, wich takes data from
             // attributes as well as tag value, split the
             // declaration and array assignment
-            SAMediaFile *mediaFile = [[SAMediaFile alloc] init];
+            SAVASTMediaFile *mediaFile = [[SAVASTMediaFile alloc] init];
             mediaFile.width = [cMediaElement getAttribute:@"width"];
             mediaFile.height = [cMediaElement getAttribute:@"height"];
             mediaFile.type = [cMediaElement getAttribute:@"type"];
@@ -223,7 +223,7 @@
             // since this is also a more "complex" object, which takes data from
             // attributes as well as tag value, split the declaration and
             // array assignmenent
-            SATracking *tracking = [[SATracking alloc] init];
+            SAVASTTracking *tracking = [[SAVASTTracking alloc] init];
             tracking.event = [cTrackingElement getAttribute:@"event"];
             tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[cTrackingElement value]];
             [_creative.TrackingEvents addObject:tracking];
@@ -231,7 +231,7 @@
         
         // get the designated playable Media File
         if (_creative.MediaFiles > 0){
-            _creative.playableMediaURL = [(SAMediaFile*)_creative.MediaFiles.firstObject URL];
+            _creative.playableMediaURL = [(SAVASTMediaFile*)_creative.MediaFiles.firstObject URL];
             if (_creative.playableMediaURL != NULL) {
                 _creative.playableDiskURL = [[SAFileDownloader getInstance] downloadFileSync:_creative.playableMediaURL];
                 if (_creative.playableDiskURL != NULL) {

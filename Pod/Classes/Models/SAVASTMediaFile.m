@@ -6,7 +6,7 @@
 //
 //
 
-#import "SAMediaFile.h"
+#import "SAVASTMediaFile.h"
 
-@implementation SAMediaFile
+@implementation SAVASTMediaFile
 @end

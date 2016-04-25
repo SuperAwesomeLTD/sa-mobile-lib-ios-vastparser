@@ -17,8 +17,8 @@
 // import modelspace
 #import "SAVASTAd.h"
 #import "SAVASTCreative.h"
-#import "SATracking.h"
-#import "SAMediaFile.h"
+#import "SAVASTTracking.h"
+#import "SAVASTMediaFile.h"
 
 // import aux headers
 #import "SAUtils.h"
@@ -80,7 +80,7 @@
     _adQueue = ads;
     
     // print the resulting ads
-     NSLog(@"%@", [_adQueue jsonStringPreetyRepresentation]);
+    // NSLog(@"%@", [_adQueue jsonStringPreetyRepresentation]);
     
     // set the playhead
     _currentAdIndex = 0;
@@ -302,7 +302,7 @@
 // as a function
 - (void) sendCurrentCreativeTrackersFor:(NSString*)event {
     NSArray *trackers = [__cCreative.TrackingEvents filterBy:@"event" withValue:event];
-    for (SATracking *tracker in trackers) {
+    for (SAVASTTracking *tracker in trackers) {
         [SAEvents sendEventToURL:tracker.URL];
     }
 }

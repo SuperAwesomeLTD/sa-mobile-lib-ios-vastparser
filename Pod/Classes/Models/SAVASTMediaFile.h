@@ -10,7 +10,7 @@
 
 //
 // @brief: media file implementation
-@interface SAMediaFile : NSObject
+@interface SAVASTMediaFile : NSObject
 @property (nonatomic, strong) NSString *width;
 @property (nonatomic, strong) NSString *height;
 @property (nonatomic, strong) NSString *type;
