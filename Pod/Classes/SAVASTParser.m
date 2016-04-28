@@ -45,6 +45,21 @@
     });
 }
 
+- (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing {
+    dispatch_queue_t myQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
+    
+    dispatch_async(myQueue, ^{
+        
+        // get ads array
+        NSMutableArray *adsArray = [self parseVAST:url];
+        
+        // long running stuff
+        dispatch_async(dispatch_get_main_queue(), ^{
+            vastParsing(adsArray);
+        });
+    });
+}
+
 //
 // @brief: get ads starting from a root
 - (NSMutableArray*) parseVAST:(NSString*)vastURL {

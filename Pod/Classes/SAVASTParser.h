@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+
+typedef void (^vastParsingDone)(NSArray *ads);
+
 ////////////////////////////////////////////////////////////////////////////////
 // The VASTParser main protocol
 ////////////////////////////////////////////////////////////////////////////////
@@ -31,5 +34,6 @@
 
 // parse the VAST URL
 - (void) parseVASTURL:(NSString*)url;
+- (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing;
 
 @end
