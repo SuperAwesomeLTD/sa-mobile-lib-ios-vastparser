@@ -32,24 +32,16 @@
         
         if (ad) {
             
-            SAFileObject *f = [[SAFileObject alloc] init];
-            f.url = ad.creative.playableMediaURL;
-            f.location = ad.creative.playableDiskURL;
-            
-            [[SAFileDownloader getInstance] downloadFileFrom:f.url to:f.location withSuccess:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    ad.creative.isOnDisk = TRUE;
-                    if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
-                        [_delegate didParseVAST:ad];
-                    }
-                });
+            [[SAFileDownloader getInstance] downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withSuccess:^{
+                ad.creative.isOnDisk = TRUE;
+                if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
+                    [_delegate didParseVAST:ad];
+                }
             } orFailure:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    ad.creative.isOnDisk = FALSE;
-                    if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
-                        [_delegate didParseVAST:ad];
-                    }
-                });
+                ad.creative.isOnDisk = FALSE;
+                if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
+                    [_delegate didParseVAST:ad];
+                }
             }];
             
         } else {
@@ -66,20 +58,12 @@
         
         if (ad) {
             
-            SAFileObject *f = [[SAFileObject alloc] init];
-            f.url = ad.creative.playableMediaURL;
-            f.location = ad.creative.playableDiskURL;
-            
-            [[SAFileDownloader getInstance] downloadFileFrom:f.url to:f.location withSuccess:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    ad.creative.isOnDisk = TRUE;
-                    vastParsing(ad);
-                });
+            [[SAFileDownloader getInstance] downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withSuccess:^{
+                ad.creative.isOnDisk = TRUE;
+                vastParsing(ad);
             } orFailure:^{
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    ad.creative.isOnDisk = FALSE;
-                    vastParsing(ad);
-                });
+                ad.creative.isOnDisk = FALSE;
+                vastParsing(ad);
             }];
             
         } else {
