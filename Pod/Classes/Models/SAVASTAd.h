@@ -8,6 +8,9 @@
 
 #import <Foundation/Foundation.h>
 
+// forward declarations
+@class SAVASTCreative;
+
 //
 // @brief: this enum should hold the type of content an ad holds
 typedef enum SAAdType {
@@ -24,10 +27,10 @@ typedef enum SAAdType {
 @property (nonatomic, strong) NSString *_id;
 @property (nonatomic, strong) NSString *sequence;
 @property (nonatomic, strong) NSString *redirectUri;
-@property (nonatomic, strong) NSMutableArray *Errors;
-@property (nonatomic, strong) NSMutableArray *Impressions;
+@property (nonatomic, strong) NSMutableArray<NSString*> *Errors;
+@property (nonatomic, strong) NSMutableArray<NSString*> *Impressions;
 @property (nonatomic, assign) BOOL isImpressionSent;
-@property (nonatomic, strong) NSMutableArray *Creatives;
+@property (nonatomic, strong) SAVASTCreative *creative;
 
 // @brief: this function performs the sum of an Ad over the current Ad
 - (void) sumAd:(SAVASTAd*)ad;

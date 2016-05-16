@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+// forward declaration
+@class SAVASTAd;
 
-typedef void (^vastParsingDone)(NSArray *ads);
+typedef void (^vastParsingDone)(SAVASTAd *ad);
 
 ////////////////////////////////////////////////////////////////////////////////
 // The VASTParser main protocol
@@ -19,7 +21,7 @@ typedef void (^vastParsingDone)(NSArray *ads);
 @protocol SAVASTParserProtocol <NSObject>
 
 // Called as a callback when there are valid ads to be displayed
-- (void) didParseVAST:(NSArray*)ads;
+- (void) didParseVAST:(SAVASTAd*)ad;
 
 @end
 

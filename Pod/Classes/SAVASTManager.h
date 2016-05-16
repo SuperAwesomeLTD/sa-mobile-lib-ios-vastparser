@@ -13,6 +13,7 @@
 // import vast stuff
 #import "SAVASTParser.h"
 
+@class SAVASTAd;
 @class SAVideoPlayer;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -72,7 +73,7 @@
 - (id) initWithPlayer:(SAVideoPlayer*)player;
 
 // function to manage ads
-- (void) manageWithAds:(NSArray*)ads;
+- (void) manageWithAd:(SAVASTAd*)ad;
 
 // parse VAST
 - (void) parseVASTURL:(NSString*)urlString;

@@ -28,65 +28,69 @@
 // @brief: main Async function
 - (void) parseVASTURL:(NSString *)url {
     
-    [self parseVASTAds:url withResult:^(NSArray *ads) {
+    [self parseVASTAds:url withResult:^(SAVASTAd *ad) {
         
-        NSMutableArray *files = [@[] mutableCopy];
-        
-        for (SAVASTAd *ad in ads) {
-            for (SAVASTCreative *creative in ad.Creatives) {
-                SAFileObject *f = [[SAFileObject alloc] init];
-                f.url = creative.playableMediaURL;
-                f.location = creative.playableDiskURL;
-                creative.isOnDisk = TRUE;
-                [files addObject:f];
+        if (ad) {
+            
+            SAFileObject *f = [[SAFileObject alloc] init];
+            f.url = ad.creative.playableMediaURL;
+            f.location = ad.creative.playableDiskURL;
+            
+            [[SAFileDownloader getInstance] downloadFileFrom:f.url to:f.location withSuccess:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    ad.creative.isOnDisk = TRUE;
+                    if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
+                        [_delegate didParseVAST:ad];
+                    }
+                });
+            } orFailure:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    ad.creative.isOnDisk = FALSE;
+                    if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
+                        [_delegate didParseVAST:ad];
+                    }
+                });
+            }];
+            
+        } else {
+            if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
+                [_delegate didParseVAST:nil];
             }
         }
-        
-        // download files
-        [[SAFileDownloader getInstance] downloadFileArray:files startingFrom:0 withSuccess:^{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
-                    [_delegate didParseVAST:ads];
-                }
-            });
-            
-        }];
     }];
 }
 
 - (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing {
     
-    [self parseVASTAds:url withResult:^(NSArray *ads) {
-        NSMutableArray *files = [@[] mutableCopy];
+    [self parseVASTAds:url withResult:^(SAVASTAd *ad) {
         
-        for (SAVASTAd *ad in ads) {
-            for (SAVASTCreative *creative in ad.Creatives) {
-                SAFileObject *f = [[SAFileObject alloc] init];
-                f.url = creative.playableMediaURL;
-                f.location = creative.playableDiskURL;
-                [files addObject:f];
-                creative.isOnDisk = TRUE;
-            }
+        if (ad) {
+            
+            SAFileObject *f = [[SAFileObject alloc] init];
+            f.url = ad.creative.playableMediaURL;
+            f.location = ad.creative.playableDiskURL;
+            
+            [[SAFileDownloader getInstance] downloadFileFrom:f.url to:f.location withSuccess:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    ad.creative.isOnDisk = TRUE;
+                    vastParsing(ad);
+                });
+            } orFailure:^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    ad.creative.isOnDisk = FALSE;
+                    vastParsing(ad);
+                });
+            }];
+            
+        } else {
+            vastParsing(nil);
         }
-        
-        // download files
-        [[SAFileDownloader getInstance] downloadFileArray:files startingFrom:0 withSuccess:^{
-            
-            dispatch_async(dispatch_get_main_queue(), ^{
-                vastParsing(ads);
-            });
-            
-        }];
     }];
 }
 
 //
 // @brief: get ads starting from a root
 - (void) parseVASTAds:(NSString*)vastURL withResult:(vastParsingDone)done {
-    
-    // create array of ads that should be retreived
-    __block NSMutableArray *ads = [@[] mutableCopy];
     
     [SAUtils sendGETtoEndpoint:vastURL withQueryDict:nil andSuccess:^(NSData *data) {
         
@@ -95,43 +99,34 @@
         __block SAXMLElement *root = [parser parseXMLData:data];
         
         // check for preliminary errors
-        if ([parser getError]) { done(ads); return; }
-        if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(ads); return; }
+        if ([parser getError]) { done(nil); return; }
+        if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(nil); return; }
         
-        // start parsing ad
-        [SAXMLParser searchSiblingsAndChildrenOf:root forName:@"Ad" andInterate:^(SAXMLElement *element) {
-            
-            // get the first ad
-            SAVASTAd *ad = [self parseAdXML:element];
-            
-            // in-line case
-            if (ad.type == InLine) {
-                [ads addObject:ad];
-                done(ads);
+        // get and parse *Only* first Ad
+        SAXMLElement *element = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:root forName:@"Ad"];
+        SAVASTAd *ad = [self parseAdXML:element];
+        
+        // in-line case
+        if (ad.type == InLine) {
+            done(ad);
+            return;
+        }
+        // wrapper case
+        else if (ad.type == Wrapper) {
+            [self parseVASTAds:ad.redirectUri withResult:^(SAVASTAd *wrapper) {
+                [wrapper sumAd:ad];
+                done(wrapper);
                 return;
-            }
-            // wrapper case
-            else if (ad.type == Wrapper) {
-                [self parseVASTAds:ad.redirectUri withResult:^(NSArray *foundAds) {
-                    
-                    [ad.Creatives removeAllButFirstElement];
-                    for (SAVASTAd *foundAd in foundAds) {
-                        [foundAd sumAd:ad];
-                    }
-                    [ads addObjectsFromArray:foundAds];
-                    done(ads);
-                    return;
-                }];
-            }
-            // some other type of failure case
-            else {
-                done(ads);
-                return;
-            }
-        }];
+            }];
+        }
+        // some other type of failure case
+        else {
+            done(nil);
+            return;
+        }
         
     } orFailure:^{
-        done(ads);
+        done(nil);
     }];
 }
 
@@ -147,7 +142,6 @@
     // init arrays of data
     ad.Errors = [[NSMutableArray alloc] init];
     ad.Impressions = [[NSMutableArray alloc] init];
-    ad.Creatives = [[NSMutableArray alloc] init];
     
     // check ad type
     BOOL isInLine = [SAXMLParser checkSiblingsAndChildrenOf:adElement forName:@"InLine"];
@@ -174,14 +168,8 @@
     }];
     
     // get creatives
-    [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Creative" andInterate:^(SAXMLElement *creativeElement) {
-        SAVASTCreative *linear = [self parseCreativeXML:creativeElement];
-        if (linear) {
-            [ad.Creatives addObject:linear];
-        }
-    }];
-    
-    // now do a check - if the
+    SAXMLElement *creativeElement = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:adElement forName:@"Creative"];
+    ad.creative = [self parseCreativeXML:creativeElement];
     
     return ad;
 }

@@ -24,11 +24,7 @@
     [self.Impressions addObjectsFromArray:ad.Impressions];
     // and creatives (and for now we assume we only have linear ones)
     // don't sum-up creatives now
-    for (SAVASTCreative *creative in self.Creatives) {
-        for (SAVASTCreative *creative2 in ad.Creatives) {
-            [creative sumCreative:creative2];
-        }
-    }
+    [self.creative sumCreative:ad.creative];
 }
 
 @end
