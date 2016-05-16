@@ -23,6 +23,7 @@ typedef enum SAAdType {
 @property (nonatomic, assign) SAAdType type;
 @property (nonatomic, strong) NSString *_id;
 @property (nonatomic, strong) NSString *sequence;
+@property (nonatomic, strong) NSString *redirectUri;
 @property (nonatomic, strong) NSMutableArray *Errors;
 @property (nonatomic, strong) NSMutableArray *Impressions;
 @property (nonatomic, assign) BOOL isImpressionSent;

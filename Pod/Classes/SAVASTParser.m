@@ -28,101 +28,109 @@
 // @brief: main Async function
 - (void) parseVASTURL:(NSString *)url {
     
-    dispatch_queue_t myQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
-    
-    dispatch_async(myQueue, ^{
-    
-        // get ads array
-        NSMutableArray *adsArray = [self parseVAST:url];
+    [self parseVASTAds:url withResult:^(NSArray *ads) {
         
-        // long running stuff
-        dispatch_async(dispatch_get_main_queue(), ^{
-            
-            if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]) {
-                [_delegate didParseVAST:adsArray];
+        NSMutableArray *files = [@[] mutableCopy];
+        
+        for (SAVASTAd *ad in ads) {
+            for (SAVASTCreative *creative in ad.Creatives) {
+                SAFileObject *f = [[SAFileObject alloc] init];
+                f.url = creative.playableMediaURL;
+                f.location = creative.playableDiskURL;
+                [files addObject:f];
             }
-        });
-    });
+        }
+        
+        // download files
+        [[SAFileDownloader getInstance] downloadFileArray:files startingFrom:0 withSuccess:^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
+                    [_delegate didParseVAST:ads];
+                }
+            });
+            
+        }];
+    }];
 }
 
 - (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing {
-    dispatch_queue_t myQueue = dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0);
     
-    dispatch_async(myQueue, ^{
+    [self parseVASTAds:url withResult:^(NSArray *ads) {
+        NSMutableArray *files = [@[] mutableCopy];
         
-        // get ads array
-        NSMutableArray *adsArray = [self parseVAST:url];
+        for (SAVASTAd *ad in ads) {
+            for (SAVASTCreative *creative in ad.Creatives) {
+                SAFileObject *f = [[SAFileObject alloc] init];
+                f.url = creative.playableMediaURL;
+                f.location = creative.playableDiskURL;
+                [files addObject:f];
+            }
+        }
         
-        // long running stuff
-        dispatch_async(dispatch_get_main_queue(), ^{
-            vastParsing(adsArray);
-        });
-    });
+        // download files
+        [[SAFileDownloader getInstance] downloadFileArray:files startingFrom:0 withSuccess:^{
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                vastParsing(ads);
+            });
+            
+        }];
+    }];
 }
 
 //
 // @brief: get ads starting from a root
-- (NSMutableArray*) parseVAST:(NSString*)vastURL {
-    // create the array of ads that should be returned
-    __block NSMutableArray *ads = [[NSMutableArray alloc] init];
+- (void) parseVASTAds:(NSString*)vastURL withResult:(vastParsingDone)done {
     
-    // step 1: get the XML
-    NSData *xmlData = [SAUtils sendSyncGETToEndpoint:vastURL];
-    SAXMLParser *parser = [[SAXMLParser alloc] init];
-    __block SAXMLElement *root = [parser parseXMLData:xmlData];
-    if ([parser getError]) {
-        NSLog(@"%@", [parser getError]);
-        return ads;
-    }
+    // create array of ads that should be retreived
+    __block NSMutableArray *ads = [@[] mutableCopy];
     
-    // step 3. if no "Ad" elements are found, just don't continue
-    if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]){
-        return ads;
-    }
-    
-    // step 4. start finding ads and parsing them
-    [SAXMLParser searchSiblingsAndChildrenOf:root forName:@"Ad" andInterate:^(SAXMLElement *adElement) {
+    [SAUtils sendGETtoEndpoint:vastURL withQueryDict:nil andSuccess:^(NSData *data) {
         
-        // check ad type
-        BOOL isInLine = [SAXMLParser checkSiblingsAndChildrenOf:adElement forName:@"InLine"];
-        BOOL isWrapper = [SAXMLParser checkSiblingsAndChildrenOf:adElement forName:@"Wrapper"];
+        // parse XML element
+        SAXMLParser *parser = [[SAXMLParser alloc] init];
+        __block SAXMLElement *root = [parser parseXMLData:data];
         
-        // normal InLine case
-        if (isInLine) {
-            SAVASTAd *inlineAd = [self parseAdXML:adElement];
-            [ads addObject:inlineAd];
-        }
-        // normal Wrapper case
-        else if (isWrapper){
-            // get the Wrapper type ad
-            SAVASTAd *wrapperAd = [self parseAdXML:adElement];
+        // check for preliminary errors
+        if ([parser getError]) { done(ads); return; }
+        if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(ads); return; }
+        
+        // start parsing ad
+        [SAXMLParser searchSiblingsAndChildrenOf:root forName:@"Ad" andInterate:^(SAXMLElement *element) {
             
-            // get VAStAdTagURI
-            NSString *VASTAdTagURI = @"";
-            SAXMLElement *redirect = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:adElement forName:@"VASTAdTagURI"];
-            if (redirect) {
-                VASTAdTagURI = [redirect getValue];
+            // get the first ad
+            SAVASTAd *ad = [self parseAdXML:element];
+            
+            // in-line case
+            if (ad.type == InLine) {
+                [ads addObject:ad];
+                done(ads);
+                return;
             }
-            
-            // call back this function recursevly
-            NSMutableArray *foundAds = [self parseVAST:VASTAdTagURI];
-            
-            // now try to joing creatives - that's a bit tricky
-            // step 1: remove all creatives other than one from the Wrapper
-            [wrapperAd.Creatives removeAllButFirstElement];
-            // step 2: now go through the resulting ads, remove all but one
-            // element from the creatives, and sum them
-            for (SAVASTAd *foundAd in foundAds) {
-                // [foundAd.Creatives removeAllButFirstElement];
-                [foundAd sumAd:wrapperAd];
+            // wrapper case
+            else if (ad.type == Wrapper) {
+                [self parseVASTAds:ad.redirectUri withResult:^(NSArray *foundAds) {
+                    
+                    [ad.Creatives removeAllButFirstElement];
+                    for (SAVASTAd *foundAd in foundAds) {
+                        [foundAd sumAd:ad];
+                    }
+                    [ads addObjectsFromArray:foundAds];
+                    done(ads);
+                    return;
+                }];
             }
-            
-            // add the object of the array to the main array
-            [ads addObjectsFromArray:foundAds];
-        }
+            // some other type of failure case
+            else {
+                done(ads);
+                return;
+            }
+        }];
+        
+    } orFailure:^{
+        done(ads);
     }];
-    
-    return ads;
 }
 
 - (SAVASTAd*) parseAdXML:(SAXMLElement *)adElement {
@@ -145,6 +153,12 @@
     
     if (isInLine) ad.type = InLine;
     if (isWrapper) ad.type = Wrapper;
+    
+    // get VAStAdTagURI
+    SAXMLElement *redirect = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:adElement forName:@"VASTAdTagURI"];
+    if (redirect) {
+        ad.redirectUri = [redirect getValue];
+    }
     
     // get errors
     [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Error" andInterate:^(SAXMLElement *errElement) {
@@ -248,11 +262,7 @@
         if (_creative.MediaFiles > 0){
             _creative.playableMediaURL = [(SAVASTMediaFile*)_creative.MediaFiles.firstObject URL];
             if (_creative.playableMediaURL != NULL) {
-                _creative.playableDiskURL = [[SAFileDownloader getInstance] downloadFileSync:_creative.playableMediaURL];
-                if (_creative.playableDiskURL != NULL) {
-                    NSLog(@"Downloaded %@ on %@", _creative.playableMediaURL, _creative.playableDiskURL);
-                    _creative.isOnDisk = true;
-                }
+                _creative.playableDiskURL = [[SAFileDownloader getInstance] getDiskLocation];
             }
         }
         
