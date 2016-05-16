@@ -177,6 +177,8 @@
     // call delegate
     if (_delegate && [_delegate respondsToSelector:@selector(didEndOfCreative)]) {
         [_delegate didEndOfCreative];
+        [_delegate didEndAd];
+        [_delegate didEndAllAds];
     }
 }
 
