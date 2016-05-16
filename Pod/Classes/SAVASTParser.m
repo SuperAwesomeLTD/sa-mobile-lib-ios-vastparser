@@ -37,6 +37,7 @@
                 SAFileObject *f = [[SAFileObject alloc] init];
                 f.url = creative.playableMediaURL;
                 f.location = creative.playableDiskURL;
+                creative.isOnDisk = TRUE;
                 [files addObject:f];
             }
         }
@@ -65,6 +66,7 @@
                 f.url = creative.playableMediaURL;
                 f.location = creative.playableDiskURL;
                 [files addObject:f];
+                creative.isOnDisk = TRUE;
             }
         }
         
