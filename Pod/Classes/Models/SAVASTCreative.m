@@ -21,17 +21,14 @@
     self.sequence = creative.sequence;
     self.Duration = creative.Duration;
     
-    if ([SAUtils isValidURL:self.ClickThrough]) {
-        self.ClickThrough = self.ClickThrough;
-    }
     if ([SAUtils isValidURL:creative.ClickThrough]) {
         self.ClickThrough = creative.ClickThrough;
     }
-    if ([SAUtils isValidURL:self.playableMediaURL]){
-        self.playableMediaURL = self.playableMediaURL;
-    }
     if ([SAUtils isValidURL:creative.playableMediaURL]){
         self.playableMediaURL = creative.playableMediaURL;
+    }
+    if (creative.playableDiskURL != NULL){
+        self.playableDiskURL = creative.playableDiskURL;
     }
     
     // then concatenate arrays (this is what's important)

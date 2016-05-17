@@ -100,9 +100,9 @@
         else if (ad.type == Wrapper) {
             [self parseVASTAds:ad.redirectUri withResult:^(SAVASTAd *wrapper) {
                 if (wrapper) {
-                    [wrapper sumAd:ad];
+                    [ad sumAd:wrapper];
                 }
-                done(wrapper);
+                done(ad);
                 return;
             }];
         }
