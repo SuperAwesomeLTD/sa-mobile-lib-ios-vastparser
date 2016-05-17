@@ -84,6 +84,7 @@
         
         // check for preliminary errors
         if ([parser getError]) { done(nil); return; }
+        if (!root) { done(nil); return; }
         if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(nil); return; }
         
         // get and parse *Only* first Ad
@@ -98,7 +99,9 @@
         // wrapper case
         else if (ad.type == Wrapper) {
             [self parseVASTAds:ad.redirectUri withResult:^(SAVASTAd *wrapper) {
-                [wrapper sumAd:ad];
+                if (wrapper) {
+                    [wrapper sumAd:ad];
+                }
                 done(wrapper);
                 return;
             }];
