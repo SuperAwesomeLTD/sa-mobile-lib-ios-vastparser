@@ -1,0 +1,5 @@
+GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/SAEvents" "${PODS_ROOT}/Headers/Public/SAJsonParser" "${PODS_ROOT}/Headers/Public/SAUtils" "${PODS_ROOT}/Headers/Public/SAVASTParser" "${PODS_ROOT}/Headers/Public/SAVideoPlayer"
+OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/SAEvents" -isystem "${PODS_ROOT}/Headers/Public/SAJsonParser" -isystem "${PODS_ROOT}/Headers/Public/SAUtils" -isystem "${PODS_ROOT}/Headers/Public/SAVASTParser" -isystem "${PODS_ROOT}/Headers/Public/SAVideoPlayer"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"SAEvents" -l"SAJsonParser" -l"SAUtils" -l"SAVASTParser" -l"SAVideoPlayer"
+PODS_ROOT = ${SRCROOT}/Pods

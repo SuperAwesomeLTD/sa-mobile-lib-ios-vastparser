@@ -1,0 +1,10 @@
+
+target 'SAVASTParser_Example', :exclusive => true do
+  pod 'SAVASTParser', :path => '../'
+end
+
+target 'SAVASTParser_Tests', :exclusive => true do
+  pod 'SAVASTParser', :path => '../'
+
+  
+end
