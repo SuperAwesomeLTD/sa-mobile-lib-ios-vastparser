@@ -21,17 +21,17 @@
     if (self = [super initWithJsonDictionary:jsonDictionary]) {
         
         _type = (SAAdType)[[jsonDictionary objectForKey:@"type"] integerValue];
-        __id = [jsonDictionary objectForKey:@"id"];
-        _sequence = [jsonDictionary objectForKey:@"sequence"];
-        _redirectUri = [jsonDictionary objectForKey:@"redirectUri"];
-        _isImpressionSent = [[jsonDictionary objectForKey:@"isImpressionSent"] boolValue];
-        _Errors = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"Errors"] andIterator:^id(id item) {
+        __id = [jsonDictionary safeObjectForKey:@"id"];
+        _sequence = [jsonDictionary safeObjectForKey:@"sequence"];
+        _redirectUri = [jsonDictionary safeObjectForKey:@"redirectUri"];
+        _isImpressionSent = [[jsonDictionary safeObjectForKey:@"isImpressionSent"] boolValue];
+        _Errors = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"Errors"] andIterator:^id(id item) {
             return (NSString*)item;
         }] mutableCopy];
-        _Impressions = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"Impressions"] andIterator:^id(id item) {
+        _Impressions = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"Impressions"] andIterator:^id(id item) {
             return (NSString*)item;
         }] mutableCopy];
-        _creative = [[SAVASTCreative alloc] initWithJsonDictionary:[jsonDictionary objectForKey:@"creative"]];
+        _creative = [[SAVASTCreative alloc] initWithJsonDictionary:[jsonDictionary safeObjectForKey:@"creative"]];
     }
     return self;
 }

@@ -14,6 +14,6 @@
 
 @interface NSDictionary (SAJson) <SASerializationProtocol, SADeserializationProtocol>
 
-- (id) objectForKey:(id)aKey;
+- (id) safeObjectForKey:(id)aKey;
 
 @end

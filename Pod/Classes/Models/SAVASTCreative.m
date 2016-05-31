@@ -24,23 +24,23 @@
 - (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
     if (self = [super initWithJsonDictionary:jsonDictionary]) {
         
-        _type = (SAVASTCreativeType)[[jsonDictionary objectForKey:@"type"] integerValue];
-        __id = [jsonDictionary objectForKey:@"id"];
-        _sequence = [jsonDictionary objectForKey:@"sequence"];
-        _Duration = [jsonDictionary objectForKey:@"Duration"];
-        _ClickThrough = [jsonDictionary objectForKey:@"ClickThrough"];
-        _playableDiskURL = [jsonDictionary objectForKey:@"playableDiskURL"];
-        _isOnDisk = [[jsonDictionary objectForKey:@"isOnDisk"] boolValue];
-        _MediaFiles = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"MediaFiles"] andIterator:^id(id item) {
+        _type = (SAVASTCreativeType)[[jsonDictionary safeObjectForKey:@"type"] integerValue];
+        __id = [jsonDictionary safeObjectForKey:@"id"];
+        _sequence = [jsonDictionary safeObjectForKey:@"sequence"];
+        _Duration = [jsonDictionary safeObjectForKey:@"Duration"];
+        _ClickThrough = [jsonDictionary safeObjectForKey:@"ClickThrough"];
+        _playableDiskURL = [jsonDictionary safeObjectForKey:@"playableDiskURL"];
+        _isOnDisk = [[jsonDictionary safeObjectForKey:@"isOnDisk"] boolValue];
+        _MediaFiles = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"MediaFiles"] andIterator:^id(id item) {
             return [[SAVASTMediaFile alloc] initWithJsonDictionary:(NSDictionary*)item];
         }] mutableCopy];
-        _TrackingEvents = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"TrackingEvents"] andIterator:^id(id item) {
+        _TrackingEvents = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"TrackingEvents"] andIterator:^id(id item) {
             return [[SAVASTTracking alloc] initWithJsonDictionary:(NSDictionary*)item];
         }] mutableCopy];
-        _ClickTracking = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"ClickTracking"] andIterator:^id(id item) {
+        _ClickTracking = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"ClickTracking"] andIterator:^id(id item) {
             return (NSString*)item;
         }] mutableCopy];
-        _CustomClicks = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"CustomClicks"] andIterator:^id(id item) {
+        _CustomClicks = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"CustomClicks"] andIterator:^id(id item) {
             return (NSString*)item;
         }] mutableCopy];
     }

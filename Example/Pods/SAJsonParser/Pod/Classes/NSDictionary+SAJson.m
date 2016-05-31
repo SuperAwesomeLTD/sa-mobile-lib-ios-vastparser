@@ -75,10 +75,17 @@
     return true;
 }
 
-- (id) objectForKey:(id)aKey {
-    id response = [self objectForKey:aKey];
-    if (response != NULL || ![response isKindOfClass:[NSNull class]]) { return response; }
-    return NULL;
+- (id)safeObjectForKey:(id)aKey {
+    NSObject *object = self[aKey];
+    
+    if (object == [NSNull null]) {
+        return nil;
+    }
+    if (object == nil) {
+        return nil;
+    }
+    
+    return object;
 }
 
 @end
