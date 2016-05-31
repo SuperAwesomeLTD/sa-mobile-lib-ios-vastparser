@@ -26,7 +26,7 @@
 }
 
 - (NSString*) jsonPrettyStringRepresentation {
-    NSArray *array = [self dictionaryRepresentation];
+    NSArray *array = (NSArray*)[self dictionaryRepresentation];
     if ([NSJSONSerialization isValidJSONObject:array]) {
         NSData *json = [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:nil];
         return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
@@ -35,7 +35,7 @@
 }
 
 - (NSString*) jsonCompactStringRepresentation {
-    NSArray *array = [self dictionaryRepresentation];
+    NSArray *array = (NSArray*)[self dictionaryRepresentation];
     if ([NSJSONSerialization isValidJSONObject:array]) {
         NSData *json = [NSJSONSerialization dataWithJSONObject:array options:kNilOptions error:nil];
         return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
@@ -44,7 +44,7 @@
 }
 
 - (NSData*) jsonDataRepresentation {
-    NSArray *array = [self dictionaryRepresentation];
+    NSArray *array = (NSArray*)[self dictionaryRepresentation];
     if ([NSJSONSerialization isValidJSONObject:array]) {
         return [NSJSONSerialization dataWithJSONObject:array options:NSJSONWritingPrettyPrinted error:nil];
     }
@@ -54,7 +54,7 @@
 // deserialization part
 
 - (id) initWithJsonArray:(NSArray*)array andIterator:(SAArrayIterator)iterator {
-    if (self = [super init]) {
+    if (self = [self init]) {
         NSMutableArray *mutableSelf = [@[] mutableCopy];
         if (array != NULL) {
             for (id item in array) {

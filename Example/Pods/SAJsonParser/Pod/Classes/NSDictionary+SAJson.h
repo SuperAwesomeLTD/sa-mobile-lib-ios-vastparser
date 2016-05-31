@@ -7,25 +7,25 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <Foundation/NSEnumerator.h>
 
-@interface NSDictionary (SAJson)
+#import "SADeserializationProtocol.h"
+#import "SASerializationProtocol.h"
 
-/**
- *  Factory constructor for a dictionary with a json string
- *
- *  @param jsonString valid json string
- *
- *  @return a new dictionary instance
- */
-+ (NSDictionary*) dictionaryWithJsonString:(NSString*)jsonString;
+@interface NSDictionary (SAJson) <SASerializationProtocol, SADeserializationProtocol>
 
 /**
- *  Factory constructor for a dictionary with a json data object
+ *  Function to safely get data from a dictionary
  *
- *  @param jsonData a valid json data object
+ *  @param aKey key
  *
- *  @return a new dictionary instance
+ *  @return result
  */
-+ (NSDictionary*) dictionaryWithJsonData:(NSData*)jsonData;
+- (id) safeObjectForKey:(id)aKey;
+- (BOOL) safeBoolForKey:(id)aKey;
+- (NSInteger) safeIntForKey:(id)aKey;
+- (CGFloat) safeFloatForKey:(id)aKey;
+- (double) safeDoubleForKey:(id)aKey;
+- (NSString*) safeStringForKey:(NSString*)aKey;
 
 @end

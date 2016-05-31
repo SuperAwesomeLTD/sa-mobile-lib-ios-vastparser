@@ -8,6 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
+#import "SASerializationProtocol.h"
+
 /**
  *  The array iterator
  *

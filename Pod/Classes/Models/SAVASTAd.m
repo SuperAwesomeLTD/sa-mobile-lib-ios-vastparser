@@ -19,11 +19,11 @@
 
 - (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
     if (self = [super init]) {
-        _type = (SAAdType)[[jsonDictionary objectForKey:@"type"] integerValue];
-        __id = [jsonDictionary objectForKey:@"id"];
-        _sequence = [jsonDictionary objectForKey:@"sequence"];
-        _redirectUri = [jsonDictionary objectForKey:@"redirectUri"];
-        _isImpressionSent = [[jsonDictionary objectForKey:@"isImpressionSent"] boolValue];
+        _type = (SAAdType)[jsonDictionary safeIntForKey:@"type"];
+        __id = [jsonDictionary safeStringForKey:@"id"];
+        _sequence = [jsonDictionary safeStringForKey:@"sequence"];
+        _redirectUri = [jsonDictionary safeStringForKey:@"redirectUri"];
+        _isImpressionSent = [jsonDictionary safeBoolForKey:@"isImpressionSent"];
         _Errors = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"Errors"] andIterator:^id(id item) {
             return (NSString*)item;
         }] mutableCopy];

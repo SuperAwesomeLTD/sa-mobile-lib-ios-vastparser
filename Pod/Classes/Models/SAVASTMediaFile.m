@@ -19,11 +19,11 @@
 
 - (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
     if (self = [super init]) {
-        _width = [jsonDictionary objectForKey:@"width"];
-        _height = [jsonDictionary objectForKey:@"height"];
-        _type = [jsonDictionary objectForKey:@"type"];
-        _URL = [jsonDictionary objectForKey:@"URL"];
-        _diskURL = [jsonDictionary objectForKey:@"diskURL"];
+        _width = [jsonDictionary safeStringForKey:@"width"];
+        _height = [jsonDictionary safeStringForKey:@"height"];
+        _type = [jsonDictionary safeStringForKey:@"type"];
+        _URL = [jsonDictionary safeStringForKey:@"URL"];
+        _diskURL = [jsonDictionary safeStringForKey:@"diskURL"];
     }
     return self;
 }

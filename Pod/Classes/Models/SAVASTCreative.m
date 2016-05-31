@@ -23,13 +23,13 @@
 
 - (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
     if (self = [super init]) {
-        _type = (SAVASTCreativeType)[[jsonDictionary objectForKey:@"type"] integerValue];
-        __id = [jsonDictionary objectForKey:@"id"];
-        _sequence = [jsonDictionary objectForKey:@"sequence"];
-        _Duration = [jsonDictionary objectForKey:@"Duration"];
-        _ClickThrough = [jsonDictionary objectForKey:@"ClickThrough"];
-        _playableDiskURL = [jsonDictionary objectForKey:@"playableDiskURL"];
-        _isOnDisk = [[jsonDictionary objectForKey:@"isOnDisk"] boolValue];
+        _type = (SAVASTCreativeType)[jsonDictionary safeIntForKey:@"type"];
+        __id = [jsonDictionary safeStringForKey:@"id"];
+        _sequence = [jsonDictionary safeStringForKey:@"sequence"];
+        _Duration = [jsonDictionary safeStringForKey:@"Duration"];
+        _ClickThrough = [jsonDictionary safeStringForKey:@"ClickThrough"];
+        _playableDiskURL = [jsonDictionary safeStringForKey:@"playableDiskURL"];
+        _isOnDisk = [jsonDictionary safeBoolForKey:@"isOnDisk"];
         _MediaFiles = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"MediaFiles"] andIterator:^id(id item) {
             return [[SAVASTMediaFile alloc] initWithJsonDictionary:(NSDictionary*)item];
         }] mutableCopy];

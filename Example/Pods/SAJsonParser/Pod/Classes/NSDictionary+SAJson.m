@@ -10,17 +10,100 @@
 
 @implementation NSDictionary (SAJson)
 
-+ (NSDictionary*) dictionaryWithJsonData:(NSData*)jsonData {
-    
-    if (jsonData == NULL) return NULL;
-    NSError *error = NULL;
-    NSDictionary *jsonDict = NULL;
-    return [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+// deserialization
+
+- (NSDictionary*) dictionaryRepresentation {
+    return self;
 }
 
-+ (NSDictionary*) dictionaryWithJsonString:(NSString*)jsonString {
-    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
-    return [NSDictionary dictionaryWithJsonData:jsonData];
+- (NSString*) jsonPreetyStringRepresentation {
+    if ([NSJSONSerialization isValidJSONObject:self]) {
+        NSData *json = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:nil];
+        return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
+    }
+    return nil;
 }
+
+- (NSString*) jsonCompactStringRepresentation {
+    if ([NSJSONSerialization isValidJSONObject:self]) {
+        NSData *json = [NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:nil];
+        return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
+    }
+    return nil;
+}
+
+- (NSData*) jsonDataRepresentation {
+    if ([NSJSONSerialization isValidJSONObject:self]) {
+        return [NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:nil];
+    }
+    return nil;
+}
+
+// serialization
+
+- (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
+    if (self = [self init]) {
+        NSMutableDictionary *dictionary = [@{} mutableCopy];
+        for (NSString *key in [jsonDictionary allKeys]) {
+            [dictionary setValue:[jsonDictionary objectForKey:key] forKey:key];
+        }
+        self = dictionary;
+    }
+    return self;
+}
+
+- (id) initWithJsonData:(NSData *)jsonData {
+    if (jsonData == NULL) return NULL;
+    NSError *error = NULL;
+    NSDictionary *temp = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
+    if (error) return NULL;
+    if (self = [self initWithJsonDictionary:temp]){
+        
+    }
+    return self;
+}
+
+- (id) initWithJsonString:(NSString *)jsonString {
+    NSData *jsonData = [jsonString dataUsingEncoding:NSUTF8StringEncoding];
+    if (self = [self initWithJsonData:jsonData]){
+        
+    }
+    return self;
+}
+
+- (BOOL) isValid {
+    return true;
+}
+
+// misc
+
+- (id) safeObjectForKey:(id)aKey {
+    if ([self objectForKey:aKey] != NULL && ![[self objectForKey:aKey] isKindOfClass:[NSNull class]] ) {
+        return [self objectForKey:aKey];
+    } else {
+        return [[NSNumber alloc] init];
+    }
+}
+
+- (BOOL) safeBoolForKey:(id)aKey {
+    return [[self safeObjectForKey:aKey] boolValue];
+}
+
+- (NSInteger) safeIntForKey:(id)aKey {
+    return [[self safeObjectForKey:aKey] integerValue];
+}
+
+- (CGFloat) safeFloatForKey:(id)aKey {
+    return [[self safeObjectForKey:aKey] floatValue];
+}
+
+- (double) safeDoubleForKey:(id)aKey {
+    return [[self safeObjectForKey:aKey] doubleValue];
+}
+
+- (NSString*) safeStringForKey:(NSString*)aKey {
+    return [self safeObjectForKey:aKey];
+}
+
 
 @end

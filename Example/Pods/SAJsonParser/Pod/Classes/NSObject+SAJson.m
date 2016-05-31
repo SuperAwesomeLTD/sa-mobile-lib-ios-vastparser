@@ -21,7 +21,7 @@
 
 // default implementation - should be left as it is
 - (id) initWithJsonString:(NSString*)jsonString {
-    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithJsonString:jsonString];
+    NSDictionary *jsonDictionary = [[NSDictionary alloc] initWithJsonString:jsonString];
     if (self = [self initWithJsonDictionary:jsonDictionary]) {
         
     }
@@ -30,7 +30,7 @@
 
 // default implementation - should be left as it is
 - (id) initWithJsonData:(NSData*)jsonData {
-    NSDictionary *jsonDictionary = [NSDictionary dictionaryWithJsonData:jsonData];
+    NSDictionary *jsonDictionary = [[NSDictionary alloc] initWithJsonData:jsonData];
     if (self = [self initWithJsonDictionary:jsonDictionary]) {
         
     }
