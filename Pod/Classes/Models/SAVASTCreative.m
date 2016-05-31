@@ -29,6 +29,7 @@
         _sequence = [jsonDictionary safeObjectForKey:@"sequence"];
         _Duration = [jsonDictionary safeObjectForKey:@"Duration"];
         _ClickThrough = [jsonDictionary safeObjectForKey:@"ClickThrough"];
+        _playableMediaURL = [jsonDictionary safeObjectForKey:@"playableMediaURL"];
         _playableDiskURL = [jsonDictionary safeObjectForKey:@"playableDiskURL"];
         _isOnDisk = [[jsonDictionary safeObjectForKey:@"isOnDisk"] boolValue];
         _MediaFiles = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"MediaFiles"] andIterator:^id(id item) {
@@ -54,6 +55,7 @@
         @"sequence": nullSafe(_sequence),
         @"Duration": nullSafe(_Duration),
         @"ClickThrough": nullSafe(_ClickThrough),
+        @"playableMediaURL": nullSafe(_playableMediaURL),
         @"playableDiskURL": nullSafe(_playableDiskURL),
         @"isOnDisk": @(_isOnDisk),
         @"MediaFiles": [_MediaFiles dictionaryRepresentation],
