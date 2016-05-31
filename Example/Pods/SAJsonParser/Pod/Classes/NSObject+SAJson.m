@@ -46,7 +46,7 @@
 
 // default implementation that should be overriden
 - (NSDictionary*) dictionaryRepresentation {
-    return @{};
+    return NULL;
 }
 
 // default implementation - should be left as it is
