@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+//
+// Class definition
 @interface SAURLClicker : UIButton
-
+@property (nonatomic, assign) BOOL shouldShowSmallClickButton;
 @end

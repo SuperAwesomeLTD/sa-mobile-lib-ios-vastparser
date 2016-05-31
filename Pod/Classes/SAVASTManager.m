@@ -25,9 +25,6 @@
 #import "SAExtensions.h"
 #import "SAEvents.h"
 
-// import Json printing
-#import "NSObject+ModelToString.h"
-
 //
 // @brief: private interface
 @interface SAVASTManager () <SAVASTParserProtocol, SAVideoPlayerProtocol>
@@ -110,11 +107,6 @@
         }
         __cAd.isImpressionSent = true;
     }
-//    NSArray *impressionsToSend = [__cAd.Impressions filterBy:@"isSent" withBool:false];
-//    for (SAImpression *impression in impressionsToSend) {
-//        impression.isSent = true;
-//        [SAEvents sendEventToURL:impression.URL];
-//    }
 }
 
 - (void) didStartPlayer {
@@ -198,11 +190,6 @@
 }
 
 - (void) didGoToURL {
-    // send event to URL
-//    for (NSString *ctracking in __cCreative.ClickTracking) {
-//        [SAEvents sendEventToURL:ctracking];
-//    }
-    
     // setup the current click URL
     NSString *url = @"";
     if (__cCreative.ClickThrough != NULL && [SAUtils isValidURL:__cCreative.ClickThrough]) {

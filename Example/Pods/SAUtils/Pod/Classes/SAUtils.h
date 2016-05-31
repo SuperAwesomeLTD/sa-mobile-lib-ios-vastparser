@@ -45,7 +45,6 @@ typedef void (^failure)();
 
 + (SASystemSize) getSystemSize;
 + (NSString*) getVerboseSystemDetails;
-+ (NSString*) filePathForName:(NSString*)name type:(NSString*)type andBundle:(NSString*)bundleName andClass:(Class)className;
 + (NSString*) filePathInDocuments:(NSString*)fpath;
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -59,6 +58,13 @@ typedef void (^failure)();
 + (NSString*) encodeJSONDictionaryFromNSDictionary:(NSDictionary*)dict;
 + (NSString*) decodeHTMLEntitiesFrom:(NSString*)string;
 + (BOOL) isValidURL:(NSObject*) urlObject;
+
+////////////////////////////////////////////////////////////////////////////////
+// UIImage classes
+////////////////////////////////////////////////////////////////////////////////
+
++ (UIImage*) closeImage;
++ (UIImage*) padlockImage;
 
 ////////////////////////////////////////////////////////////////////////////////
 // Aux network functions

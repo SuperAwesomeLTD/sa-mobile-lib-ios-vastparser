@@ -9,4 +9,27 @@
 #import "SAVASTTracking.h"
 
 @implementation SAVASTTracking
+
+- (id) init{
+    if (self = [super init]){
+        
+    }
+    return self;
+}
+
+- (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
+    if (self = [super init]) {
+        _event = [jsonDictionary objectForKey:@"event"];
+        _URL = [jsonDictionary objectForKey:@"URL"];
+    }
+    return self;
+}
+
+- (NSDictionary*) dictionaryRepresentation {
+    return @{
+        @"event": nullSafe(_event),
+        @"URL": nullSafe(_URL)
+    };
+}
+
 @end

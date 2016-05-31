@@ -8,8 +8,8 @@
 
 #import <Foundation/Foundation.h>
 
-// forward declarations
-@class SAVASTCreative;
+#import "SAJsonParser.h"
+#import "SAVASTCreative.h"
 
 //
 // @brief: this enum should hold the type of content an ad holds
@@ -22,7 +22,7 @@ typedef enum SAAdType {
 //
 // @brief: the simplified representation of a VAST ad
 // - some details have been contactenated, but all important data is here
-@interface SAVASTAd : NSObject
+@interface SAVASTAd : NSObject <SASerializationProtocol, SADeserializationProtocol>
 @property (nonatomic, assign) SAAdType type;
 @property (nonatomic, strong) NSString *_id;
 @property (nonatomic, strong) NSString *sequence;

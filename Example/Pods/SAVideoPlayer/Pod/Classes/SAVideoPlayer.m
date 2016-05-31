@@ -10,7 +10,6 @@
 #import "SAUtils.h"
 #import "SABlackMask.h"
 #import "SACronograph.h"
-#import "SAURLClicker.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 
@@ -76,27 +75,27 @@
 
 - (id) init {
     if (self = [super init]) {
-        [self setup];
         _notif = [NSNotificationCenter defaultCenter];
         _shouldShowSpinner = false;
+        _shouldShowSmallClickButton = false;
     }
     return self;
 }
 
 - (id) initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
-        [self setup];
         _notif = [NSNotificationCenter defaultCenter];
         _shouldShowSpinner = false;
+        _shouldShowSmallClickButton = false;
     }
     return self;
 }
 
 - (id) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
-        [self setup];
         _notif = [NSNotificationCenter defaultCenter];
         _shouldShowSpinner = false;
+        _shouldShowSmallClickButton = false;
     }
     return self;
 }
@@ -141,14 +140,15 @@
     [_chrome addSubview:_chrono];
     
     _clicker = [[SAURLClicker alloc] init];
+    _clicker.shouldShowSmallClickButton = _shouldShowSmallClickButton;
     [_clicker addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     [_chrome addSubview:_clicker];
 
-    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-    _spinner.center = _chrome.center;
-    [_chrome addSubview:_spinner];
-    [_spinner startAnimating];
-    _spinner.hidden = !_shouldShowSpinner;
+//    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
+//    _spinner.center = _chrome.center;
+//    [_chrome addSubview:_spinner];
+//    [_spinner startAnimating];
+//    _spinner.hidden = !_shouldShowSpinner;
 }
 
 #pragma mark <Destroy> functions
@@ -197,13 +197,13 @@
     [_clicker removeTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     [_clicker removeFromSuperview];
     [_chrome removeFromSuperview];
-    [_spinner stopAnimating];
-    [_spinner removeFromSuperview];
+//    [_spinner stopAnimating];
+//    [_spinner removeFromSuperview];
     _mask = NULL;
     _clicker = NULL;
     _chrono = NULL;
     _chrome = NULL;
-    _spinner = NULL;
+//    _spinner = NULL;
 }
 
 #pragma mark <Update> functions
@@ -225,6 +225,7 @@
 #pragma mark <Play> function
 
 - (void) playWithMediaURL:(NSURL *)url {
+    [self setup];
     _mediaURL = url;
     _playerItem = [AVPlayerItem playerItemWithURL:_mediaURL];
     _player = [AVPlayer playerWithPlayerItem:_playerItem];
@@ -238,7 +239,7 @@
 }
 
 - (void) playWithMediaFile:(NSString *)file {
-    
+    [self setup];
     NSString *fullPath = [SAUtils filePathInDocuments:file];
     NSURL *url = [[NSURL alloc] initFileURLWithPath:fullPath isDirectory:false];
     AVAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
@@ -247,7 +248,6 @@
     _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
     _playerLayer.frame = _videoView.bounds;
     [_videoView.layer addSublayer:_playerLayer];
-    [_player seekToTime:kCMTimeZero];
     [_player play];
     
     [self setObservers];
@@ -278,7 +278,7 @@
 #pragma mark <AVPlayer> events
 
 - (void) playerItemDidReachEnd: (NSNotification*)notification {
-    _spinner.hidden = YES;
+//    _spinner.hidden = YES;
     
     // delegate
     if (!_isEndHandled && _delegate && [_delegate respondsToSelector:@selector(didReachEnd)]){
@@ -292,7 +292,7 @@
 }
 
 - (void) playerItemPlaybackStall: (NSNotification*)notification {
-    
+    [_player play];
 }
 
 - (void) playerItemEnterBackground: (NSNotification*)notification {
@@ -309,6 +309,7 @@
     }
     if (object == _playerItem && [keyPath isEqualToString:AV_STATUS]) {
         if (_playerItem.status == AVPlayerItemStatusReadyToPlay) {
+            [_player play];
             NSLog(@"[KVO] %@: Ready", AV_STATUS);
             _isNetworkHavingProblems = false;
             
@@ -378,35 +379,35 @@
         // start spinner
         dispatch_async(dispatch_get_main_queue(), ^{
             _shouldShowSpinner = YES;
-            _spinner.hidden = !_shouldShowSpinner;
+//            _spinner.hidden = !_shouldShowSpinner;
         });
     }
     if (object == _playerItem && [keyPath isEqualToString:AV_KEEPUP]) {
         NSLog(@"[KVO] %@ %d", AV_KEEPUP, _playerItem.isPlaybackLikelyToKeepUp);
     }
-    if (object == _playerItem && [keyPath isEqualToString:AV_TIME]) {
-        NSValue *timeRangeValue = _playerItem.loadedTimeRanges.firstObject;
-        CMTimeRange timeRange;
-        [timeRangeValue getValue:&timeRange];
-        
-        CGFloat assetTime = CMTimeGetSeconds(_playerItem.currentTime);
-        CGFloat assetDuration = CMTimeGetSeconds(_playerItem.asset.duration);
-        CGFloat bufferStart = CMTimeGetSeconds(timeRange.start);
-        CGFloat bufferDuration = CMTimeGetSeconds(timeRange.duration);
-        NSLog(@"[KVO] Loaded time %.2f to %.2f at %.2f / %.2f", bufferStart, bufferDuration, assetTime, assetDuration);
-    
-        // there is enough data in the buffer to play
-        if (_isPlaybackBufferEmpty && bufferDuration >= MIN_BUFFER_TO_PLAY) {
-            _isPlaybackBufferEmpty = false;
-            [_player play];
-            
-            // and stop spinner
-            dispatch_async(dispatch_get_main_queue(), ^{
-                _shouldShowSpinner = NO;
-                _spinner.hidden = !_shouldShowSpinner;
-            });
-        }
-    }
+//    if (object == _playerItem && [keyPath isEqualToString:AV_TIME]) {
+//        NSValue *timeRangeValue = _playerItem.loadedTimeRanges.firstObject;
+//        CMTimeRange timeRange;
+//        [timeRangeValue getValue:&timeRange];
+//        
+//        CGFloat assetTime = CMTimeGetSeconds(_playerItem.currentTime);
+//        CGFloat assetDuration = CMTimeGetSeconds(_playerItem.asset.duration);
+//        CGFloat bufferStart = CMTimeGetSeconds(timeRange.start);
+//        CGFloat bufferDuration = CMTimeGetSeconds(timeRange.duration);
+//        NSLog(@"[KVO] Loaded time %.2f to %.2f at %.2f / %.2f", bufferStart, bufferDuration, assetTime, assetDuration);
+//    
+//        // there is enough data in the buffer to play
+//        if (_isPlaybackBufferEmpty && bufferDuration >= MIN_BUFFER_TO_PLAY) {
+//            _isPlaybackBufferEmpty = false;
+//            [_player play];
+//            
+//            // and stop spinner
+//            dispatch_async(dispatch_get_main_queue(), ^{
+//                _shouldShowSpinner = NO;
+//                _spinner.hidden = !_shouldShowSpinner;
+//            });
+//        }
+//    }
 }
 
 - (void) reconnectFunc {

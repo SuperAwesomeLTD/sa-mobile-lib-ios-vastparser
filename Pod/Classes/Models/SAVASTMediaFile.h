@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SAJsonParser.h"
 
 //
 // @brief: media file implementation
-@interface SAVASTMediaFile : NSObject
+@interface SAVASTMediaFile : NSObject <SASerializationProtocol, SADeserializationProtocol>
 @property (nonatomic, strong) NSString *width;
 @property (nonatomic, strong) NSString *height;
 @property (nonatomic, strong) NSString *type;

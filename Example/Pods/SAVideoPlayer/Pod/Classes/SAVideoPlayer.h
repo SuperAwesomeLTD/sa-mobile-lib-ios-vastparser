@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SAURLClicker.h"
 
 @class AVPlayer;
 @class AVPlayerLayer;
@@ -53,6 +54,7 @@
 
 // delegate method
 @property (nonatomic, weak) id<SAVideoPlayerProtocol> delegate;
+@property (nonatomic, assign) BOOL shouldShowSmallClickButton;
 
 // play with URL
 - (void) playWithMediaURL:(NSURL *)url;

@@ -7,24 +7,61 @@
 //
 
 #import "SAVASTAd.h"
-#import "SAVASTCreative.h"
 
 @implementation SAVASTAd
+
+- (id) init {
+    if (self = [super init]) {
+        
+    }
+    return self;
+}
+
+- (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
+    if (self = [super init]) {
+        _type = (SAAdType)[[jsonDictionary objectForKey:@"type"] integerValue];
+        __id = [jsonDictionary objectForKey:@"id"];
+        _sequence = [jsonDictionary objectForKey:@"sequence"];
+        _redirectUri = [jsonDictionary objectForKey:@"redirectUri"];
+        _isImpressionSent = [[jsonDictionary objectForKey:@"isImpressionSent"] boolValue];
+        _Errors = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"Errors"] andIterator:^id(id item) {
+            return (NSString*)item;
+        }] mutableCopy];
+        _Impressions = [[[NSArray alloc] initWithJsonArray:[jsonDictionary objectForKey:@"Impressions"] andIterator:^id(id item) {
+            return (NSString*)item;
+        }] mutableCopy];
+        _creative = [[SAVASTCreative alloc] initWithJsonDictionary:[jsonDictionary objectForKey:@"creative"]];
+    }
+    return self;
+}
+
+- (NSDictionary*) dictionaryRepresentation {
+    return @{
+        @"type": @(_type),
+        @"id": nullSafe(__id),
+        @"sequence": nullSafe(_sequence),
+        @"redirectUri": nullSafe(_redirectUri),
+        @"isImpressionSent": @(_isImpressionSent),
+        @"Errors": [_Errors dictionaryRepresentation],
+        @"Impressions": [_Impressions dictionaryRepresentation],
+        @"creative": nullSafe([_creative dictionaryRepresentation])
+    };
+}
 
 - (void) sumAd:(SAVASTAd *)ad {
     
     // old ad gets _id of new ad (does not really affect anything)
-    self._id = ad._id;
+    __id = ad._id;
     // and the sequence is overriden (again, does not affect anything)
-    self.sequence = ad.sequence;
+    _sequence = ad.sequence;
     
     // summing errors
-    [self.Errors addObjectsFromArray:ad.Errors];
+    [_Errors addObjectsFromArray:ad.Errors];
     // suming impressions
-    [self.Impressions addObjectsFromArray:ad.Impressions];
+    [_Impressions addObjectsFromArray:ad.Impressions];
     // and creatives (and for now we assume we only have linear ones)
     // don't sum-up creatives now
-    [self.creative sumCreative:ad.creative];
+    [_creative sumCreative:ad.creative];
 }
 
 @end

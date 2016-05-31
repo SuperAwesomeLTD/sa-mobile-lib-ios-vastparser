@@ -7,10 +7,11 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SAJsonParser.h"
 
 //
 // @brief: the tracking object
-@interface SAVASTTracking : NSObject
+@interface SAVASTTracking : NSObject <SADeserializationProtocol, SASerializationProtocol>
 @property (nonatomic, strong) NSString *event;
 @property (nonatomic, strong) NSString *URL;
 @end
