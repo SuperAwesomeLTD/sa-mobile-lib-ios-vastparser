@@ -12,7 +12,12 @@
 @implementation NSObject (SAJson)
 
 // default implementation (that should be overridden)
-- (id) initWithJsonDictionary:(NSDictionary*)jsonDictionary{
+- (id) initWithJsonDictionary:(NSDictionary*)jsonDictionary {
+    
+    // guard
+    if (jsonDictionary == NULL) return NULL;
+    if ([jsonDictionary isKindOfClass:[NSNull class]]) return NULL;
+    
     if (self = [self init]){
         
     }

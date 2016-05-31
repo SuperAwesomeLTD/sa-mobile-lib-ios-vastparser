@@ -18,9 +18,9 @@
 }
 
 - (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
-    if (self = [super init]) {
-        _event = [jsonDictionary safeStringForKey:@"event"];
-        _URL = [jsonDictionary safeStringForKey:@"URL"];
+    if (self = [super initWithJsonDictionary:jsonDictionary]) {
+        _event = [jsonDictionary objectForKey:@"event"];
+        _URL = [jsonDictionary objectForKey:@"URL"];
     }
     return self;
 }

@@ -17,7 +17,7 @@
  *
  *  @return either the object or NSNull
  */
-static id nullSafe(id object) {
+static id _Nullable nullSafe(id object) {
     return object ?: [NSNull null];
 }
 
@@ -36,7 +36,7 @@ static id nullSafe(id object) {
  *
  *  @return a dictionary
  */
-- (NSDictionary*) dictionaryRepresentation;
+- (NSDictionary* _Nullable) dictionaryRepresentation;
 
 @optional
 
@@ -46,7 +46,7 @@ static id nullSafe(id object) {
  *
  *  @return a JSON string
  */
-- (NSString*) jsonPreetyStringRepresentation;
+- (NSString* _Nullable) jsonPreetyStringRepresentation;
 
 /**
  *  This function provides the json compact string representation of a model
@@ -54,7 +54,7 @@ static id nullSafe(id object) {
  *
  *  @return a JSON string
  */
-- (NSString*) jsonCompactStringRepresentation;
+- (NSString* _Nullable) jsonCompactStringRepresentation;
 
 /**
  *  This funciton provides the json NSData representation of a model object;
@@ -62,6 +62,6 @@ static id nullSafe(id object) {
  *
  *  @return a NSData object
  */
-- (NSData*) jsonDataRepresentation;
+- (NSData* _Nullable) jsonDataRepresentation;
 
 @end

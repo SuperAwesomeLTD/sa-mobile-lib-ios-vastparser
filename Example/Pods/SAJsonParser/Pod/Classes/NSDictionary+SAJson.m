@@ -75,35 +75,11 @@
     return true;
 }
 
-// misc
-
-- (id) safeObjectForKey:(id)aKey {
-    if ([self objectForKey:aKey] != NULL && ![[self objectForKey:aKey] isKindOfClass:[NSNull class]] ) {
-        return [self objectForKey:aKey];
-    } else {
-        return [[NSNumber alloc] init];
-    }
+- (id) objectForKey:(id)aKey {
+    id response = [self objectForKey:aKey];
+    if (response != NULL || ![response isKindOfClass:[NSNull class]]) { return response; }
+    return NULL;
 }
-
-- (BOOL) safeBoolForKey:(id)aKey {
-    return [[self safeObjectForKey:aKey] boolValue];
-}
-
-- (NSInteger) safeIntForKey:(id)aKey {
-    return [[self safeObjectForKey:aKey] integerValue];
-}
-
-- (CGFloat) safeFloatForKey:(id)aKey {
-    return [[self safeObjectForKey:aKey] floatValue];
-}
-
-- (double) safeDoubleForKey:(id)aKey {
-    return [[self safeObjectForKey:aKey] doubleValue];
-}
-
-- (NSString*) safeStringForKey:(NSString*)aKey {
-    return [self safeObjectForKey:aKey];
-}
-
 
 @end
+

@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "2BBEBAF513AA21475359CF0F"
+               BlueprintIdentifier = "4391108C1F3042BE9BADA522"
                BuildableName = "libPods-SAVASTParser_Example.a"
                BlueprintName = "Pods-SAVASTParser_Example"
                ReferencedContainer = "container:Pods.xcodeproj">
