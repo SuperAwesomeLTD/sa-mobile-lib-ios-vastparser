@@ -9,19 +9,6 @@
 #import <Foundation/Foundation.h>
 
 /**
- *  This function makes sure the data you enter in a dictionary object is not
- *  ever going to be NULL or nil; If it's not initialized, a NSNull instance
- *  will be delivered
- *
- *  @param object the object in question
- *
- *  @return either the object or NSNull
- */
-static id _Nullable nullSafe(id object) {
-    return object ?: [NSNull null];
-}
-
-/**
  This protocol describes the functions that must be implemented by a class in
  order to serialize correctly using the SA method
  */

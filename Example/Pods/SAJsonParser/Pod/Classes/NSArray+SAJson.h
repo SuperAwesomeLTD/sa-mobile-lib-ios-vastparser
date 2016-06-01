@@ -8,8 +8,6 @@
 
 #import <Foundation/Foundation.h>
 
-#import "SASerializationProtocol.h"
-
 /**
  *  The array iterator
  *
@@ -62,6 +60,15 @@ typedef id (^SAArrayIterator)(id item);
  *  @return a new object
  */
 - (id) initWithJsonArray:(NSArray*)array andIterator:(SAArrayIterator)iterator;
+
+/**
+ *  Factory function that inits an array with another array and iterator
+ *
+ *  @param array    array of dictionaries or values
+ *  @param iterator iterator
+ *
+ *  @return a new array
+ */
 + (NSArray*) arrayWithJsonArray:(NSArray*)array andIterator:(SAArrayIterator)iterator;
 
 /**
@@ -73,6 +80,15 @@ typedef id (^SAArrayIterator)(id item);
  *  @return a new object
  */
 - (id) initWithJsonString:(NSString*)json andIterator:(SAArrayIterator)iterator;
+
+/**
+ *  Factory function that inits an array with a json string and iterator
+ *
+ *  @param array    json string of array of dictionaries (or values)
+ *  @param iterator iterator
+ *
+ *  @return a new array
+ */
 + (NSArray*) arrayWithJsonString:(NSString*)json andIterator:(SAArrayIterator)iterator;
 
 /**
@@ -84,6 +100,15 @@ typedef id (^SAArrayIterator)(id item);
  *  @return a new object
  */
 - (id) initWithJsonData:(NSData*)json andIterator:(SAArrayIterator)iterator;
+
+/**
+ *  Factory function that inits an array with a json data object and iterator
+ *
+ *  @param array    json as nsdata
+ *  @param iterator iterator
+ *
+ *  @return a new array
+ */
 + (NSArray*) arrayWithJsonData:(NSData*)json andIterator:(SAArrayIterator)iterator;
 
 @end

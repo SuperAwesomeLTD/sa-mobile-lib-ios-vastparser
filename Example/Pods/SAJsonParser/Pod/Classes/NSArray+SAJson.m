@@ -18,8 +18,8 @@
     for (id item in self){
         if ([item respondsToSelector:@selector(dictionaryRepresentation)]) {
             NSDictionary *result = [item dictionaryRepresentation];
-            if (![result isEqualToDictionary:@{}] && result != NULL) {
-                [array addObject:[item dictionaryRepresentation]];
+            if (result != NULL && ![result isEqualToDictionary:@{}]) {
+                [array addObject:result];
             }
         }
     }

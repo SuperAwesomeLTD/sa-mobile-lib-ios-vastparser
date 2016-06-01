@@ -24,12 +24,12 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-//    _player = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 40, 220, 160)];
-//    [self.view addSubview:_player];
-//    
-//    _manager = [[SAVASTManager alloc] initWithPlayer:_player];
-//    _manager.delegate = self;
-//    [_manager parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/-1/-1/?sdkVersion=unknown&rnd=457960880"];
+    _player = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 40, 220, 160)];
+    [self.view addSubview:_player];
+    
+    _manager = [[SAVASTManager alloc] initWithPlayer:_player];
+    _manager.delegate = self;
+    [_manager parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/-1/-1/?sdkVersion=unknown&rnd=457960880"];
     
     _player2 = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 200, 320, 220)];
     [self.view addSubview:_player2];

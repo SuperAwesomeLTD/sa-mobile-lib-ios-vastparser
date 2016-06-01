@@ -18,6 +18,7 @@
     if (jsonDictionary == NULL) return NULL;
     if ([jsonDictionary isKindOfClass:[NSNull class]]) return NULL;
     
+    // regular init
     if (self = [self init]){
         
     }
@@ -51,7 +52,9 @@
 
 // default implementation that should be overriden
 - (NSDictionary*) dictionaryRepresentation {
-    return NULL;
+    // @warn: must return nil or else arrays of strings or other objects won't
+    // be represented correctly
+    return nil;
 }
 
 // default implementation - should be left as it is

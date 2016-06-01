@@ -10,6 +10,28 @@
 
 @implementation NSDictionary (SAJson)
 
+// private common functions
+
+- (NSData*) jsonData:(NSJSONWritingOptions) options {
+    if ([NSJSONSerialization isValidJSONObject:self]) {
+        return [NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:nil];
+    }
+    return nil;
+}
+
+- (NSDictionary*) dictionaryFromData:(NSData*) json {
+    
+    if (json != nil) {
+        NSError *error = nil;
+        NSDictionary *temp = [NSJSONSerialization JSONObjectWithData:json options:NSJSONReadingMutableContainers error:&error];
+        if (error == nil) {
+            return temp;
+        }
+    }
+    
+    return nil;
+}
+
 // deserialization
 
 - (NSDictionary*) dictionaryRepresentation {
@@ -17,46 +39,31 @@
 }
 
 - (NSString*) jsonPreetyStringRepresentation {
-    if ([NSJSONSerialization isValidJSONObject:self]) {
-        NSData *json = [NSJSONSerialization dataWithJSONObject:self options:NSJSONWritingPrettyPrinted error:nil];
-        return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
-    }
-    return nil;
+    NSData *json = [self jsonData:NSJSONWritingPrettyPrinted];
+    return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
 }
 
 - (NSString*) jsonCompactStringRepresentation {
-    if ([NSJSONSerialization isValidJSONObject:self]) {
-        NSData *json = [NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:nil];
-        return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
-    }
-    return nil;
+    NSData *json = [self jsonData:kNilOptions];
+    return [[NSString alloc] initWithData:json encoding:NSUTF8StringEncoding];
 }
 
 - (NSData*) jsonDataRepresentation {
-    if ([NSJSONSerialization isValidJSONObject:self]) {
-        return [NSJSONSerialization dataWithJSONObject:self options:kNilOptions error:nil];
-    }
-    return nil;
+    return [self jsonData:kNilOptions];
 }
 
 // serialization
 
 - (id) initWithJsonDictionary:(NSDictionary *)jsonDictionary {
-    if (self = [self init]) {
-        NSMutableDictionary *dictionary = [@{} mutableCopy];
-        for (NSString *key in [jsonDictionary allKeys]) {
-            [dictionary setValue:[jsonDictionary objectForKey:key] forKey:key];
-        }
-        self = dictionary;
+    if (self = [self initWithDictionary:jsonDictionary]) {
+    
     }
     return self;
 }
 
 - (id) initWithJsonData:(NSData *)jsonData {
-    if (jsonData == NULL) return NULL;
-    NSError *error = NULL;
-    NSDictionary *temp = [NSJSONSerialization JSONObjectWithData:jsonData options:NSJSONReadingMutableContainers error:&error];
-    if (error) return NULL;
+    NSDictionary *temp = [self dictionaryFromData:jsonData];
+    if (!temp) return NULL;
     if (self = [self initWithJsonDictionary:temp]){
         
     }
@@ -73,19 +80,6 @@
 
 - (BOOL) isValid {
     return true;
-}
-
-- (id)safeObjectForKey:(id)aKey {
-    NSObject *object = self[aKey];
-    
-    if (object == [NSNull null]) {
-        return nil;
-    }
-    if (object == nil) {
-        return nil;
-    }
-    
-    return object;
 }
 
 @end
