@@ -24,19 +24,19 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view, typically from a nib.
     
-    _player = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 40, 220, 160)];
-    [self.view addSubview:_player];
-    
-    _manager = [[SAVASTManager alloc] initWithPlayer:_player];
-    _manager.delegate = self;
-    [_manager parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/-1/-1/?sdkVersion=unknown&rnd=457960880"];
+//    _player = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 40, 220, 160)];
+//    [self.view addSubview:_player];
+//    
+//    _manager = [[SAVASTManager alloc] initWithPlayer:_player];
+//    _manager.delegate = self;
+//    [_manager parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/-1/-1/?sdkVersion=unknown&rnd=457960880"];
     
     _player2 = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 200, 320, 220)];
     [self.view addSubview:_player2];
     
     _manager2 = [[SAVASTManager alloc] initWithPlayer:_player2];
     _manager2.delegate = self;
-    [_manager2 parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/30496/31794/32061/?sdkVersion=unknown&rnd=621781753"];
+    [_manager2 parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/31825/32136/?sdkVersion=ios_4.0.2&rnd=687506518&dauid=2097324019"];
 }
 
 - (void)didReceiveMemoryWarning
