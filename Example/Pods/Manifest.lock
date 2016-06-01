@@ -1,9 +1,12 @@
 PODS:
-  - SAEvents (1.0.4):
+  - SAEvents (1.0.6):
+    - SAEvents/Core (= 1.0.6)
+    - SAUtils
+  - SAEvents/Core (1.0.6):
     - SAUtils
   - SAJsonParser (1.2.0)
   - SAUtils (1.1.6)
-  - SAVASTParser (1.2.5):
+  - SAVASTParser (1.2.7):
     - SAEvents
     - SAJsonParser
     - SAUtils
@@ -19,10 +22,10 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SAEvents: 920515c4e0ac6f6dc3aeaabe411550ac391f7a58
+  SAEvents: 0d386d7316f5d148bd6fd96fec0665eb3189570f
   SAJsonParser: b2ca75e9916c9f416adb1c75707ba776de760140
   SAUtils: acb66358c0744e48632849dc88d44188bbef7d4b
-  SAVASTParser: 14f6d0d1172994874e8962ee6e958dc4267c5391
+  SAVASTParser: 1d9330590cc84c53b417bee3e365a185c3872c0b
   SAVideoPlayer: 7598f1c67bbfbe0eddfd214fb86b7848c639ca7a
 
 COCOAPODS: 0.38.2

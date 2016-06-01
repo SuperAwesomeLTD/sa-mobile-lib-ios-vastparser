@@ -58,14 +58,14 @@ install_resource()
   esac
 }
 if [[ "$CONFIGURATION" == "Debug" ]]; then
-  install_resource "${BUILT_PRODUCTS_DIR}/SAEvents.bundle"
+  install_resource "${BUILT_PRODUCTS_DIR}/SuperAwesome.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAJsonParser.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAUtils.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAVASTParser.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAVideoPlayer.bundle"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
-  install_resource "${BUILT_PRODUCTS_DIR}/SAEvents.bundle"
+  install_resource "${BUILT_PRODUCTS_DIR}/SuperAwesome.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAJsonParser.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAUtils.bundle"
   install_resource "${BUILT_PRODUCTS_DIR}/SAVASTParser.bundle"
