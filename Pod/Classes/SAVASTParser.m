@@ -30,7 +30,7 @@
     
     [self parseVASTAds:url withResult:^(SAVASTAd *ad) {
         
-        if (ad) {
+        if (ad && ad.creative.playableMediaURL != NULL) {
             
             [[SAFileDownloader getInstance] downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withSuccess:^{
                 ad.creative.isOnDisk = TRUE;
