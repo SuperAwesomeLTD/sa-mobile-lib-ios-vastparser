@@ -11,7 +11,7 @@
 
 //
 // @brief: media file implementation
-@interface SAVASTMediaFile : NSObject <SASerializationProtocol, SADeserializationProtocol>
+@interface SAVASTMediaFile : SABaseObject <SASerializationProtocol, SADeserializationProtocol>
 @property (nonatomic, strong) NSString *width;
 @property (nonatomic, strong) NSString *height;
 @property (nonatomic, strong) NSString *type;

@@ -25,7 +25,7 @@ typedef enum SAVASTCreativeType {
 // @brief: the vast creative class that now supports only "Linear" creative,
 // because that's the only one actually used for videos
 // in the future both NonLinear and CompanionAds should be used
-@interface SAVASTCreative : NSObject <SADeserializationProtocol, SASerializationProtocol>
+@interface SAVASTCreative : SABaseObject <SADeserializationProtocol, SASerializationProtocol>
 @property (nonatomic, assign) SAVASTCreativeType type;
 @property (nonatomic, strong) NSString *_id;
 @property (nonatomic, strong) NSString *sequence;

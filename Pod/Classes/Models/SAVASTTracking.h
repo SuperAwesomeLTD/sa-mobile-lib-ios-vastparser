@@ -11,7 +11,7 @@
 
 //
 // @brief: the tracking object
-@interface SAVASTTracking : NSObject <SADeserializationProtocol, SASerializationProtocol>
+@interface SAVASTTracking : SABaseObject <SADeserializationProtocol, SASerializationProtocol>
 @property (nonatomic, strong) NSString *event;
 @property (nonatomic, strong) NSString *URL;
 @end

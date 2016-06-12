@@ -1,15 +1,18 @@
 //
-//  NSObject+SASerialization.m
+//  SABaseObject.m
 //  Pods
 //
-//  Created by Gabriel Coman on 27/05/2016.
+//  Created by Gabriel Coman on 12/06/2016.
 //
 //
 
-#import "NSObject+SAJson.h"
+#import "SABaseObject.h"
 #import "NSDictionary+SAJson.h"
 
-@implementation NSObject (SAJson)
+@implementation SABaseObject
+@end
+
+@implementation SABaseObject (SAJson)
 
 // default implementation (that should be overridden)
 - (id) initWithJsonDictionary:(NSDictionary*)jsonDictionary {

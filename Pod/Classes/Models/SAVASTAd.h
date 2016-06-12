@@ -22,7 +22,7 @@ typedef enum SAAdType {
 //
 // @brief: the simplified representation of a VAST ad
 // - some details have been contactenated, but all important data is here
-@interface SAVASTAd : NSObject <SASerializationProtocol, SADeserializationProtocol>
+@interface SAVASTAd : SABaseObject <SASerializationProtocol, SADeserializationProtocol>
 @property (nonatomic, assign) SAAdType type;
 @property (nonatomic, strong) NSString *_id;
 @property (nonatomic, strong) NSString *sequence;

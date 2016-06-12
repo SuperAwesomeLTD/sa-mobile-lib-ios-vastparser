@@ -16,6 +16,7 @@
 #define AV_END AVPlayerItemDidPlayToEndTimeNotification
 #define AV_NOEND AVPlayerItemFailedToPlayToEndTimeNotification
 #define AV_STALLED AVPlayerItemPlaybackStalledNotification
+#define AV_CHANGED AVAudioSessionRouteChangeNotification
 #define ENTER_BG UIApplicationDidEnterBackgroundNotification
 #define ENTER_FG UIApplicationWillEnterForegroundNotification
 #define AV_STATUS @"status"
@@ -167,6 +168,7 @@
     [_notif removeObserver:self name:AV_END object:nil];
     [_notif removeObserver:self name:AV_NOEND object:nil];
     [_notif removeObserver:self name:AV_STALLED object:nil];
+    [_notif removeObserver:self name:AV_CHANGED object:nil];
     [_notif removeObserver:self name:ENTER_BG object:nil];
     [_notif removeObserver:self name:ENTER_FG object:nil];
     [_player removeObserver:self forKeyPath:AV_RATE context:nil];
@@ -222,6 +224,16 @@
     [self setup];
 }
 
+#pragma mark <Resume & Pause> functions
+
+- (void) resume {
+    [_player play];
+}
+
+- (void) pause {
+    [_player pause];
+}
+
 #pragma mark <Play> function
 
 - (void) playWithMediaURL:(NSURL *)url {
@@ -254,9 +266,14 @@
 }
 
 - (void) setObservers {
+    
+    NSError *setCategoryErr;
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryErr];
+    
     [_notif addObserver:self selector:@selector(playerItemDidReachEnd:) name:AV_END object:nil];
     [_notif addObserver:self selector:@selector(playerItemFailedToPlayEndTime:) name:AV_NOEND object:nil];
     [_notif addObserver:self selector:@selector(playerItemPlaybackStall:) name:AV_STALLED object:nil];
+    [_notif addObserver:self selector:@selector(audioSessionChanged:) name:AV_CHANGED object:nil];
     [_notif addObserver:self selector:@selector(playerItemEnterBackground:) name:ENTER_BG object:nil];
     [_notif addObserver:self selector:@selector(playerItemEnterForeground:) name:ENTER_FG object:nil];
     [_player addObserver:self forKeyPath:AV_RATE options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
@@ -301,6 +318,13 @@
 
 - (void) playerItemEnterForeground: (NSNotification*)notification {
     [_player play];
+}
+
+- (void) audioSessionChanged: (NSNotification*) notification {
+    NSInteger routeChangeReason = [notification.userInfo[AVAudioSessionRouteChangeReasonKey] integerValue];
+    if (routeChangeReason == AVAudioSessionRouteChangeReasonOldDeviceUnavailable) {
+        [_player play];
+    }
 }
 
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context {

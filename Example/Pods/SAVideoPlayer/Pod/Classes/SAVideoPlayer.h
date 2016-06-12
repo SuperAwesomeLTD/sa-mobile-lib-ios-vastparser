@@ -71,6 +71,10 @@
 // reset
 - (void) reset;
 
+// pause & resume
+- (void) resume;
+- (void) pause;
+
 // getters
 - (AVPlayer*) getPlayer;
 - (AVPlayerLayer*) getPlayerLayer;
