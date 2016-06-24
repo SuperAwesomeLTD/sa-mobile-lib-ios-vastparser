@@ -209,8 +209,9 @@
     // play the current creative
     _playerRef.delegate = self;
     if (__cCreative.isOnDisk) {
-        NSLog(@"Playing video from Disk %@", __cCreative.playableDiskURL);
-        [_playerRef playWithMediaFile:__cCreative.playableDiskURL];
+        NSString *finalDiskURL = [SAUtils filePathInDocuments:__cCreative.playableDiskURL];
+        NSLog(@"Playing video from Disk %@", finalDiskURL);
+        [_playerRef playWithMediaFile:finalDiskURL];
     }
     else {
         NSLog(@"Playing video from URL %@", __cCreative.playableMediaURL);

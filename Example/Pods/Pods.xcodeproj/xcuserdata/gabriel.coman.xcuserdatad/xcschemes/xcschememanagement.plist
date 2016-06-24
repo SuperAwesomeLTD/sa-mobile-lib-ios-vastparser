@@ -9,22 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-SAVASTParser_Tests.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAEvents-SuperAwesome.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SAEvents.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAJsonParser-SAJsonParser.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -44,17 +29,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SAVASTParser-SAVASTParser.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
 		<key>SAVASTParser.xcscheme</key>
-		<dict>
-			<key>isShown</key>
-			<false/>
-		</dict>
-		<key>SAVideoPlayer-SAVideoPlayer.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -67,62 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04D0B77197E6E75714FFE6DB88E95FDD</key>
+		<key>454A16363AB1BB820949D2211AB17DB0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>05232DD9E2E3CB601AEEF68C8429AEB7</key>
+		<key>6202BBF7A9F63D378A4D8D1466E7F00F</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>121E86944E4E451CFBE85DA47F8C89E5</key>
+		<key>62490D33A33E8E1ACFED6D5D44EA7EE6</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>427DAA32D27247087726E442BF09A96C</key>
+		<key>876265908C98D934E95D653A215EE872</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>80DA16AD8049C9484429CF0A7AEC272C</key>
+		<key>A20CF705F9E218840585B643D4666840</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>81072886EDE64DC23618126A03F39E9C</key>
+		<key>A854C2CE8464F4B22A94528E8983DDC1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A95592B573BE7C778585A9B3DD87EB90</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>D853CB8812FF55CDC31A837C62E40495</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>DA2264D395159E4D9845B7943DEEB331</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E67FD0AADC6C6EB793ED04E37CA238ED</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E75374C5AF4620149C258BF12FA7A49B</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>E807547039F54DD22B283122EA42BE96</key>
+		<key>F562336FD45313A3BFA42E553B311F39</key>
 		<dict>
 			<key>primary</key>
 			<true/>

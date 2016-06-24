@@ -7,7 +7,6 @@
 //
 
 #import "SAVideoPlayer.h"
-#import "SAUtils.h"
 #import "SABlackMask.h"
 #import "SACronograph.h"
 #import <AVFoundation/AVFoundation.h>
@@ -252,8 +251,7 @@
 
 - (void) playWithMediaFile:(NSString *)file {
     [self setup];
-    NSString *fullPath = [SAUtils filePathInDocuments:file];
-    NSURL *url = [[NSURL alloc] initFileURLWithPath:fullPath isDirectory:false];
+    NSURL *url = [[NSURL alloc] initFileURLWithPath:file isDirectory:false];
     AVAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
     _playerItem = [AVPlayerItem playerItemWithAsset:asset];
     _player = [AVPlayer playerWithPlayerItem:_playerItem];
@@ -313,6 +311,7 @@
 }
 
 - (void) playerItemEnterBackground: (NSNotification*)notification {
+    
     [_player pause];
 }
 

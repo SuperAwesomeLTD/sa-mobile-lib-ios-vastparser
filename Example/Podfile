@@ -1,10 +1,6 @@
+platform :ios, '6.0'
 
-target 'SAVASTParser_Example', :exclusive => true do
+target 'SAVASTParser_Example' do
   pod 'SAVASTParser', :path => '../'
 end
 
-target 'SAVASTParser_Tests', :exclusive => true do
-  pod 'SAVASTParser', :path => '../'
-
-  
-end

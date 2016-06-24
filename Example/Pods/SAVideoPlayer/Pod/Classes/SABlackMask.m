@@ -8,7 +8,6 @@
 
 #import "SABlackMask.h"
 #import "SAVideoPlayer.h"
-#import "SAUtils.h"
 
 @implementation SABlackMask
 
