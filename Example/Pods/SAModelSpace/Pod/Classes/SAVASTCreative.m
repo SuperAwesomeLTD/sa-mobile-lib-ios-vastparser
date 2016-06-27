@@ -9,9 +9,6 @@
 // import header
 #import "SAVASTCreative.h"
 
-// import utils
-#import "SAUtils.h"
-
 @implementation SAVASTCreative
 
 - (id) init {
@@ -72,13 +69,13 @@
     _sequence = creative.sequence;
     _Duration = creative.Duration;
     
-    if ([SAUtils isValidURL:creative.ClickThrough]) {
+    if (creative.ClickThrough) {
         _ClickThrough = creative.ClickThrough;
     }
-    if ([SAUtils isValidURL:creative.playableMediaURL]){
+    if (creative.playableMediaURL) {
         _playableMediaURL = creative.playableMediaURL;
     }
-    if (creative.playableDiskURL != NULL){
+    if (creative.playableDiskURL) {
         _playableDiskURL = creative.playableDiskURL;
     }
     

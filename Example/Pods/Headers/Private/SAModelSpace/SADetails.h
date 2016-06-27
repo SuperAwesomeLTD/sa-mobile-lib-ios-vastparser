@@ -1,0 +1,1 @@
+../../../SAModelSpace/Pod/Classes/SADetails.h
