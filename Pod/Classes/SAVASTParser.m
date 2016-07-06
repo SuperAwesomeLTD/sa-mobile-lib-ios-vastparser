@@ -19,6 +19,7 @@
 
 // import Utils
 #import "SAUtils.h"
+#import "SANetwork.h"
 #import "SAFileDownloader.h"
 #import "SAExtensions.h"
 
@@ -76,11 +77,16 @@
 // @brief: get ads starting from a root
 - (void) parseVASTAds:(NSString*)vastURL withResult:(vastParsingDone)done {
     
-    [SAUtils sendGETtoEndpoint:vastURL withQueryDict:nil andSuccess:^(NSData *data) {
-        
+    SANetwork *network = [[SANetwork alloc] init];
+    [network sendGET:vastURL
+           withQuery:@{}
+           andHeader:@{@"Content-Type":@"application/json",
+                       @"User-Agent":[SAUtils getUserAgent]
+                       }
+          andSuccess:^(NSInteger status, NSString *payload) {
         // parse XML element
         SAXMLParser *parser = [[SAXMLParser alloc] init];
-        __block SAXMLElement *root = [parser parseXMLData:data];
+        __block SAXMLElement *root = [parser parseXMLString:payload];
         
         // check for preliminary errors
         if ([parser getError]) { done(nil); return; }
@@ -111,8 +117,7 @@
             done(nil);
             return;
         }
-        
-    } orFailure:^{
+    } andFailure:^{
         done(nil);
     }];
 }

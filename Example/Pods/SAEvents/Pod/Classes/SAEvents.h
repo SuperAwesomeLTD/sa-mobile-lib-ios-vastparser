@@ -49,7 +49,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 // This function sends display data to Moat
-+ (void) sendDisplayMoatEvent:(UIView*)adView andAdDictionary:(NSDictionary*)adDict;
++ (void) sendDisplayMoatEvent:(UIWebView*)webView andAdDictionary:(NSDictionary*)adDict;
 
 // This function sends video events to Moat
 + (void) sendVideoMoatEvent:(AVPlayer*)player andLayer:(AVPlayerLayer*)layer andView:(UIView*)adView andAdDictionary:(NSDictionary*)adDict;

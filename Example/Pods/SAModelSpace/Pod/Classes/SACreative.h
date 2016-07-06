@@ -71,6 +71,9 @@ typedef enum SACreativeFormat {
 @property (nonatomic, strong) NSString *trackingUrl;
 
 // the Parental gate event url
-@property (nonatomic, strong) NSString *parentalGateClickUrl;
+@property (nonatomic, strong) NSString *parentalGateOpenUrl;
+@property (nonatomic, strong) NSString *parentalGateCloseUrl;
+@property (nonatomic, strong) NSString *parentalGateFailUrl;
+@property (nonatomic, strong) NSString *parentalGateSuccessUrl;
 
 @end

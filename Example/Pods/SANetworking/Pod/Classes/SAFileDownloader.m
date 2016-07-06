@@ -63,7 +63,7 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
 #pragma mark Main Public functions
 
 - (NSString*) getDiskLocation {
-    return [NSString stringWithFormat:@"samov_%@.mp4", [SAUtils generateUniqueKey]];
+    return [NSString stringWithFormat:@"samov_%d.mp4", arc4random_uniform((uint32_t)(65536))];
 }
 
 - (void) downloadFileFrom:(NSString*)url to:(NSString*)fpath withSuccess:(downloadFinish)success orFailure:(failure)failure {
@@ -87,7 +87,7 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
         }
         // goto success
         else {
-            NSString *fullFilePath = [SAUtils filePathInDocuments:fpath];
+            NSString *fullFilePath = [self filePathInDocuments:fpath];
             NSString *key = [self getKeyFromLocation:fpath];
             NSError *fileError = NULL;
             NSURL *destURL = [NSURL fileURLWithPath:fullFilePath];
@@ -143,7 +143,7 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
     
     for (NSString *key in _fileStore.allKeys) {
         NSString *filePath = [_fileStore objectForKey:key];
-        NSString *fullFilePath = [SAUtils filePathInDocuments:filePath];
+        NSString *fullFilePath = [self filePathInDocuments:filePath];
         if ([_fileManager fileExistsAtPath:fullFilePath] && [_fileManager isDeletableFileAtPath:fullFilePath]) {
             [_fileManager removeItemAtPath:fullFilePath error:nil];
             NSLog(@"Deleted %@ from docs dir", filePath);
@@ -156,6 +156,18 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
     [_fileStore removeAllObjects];
     [_defs removeObjectForKey:SA_FILE_STORE];
     [_defs synchronize];
+}
+
+// MARK: Private
+
+- (NSString *) getDocumentsDirectory {
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *basePath = paths.firstObject;
+    return basePath;
+}
+
+- (NSString*) filePathInDocuments:(NSString*)fpath {
+    return [[self getDocumentsDirectory] stringByAppendingPathComponent:fpath];
 }
 
 @end

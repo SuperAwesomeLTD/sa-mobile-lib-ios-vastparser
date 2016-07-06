@@ -8,6 +8,7 @@
 
 #import "SAEvents.h"
 #import "SAUtils.h"
+#import "SANetwork.h"
 
 @implementation SAEvents
 
@@ -15,7 +16,18 @@ static bool isSATrackingEnabled = true;
 
 + (void) sendEventToURL:(NSString *)url {
     if (!isSATrackingEnabled) return;
-    [SAUtils sendGETtoEndpoint:url withQueryDict:NULL andSuccess:NULL orFailure:NULL];
+    
+    SANetwork *network = [[SANetwork alloc] init];
+    [network sendGET:url
+           withQuery:@{}
+           andHeader:@{@"Content-Type":@"application/json",
+                       @"User-Agent":[SAUtils getUserAgent]
+                       }
+          andSuccess:^(NSInteger status, NSString *payload) {
+        // success
+    } andFailure:^{
+        // failure
+    }];
 }
 
 + (void) sendCustomEvent:(NSString*) baseUrl
@@ -35,6 +47,7 @@ static bool isSATrackingEnabled = true;
     };
     NSDictionary *cjson = @{
         @"rnd": @([SAUtils getCachebuster]),
+        @"ct": @([SAUtils getNetworkConnectivity]),
         @"data": [SAUtils encodeJSONDictionaryFromNSDictionary:data]
     };
     
@@ -42,7 +55,7 @@ static bool isSATrackingEnabled = true;
     [self sendEventToURL:url];
 }
  
-+ (void) sendDisplayMoatEvent:(UIView*)adView andAdDictionary:(NSDictionary*)adDict {
++ (void) sendDisplayMoatEvent:(UIWebView*)webView andAdDictionary:(NSDictionary*)adDict {
     // do nothing
 }
 

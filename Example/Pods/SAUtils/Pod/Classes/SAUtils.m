@@ -9,6 +9,9 @@
 #import "SAUtils.h"
 #import "SAExtensions.h"
 #import "NSString+HTML.h"
+#import <SystemConfiguration/SystemConfiguration.h>
+#import <sys/socket.h>
+#import <netinet/in.h>
 
 // constants with user agents
 #define iOS_Mobile_UserAgent @"Mozilla/5.0 (iPhone; CPU iPhone OS 6_1_4 like Mac OS X) AppleWebKit/536.26 (KHTML, like Gecko) Version/6.0 Mobile/10B350 Safari/8536.25";
@@ -527,61 +530,37 @@ UIColor *UIColorFromRGB(NSInteger red, NSInteger green, NSInteger blue) {
 // Aux network functions
 ////////////////////////////////////////////////////////////////////////////////
 
-+ (void) sendGETtoEndpoint:(NSString*)endpoint
-             withQueryDict:(NSDictionary*)GETDict
-                andSuccess:(success)success
-                 orFailure:(failure)failure {
++ (SAConnectionType) getNetworkConnectivity {
     
-    // prepare the URL
-    __block NSMutableString *_surl = [endpoint mutableCopy];
+    struct sockaddr_in zeroAddress;
+    bzero(&zeroAddress, sizeof(zeroAddress));
+    zeroAddress.sin_len = sizeof(zeroAddress);
+    zeroAddress.sin_family = AF_INET;
     
-    [_surl appendString:(GETDict.allKeys.count > 0 ? @"?" : @"")];
-    [_surl appendString:[self formGetQueryFromDict:GETDict]];
+    SCNetworkReachabilityRef reachability = SCNetworkReachabilityCreateWithAddress(kCFAllocatorDefault, (const struct sockaddr*)&zeroAddress);
     
-    NSURL *url = [NSURL URLWithString:_surl];
-    
-    // create the request
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    [request setURL:url];
-    [request setValue:[self getUserAgent] forHTTPHeaderField:@"User-Agent"];
-    [request setHTTPMethod:@"GET"];
-    
-    // form the response block to the POST
-    netresponse resp = ^(NSData * data, NSURLResponse * response, NSError * error) {
-        
-        NSInteger status = ((NSHTTPURLResponse*)response).statusCode;
-        
-        if (error || status != 200) {
-            // logging
-            NSLog(@"Network error for %@ - %@", _surl, error);
+    if (reachability != NULL) {
+        SCNetworkReachabilityFlags flags;
+        if (SCNetworkReachabilityGetFlags(reachability, &flags)) {
             
-            // send message
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (failure) {
-                    failure();
-                }
-            });
+            // release
+            CFRelease(reachability);
+            
+            // handle
+            if ((flags & kSCNetworkReachabilityFlagsReachable) == 0) return unknown;
+            if ((flags & kSCNetworkReachabilityFlagsConnectionRequired) == 0) return wifi;
+            if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) || (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0)) {
+                if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0) return wifi;
+            }
+            
+            if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN) return cellular_unknown;
         }
-        else {
-            
-            // logging
-            NSString *str = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-            if (str.length >= 10){  str = [[str substringToIndex:9] stringByAppendingString:@" ... /truncated"]; }
-            NSLog(@"Success: %@ ==> %@", _surl, str);
-            
-            // send message
-            dispatch_async(dispatch_get_main_queue(), ^{
-                if (success){
-                    success(data);
-                }
-            });
-        }
-    };
+    }
     
-    NSURLSession *session = [NSURLSession sharedSession];
-    NSURLSessionDataTask *task = [session dataTaskWithRequest:request completionHandler:resp];
-    [task resume];
+    // unknown
+    return unknown;
 }
+
 
 
 @end

@@ -37,7 +37,10 @@
         _creativeFormat = (SACreativeFormat)[[jsonDictionary safeObjectForKey:@"creativeFormat"] integerValue];
         _viewableImpressionUrl = [jsonDictionary safeObjectForKey:@"viewableImpressionUrl"];
         _trackingUrl = [jsonDictionary safeObjectForKey:@"trackingUrl"];
-        _parentalGateClickUrl = [jsonDictionary safeObjectForKey:@"parentalGateClickUrl"];
+        _parentalGateFailUrl = [jsonDictionary safeObjectForKey:@"parentalGateFailUrl"];
+        _parentalGateOpenUrl = [jsonDictionary safeObjectForKey:@"parentalGateOpenUrl"];
+        _parentalGateCloseUrl = [jsonDictionary safeObjectForKey:@"parentalGateCloseUrl"];
+        _parentalGateSuccessUrl = [jsonDictionary safeObjectForKey:@"parentalGateSuccessUrl"];
     }
     return self;
 }
@@ -57,7 +60,10 @@
         @"creativeFormat": @(_creativeFormat),
         @"viewableImpressionUrl": nullSafe(_viewableImpressionUrl),
         @"trackingUrl": nullSafe(_trackingUrl),
-        @"parentalGateClickUrl": nullSafe(_parentalGateClickUrl)
+        @"parentalGateFailUrl": nullSafe(_parentalGateFailUrl),
+        @"parentalGateOpenUrl": nullSafe(_parentalGateOpenUrl),
+        @"parentalGateCloseUrl": nullSafe(_parentalGateCloseUrl),
+        @"parentalGateSuccessUrl": nullSafe(_parentalGateSuccessUrl)
     };
 }
 

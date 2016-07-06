@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
-#import "SAUtils.h"
+#import "SANetwork.h"
 
 // callback for generic success
 typedef void (^downloadFinish)();
@@ -36,6 +36,9 @@ typedef void (^downloadFinish)();
  *  @param success success callback
  *  @param failure failure callback
  */
-- (void) downloadFileFrom:(NSString*)url to:(NSString*)fpath withSuccess:(downloadFinish)success orFailure:(failure)failure;
+- (void) downloadFileFrom:(NSString*)url
+                       to:(NSString*)fpath
+              withSuccess:(downloadFinish)success
+                orFailure:(failure)failure;
 
 @end
