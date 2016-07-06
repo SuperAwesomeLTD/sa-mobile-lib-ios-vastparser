@@ -55,8 +55,8 @@ static bool isSATrackingEnabled = true;
     [self sendEventToURL:url];
 }
  
-+ (void) sendDisplayMoatEvent:(UIWebView*)webView andAdDictionary:(NSDictionary*)adDict {
-    // do nothing
++ (NSString*) sendDisplayMoatEvent:(UIWebView*)webView andAdDictionary:(NSDictionary*)adDict {
+    return @"";
 }
 
 + (void) sendVideoMoatEvent:(AVPlayer *)player andLayer:(AVPlayerLayer *)layer andView:(UIView *)adView andAdDictionary:(NSDictionary *)adDict {

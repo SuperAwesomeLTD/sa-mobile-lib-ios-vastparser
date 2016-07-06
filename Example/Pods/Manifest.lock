@@ -1,9 +1,9 @@
 PODS:
-  - SAEvents (1.1.3):
-    - SAEvents/Core (= 1.1.3)
+  - SAEvents (1.1.4):
+    - SAEvents/Core (= 1.1.4)
     - SANetworking (= 0.1.1)
     - SAUtils (= 1.2.3)
-  - SAEvents/Core (1.1.3):
+  - SAEvents/Core (1.1.4):
     - SANetworking (= 0.1.1)
     - SAUtils (= 1.2.3)
   - SAJsonParser (1.2.3)
@@ -11,8 +11,8 @@ PODS:
     - SAJsonParser (= 1.2.3)
   - SANetworking (0.1.1)
   - SAUtils (1.2.3)
-  - SAVASTParser (1.3.2):
-    - SAEvents (= 1.1.3)
+  - SAVASTParser (1.3.3):
+    - SAEvents (= 1.1.4)
     - SAModelSpace (= 0.1.2)
     - SAUtils (= 1.2.3)
     - SAVideoPlayer (= 1.1.1)
@@ -26,12 +26,12 @@ EXTERNAL SOURCES:
     :path: ../
 
 SPEC CHECKSUMS:
-  SAEvents: 75d754f6b655cd701af7060cfe7059f0db2a66c5
+  SAEvents: 023f1eb32a26ee7abdac41ba348d44f252dc0164
   SAJsonParser: c0a5ace5d143bc50d5318a4981ebaf79858e4af8
   SAModelSpace: d3055296a8063924c11027035b6bf4457d05fafd
   SANetworking: 13aa56fd53c5b7f5a1a362044cce0d03bd4c3a12
   SAUtils: 713238d41568a54722737ca66f08096199e37c17
-  SAVASTParser: d130af9a14ae7d170ef703304bc6a2011768106f
+  SAVASTParser: 61fc3c724ea0d7b35de22b64f01d625cc89989fa
   SAVideoPlayer: 8170dd123632bade010d9ae930d84ce4753f3d13
 
 PODFILE CHECKSUM: 18c321a4b8c120bbb369ca7e47c9b2b1b38a6160
