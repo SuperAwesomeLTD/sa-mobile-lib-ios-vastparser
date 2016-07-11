@@ -52,7 +52,9 @@
         if (error != NULL || data == NULL) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 NSLog(@"[NOK] %@ to %@", method, _mendpoint);
-                failure();
+                if (failure != NULL) {
+                    failure();
+                }
             });
             return;
         }
@@ -64,7 +66,9 @@
         // send response on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
             NSLog(@"[OK] %ld | %@ to %@", status, method, _mendpoint);
-            success(status, payload);
+            if (success != NULL) {
+                success(status, payload);
+            }
         });
     };
     
