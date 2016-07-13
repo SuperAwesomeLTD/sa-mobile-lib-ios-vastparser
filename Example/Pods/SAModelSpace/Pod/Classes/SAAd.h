@@ -24,6 +24,12 @@
 // the SA server can send an error; if that's the case, this field will not be nill
 @property (nonatomic, assign) NSInteger error;
 
+// the advertiser Id
+@property (nonatomic, assign) NSInteger advertiserId;
+
+// the publisher Id
+@property (nonatomic, assign) NSInteger publisherId;
+
 // the App id
 @property (nonatomic, assign) NSInteger app;
 
