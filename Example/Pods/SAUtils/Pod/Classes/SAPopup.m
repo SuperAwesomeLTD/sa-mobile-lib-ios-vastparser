@@ -12,6 +12,7 @@
 // other imports
 #import "SASystemVersion.h"
 #import "SAExtensions.h"
+#import "SALogger.h"
 
 // interface
 @interface SAPopup ()
@@ -32,6 +33,15 @@
 
 // MARK: Main class functions
 
++ (instancetype) sharedManager {
+    static SAPopup *sharedMyManager = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedMyManager = [[self alloc] init];
+    });
+    return sharedMyManager;
+}
+
 - (void) showWithTitle:(NSString*)title
             andMessage:(NSString*)message
             andOKTitle:(NSString*)ok
@@ -41,14 +51,14 @@
             andOKBlock:(okBlock)okBlock
            andNOKBlock:(nokBlock)nokBlock{
     
-    _title = title;
-    _message = message;
-    _okTitle = ok;
+    _title = (title != NULL ? title : @"Title");
+    _message = (message != NULL ? message : @"Alert");
+    _okTitle = (ok != NULL ? ok : @"OK");
     _nokTitle = nok;
     _hasTextField = hasTextField;
     _keyboardType = keyboardType;
-    _okBlock = okBlock;
-    _nokBlock = nokBlock;
+    _okBlock = (okBlock != NULL ? okBlock : ^(NSString* message) { });
+    _nokBlock = (nokBlock != NULL ? nokBlock : ^(){});
     
     if (SYSTEM_VERSION_GREATER_THAN_OR_EQUAL_TO(@"8.0")) {
         [self showWithAlertController];
@@ -86,10 +96,15 @@
     _kwsPopupController = [UIAlertController alertControllerWithTitle:_title
                                                               message:_message
                                                        preferredStyle:UIAlertControllerStyleAlert];
+    
     UIAlertAction *okAction = [UIAlertAction actionWithTitle:_okTitle style:UIAlertActionStyleDefault handler:iOKBlock];
-    UIAlertAction *nokAction = [UIAlertAction actionWithTitle:_nokTitle style:UIAlertActionStyleDefault handler:iNOKBlock];
     [_kwsPopupController addAction:okAction];
-    [_kwsPopupController addAction:nokAction];
+    
+    // add this only if it exists
+    if (_nokTitle != NULL) {
+        UIAlertAction *nokAction = [UIAlertAction actionWithTitle:_nokTitle style:UIAlertActionStyleDefault handler:iNOKBlock];
+        [_kwsPopupController addAction:nokAction];
+    }
     
     if (_hasTextField) {
         __block UITextField *localTextField;

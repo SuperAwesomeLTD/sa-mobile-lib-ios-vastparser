@@ -15,6 +15,9 @@ typedef void(^nokBlock) ();
 
 @interface SAPopup : NSObject
 
+// singleton accessor
++ (instancetype) sharedManager;
+
 // show function
 - (void) showWithTitle:(NSString*)title
             andMessage:(NSString*)message
