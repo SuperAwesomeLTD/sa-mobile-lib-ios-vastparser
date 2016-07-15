@@ -61,6 +61,7 @@ typedef enum SAConnectionType {
 + (NSString*) decodeHTMLEntitiesFrom:(NSString*)string;
 + (NSString*) findBaseURLFromResourceURL:(NSString*)resourceURL;
 + (BOOL) isValidURL:(NSObject*) urlObject;
++ (BOOL) isEmailValid:(NSString*) email;
 
 ////////////////////////////////////////////////////////////////////////////////
 // UIImage classes
