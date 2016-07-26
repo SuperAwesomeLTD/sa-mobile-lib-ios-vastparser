@@ -2,7 +2,7 @@
 
 Pod::Spec.new do |s|
   s.name             = "SAVASTParser"
-  s.version          = "1.4.5"
+  s.version          = "1.4.6"
   s.summary          = "The SuperAwesome custom VAST parser"
   s.description      = <<-DESC
 		       The SuperAwesome custom VAST parser; built to work with the SAVideoPlayer or the SAVideoVLCPlayer
@@ -14,9 +14,9 @@ Pod::Spec.new do |s|
   s.platform     = :ios, '6.0'
   s.requires_arc = true
   s.source_files = 'Pod/Classes/**/*'
-  s.dependency 'SAUtils', '1.2.6'
+  s.dependency 'SAUtils', '1.2.7'
   s.dependency 'SAVideoPlayer', '1.1.1'
-  s.dependency 'SAEvents', '1.2.5'
+  s.dependency 'SAEvents', '1.2.6'
   s.dependency 'SAModelSpace', '0.1.3'
   s.dependency 'SANetworking', '0.1.2'
 end

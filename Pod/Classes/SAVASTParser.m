@@ -150,7 +150,9 @@
     
     // get errors
     [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Error" andInterate:^(SAXMLElement *errElement) {
-        [ad.Errors addObject:[SAUtils decodeHTMLEntitiesFrom:[errElement getValue]]];
+        NSString *error = [SAUtils decodeHTMLEntitiesFrom:[errElement getValue]];
+        error = [error stringByReplacingOccurrencesOfString:@" " withString:@""];
+        [ad.Errors addObject:error];
     }];
     
     // get impressions

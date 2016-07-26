@@ -204,7 +204,7 @@
 }
 
 + (NSString*) decodeHTMLEntitiesFrom:(NSString*)string {
-    return [string stringByDecodingHTMLEntities];
+    return [[string stringByDecodingHTMLEntities] stringByReplacingOccurrencesOfString:@" " withString:@""];
 }
 
 + (NSString*) findBaseURLFromResourceURL:(NSString*)resourceURL {
