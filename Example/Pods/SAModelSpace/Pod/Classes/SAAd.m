@@ -38,6 +38,8 @@
         _isFallback = [[jsonDictionary safeObjectForKey:@"is_fallback"] boolValue];
         _isFill = [[jsonDictionary safeObjectForKey:@"is_fill"] boolValue];
         _isHouse = [[jsonDictionary safeObjectForKey:@"is_house"] boolValue];
+        _safeAdApproved = [[jsonDictionary safeObjectForKey:@"safe_ad_approved"] boolValue];
+        _showPadlock = [[jsonDictionary safeObjectForKey:@"show_padlock"] boolValue];
         _creative = [[SACreative alloc] initWithJsonDictionary:[jsonDictionary safeObjectForKey:@"creative"]];
     }
     
@@ -57,6 +59,8 @@
         @"is_fallback": @(_isFallback),
         @"is_fill": @(_isFill),
         @"is_house": @(_isHouse),
+        @"safe_ad_approved": @(_safeAdApproved),
+        @"show_padlock": @(_showPadlock),
         @"creative": nullSafe([_creative dictionaryRepresentation])
     };
 }
