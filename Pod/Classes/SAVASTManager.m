@@ -99,13 +99,8 @@
 - (void) didFindPlayerReady {
     NSLog(@"[AA :: INFO] didFindPlayerReady");
     
-    // in case this is the first creative in the Ad, and it <can play>,
-    // send Ad impressions
-    if (!__cAd.isImpressionSent) {
-        for (NSString *impression in __cAd.Impressions) {
-            [SAEvents sendEventToURL:impression];
-        }
-        __cAd.isImpressionSent = true;
+    for (NSString *impression in __cAd.Impressions) {
+        [SAEvents sendEventToURL:impression];
     }
 }
 
