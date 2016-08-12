@@ -1165,27 +1165,6 @@
 			};
 			name = Release;
 		};
-		0863B4B67509E69CADE16B58D44A0B8C /* Debug */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReference = D306647886A2BBA85FA416C2310EC712 /* SAVASTParser.xcconfig */;
-			buildSettings = {
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_PREFIX_HEADER = "Target Support Files/SAVASTParser/SAVASTParser-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				OTHER_LDFLAGS = "";
-				OTHER_LIBTOOLFLAGS = "";
-				PRIVATE_HEADERS_FOLDER_PATH = "";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				PUBLIC_HEADERS_FOLDER_PATH = "";
-				SDKROOT = iphoneos;
-				SKIP_INSTALL = YES;
-			};
-			name = Debug;
-		};
 		0BF241BF068845AD1311907456696A90 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 2D53D14DC215FBA5FC526130749531C2 /* SAEvents.xcconfig */;
@@ -1396,7 +1375,7 @@
 			};
 			name = Release;
 		};
-		97160F34A5B82775BD8C9B17341D8F2B /* Release */ = {
+		6D770B9A16C9211BBDA182BDC8DDF47D /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D306647886A2BBA85FA416C2310EC712 /* SAVASTParser.xcconfig */;
 			buildSettings = {
@@ -1405,7 +1384,7 @@
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_PREFIX_HEADER = "Target Support Files/SAVASTParser/SAVASTParser-prefix.pch";
-				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "";
 				OTHER_LIBTOOLFLAGS = "";
@@ -1560,6 +1539,27 @@
 			};
 			name = Release;
 		};
+		FF60AD3A87B7D663100749129FB9636F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D306647886A2BBA85FA416C2310EC712 /* SAVASTParser.xcconfig */;
+			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PREFIX_HEADER = "Target Support Files/SAVASTParser/SAVASTParser-prefix.pch";
+				IPHONEOS_DEPLOYMENT_TARGET = 7.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				OTHER_LDFLAGS = "";
+				OTHER_LIBTOOLFLAGS = "";
+				PRIVATE_HEADERS_FOLDER_PATH = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PUBLIC_HEADERS_FOLDER_PATH = "";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -1611,8 +1611,8 @@
 		D29DDBC30829C40C12F5025BCB5F43F1 /* Build configuration list for PBXNativeTarget "SAVASTParser" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				0863B4B67509E69CADE16B58D44A0B8C /* Debug */,
-				97160F34A5B82775BD8C9B17341D8F2B /* Release */,
+				FF60AD3A87B7D663100749129FB9636F /* Debug */,
+				6D770B9A16C9211BBDA182BDC8DDF47D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

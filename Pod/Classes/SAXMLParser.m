@@ -214,7 +214,7 @@
     for (NSNumber *key in ascendingKeys) {
         NSArray *elements = [_stackDict objectForKey:key];
         for (SAXMLElement *element in elements){
-            NSLog(@"%ld | %@ > %ld", [key integerValue], element.name, element.children.count);
+            NSLog(@"%ld | %@ > %ld", (long)[key integerValue], element.name, (long)element.children.count);
         }
     }
     
