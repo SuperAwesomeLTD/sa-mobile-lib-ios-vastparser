@@ -559,12 +559,13 @@ UIColor *UIColorFromRGB(NSInteger red, NSInteger green, NSInteger blue) {
             if ((((flags & kSCNetworkReachabilityFlagsConnectionOnDemand ) != 0) || (flags & kSCNetworkReachabilityFlagsConnectionOnTraffic) != 0)) {
                 if ((flags & kSCNetworkReachabilityFlagsInterventionRequired) == 0) return wifi;
             }
-            
             if ((flags & kSCNetworkReachabilityFlagsIsWWAN) == kSCNetworkReachabilityFlagsIsWWAN) return cellular_unknown;
+        } else {
+            // release again
+            CFRelease(reachability);
+            return unknown;
         }
     }
-    
-    // unknown
     return unknown;
 }
 

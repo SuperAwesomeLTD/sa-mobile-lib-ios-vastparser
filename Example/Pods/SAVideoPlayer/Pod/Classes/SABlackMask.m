@@ -26,7 +26,7 @@
     
     CAGradientLayer *layer = [CAGradientLayer layer];
     layer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
-    layer.colors = [NSArray arrayWithObjects:[UIColor blackColor].CGColor, [UIColor clearColor].CGColor, nil];
+    layer.colors = [NSArray arrayWithObjects:(id)[UIColor blackColor].CGColor, (id)[UIColor clearColor].CGColor, nil];
     layer.startPoint = CGPointMake(1, 0.7);
     layer.endPoint = CGPointMake(1, 0.0);
     [self.layer addSublayer:layer];

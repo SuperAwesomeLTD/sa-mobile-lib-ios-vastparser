@@ -12,22 +12,19 @@
 
 @implementation SAEvents
 
-static bool isSATrackingEnabled = true;
-
 + (void) sendEventToURL:(NSString *)url {
-    if (!isSATrackingEnabled) return;
-    
     SANetwork *network = [[SANetwork alloc] init];
     [network sendGET:url
            withQuery:@{}
            andHeader:@{@"Content-Type":@"application/json",
-                       @"User-Agent":[SAUtils getUserAgent]
-                       }
-          andSuccess:^(NSInteger status, NSString *payload) {
-        // success
-    } andFailure:^{
-        // failure
-    }];
+                       @"User-Agent":[SAUtils getUserAgent]}
+        withResponse:^(NSInteger status, NSString *payload, BOOL success) {
+            if (success) {
+                NSLog(@"Event sent OK!");
+            } else {
+                NSLog(@"Event sent NOK!");
+            }
+        }];
 }
 
 + (void) sendCustomEvent:(NSString*) baseUrl
@@ -36,8 +33,6 @@ static bool isSATrackingEnabled = true;
              andCreative:(NSInteger) creative
                 andEvent:(NSString*) event
 {
-    
-    if (!isSATrackingEnabled) return;
     
     NSDictionary *data = @{
         @"placement": @(placementId),
@@ -53,23 +48,6 @@ static bool isSATrackingEnabled = true;
     
     NSString *url = [NSString stringWithFormat:@"%@/event?%@", baseUrl, [SAUtils formGetQueryFromDict:cjson]];
     [self sendEventToURL:url];
-}
- 
-+ (NSString*) sendDisplayMoatEvent:(UIWebView*)webView andAdDictionary:(NSDictionary*)adDict {
-    return @"";
-}
-
-+ (void) sendVideoMoatEvent:(AVPlayer *)player andLayer:(AVPlayerLayer *)layer andView:(UIView *)adView andAdDictionary:(NSDictionary *)adDict {
-    // do nothing
-}
-
-// functions to enable or disable tracking
-+ (void) enableSATracking {
-    isSATrackingEnabled = true;
-}
-
-+ (void) disableSATracking {
-    isSATrackingEnabled = false;
 }
 
 @end

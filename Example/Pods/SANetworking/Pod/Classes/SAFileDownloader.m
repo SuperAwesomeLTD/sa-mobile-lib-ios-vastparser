@@ -9,7 +9,7 @@
 #import "SAFileDownloader.h"
 
 // callback for iOS's own [NSURLConnection sendAsynchronousRequest:]
-typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSError * error);
+typedef void (^locationResponse)(NSURL * location, NSURLResponse * response, NSError * error);
 
 // defines
 #define SA_FILE_STORE @"SA_FILE_STORE"
@@ -31,17 +31,7 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
 
 #pragma mark Singleton & Constructor functions
 
-+ (SAFileDownloader *) getInstance {
-    static SAFileDownloader *sharedManager = nil;
-    @synchronized(self) {
-        if (sharedManager == nil){
-            sharedManager = [[self alloc] init];
-        }
-    }
-    return sharedManager;
-}
-
-- (instancetype) init {
+- (id) init {
     if (self = [super init]) {
         // get user defaults and file manager
         _defs = [NSUserDefaults standardUserDefaults];
@@ -57,16 +47,17 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
         // do a preliminary cleanup
         [self cleanup];
     }
+    
     return self;
 }
 
 #pragma mark Main Public functions
 
-- (NSString*) getDiskLocation {
++ (NSString*) getDiskLocation {
     return [NSString stringWithFormat:@"samov_%d.mp4", arc4random_uniform((uint32_t)(65536))];
 }
 
-- (void) downloadFileFrom:(NSString*)url to:(NSString*)fpath withSuccess:(downloadFinish)success orFailure:(failure)failure {
+- (void) downloadFileFrom:(NSString*)url to:(NSString*)fpath withResponse:(downloadResponse)response {
     
     // form the URL & request
     NSURL *URL = [NSURL URLWithString:url];
@@ -74,14 +65,15 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
     [request setURL:URL];
     [request setHTTPMethod:@"GET"];
     
-    downloadresponse resp2 = ^(NSURL * location, NSURLResponse * response, NSError * error) {
-        NSInteger statusCode = ((NSHTTPURLResponse*)response).statusCode;
+    locationResponse resp2 = ^(NSURL * location, NSURLResponse * httpresponse, NSError * error) {
+        NSInteger statusCode = ((NSHTTPURLResponse*)httpresponse).statusCode;
         
         // check for whatever error
         if (error != NULL || statusCode != 200) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                if (failure) {
-                    failure();
+                NSLog(@"[false] | FILE GET | 0 | %@ ==> %@", url, fpath);
+                if (response) {
+                    response(false);
                 }
             });
         }
@@ -99,23 +91,22 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
                 [_defs setObject:_fileStore forKey:SA_FILE_STORE];
                 [_defs synchronize];
                 
-                NSLog(@"[Download OK] %@ ==> %@", url, fpath);
-                
                 // call success
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (success) {
-                        success();
+                    NSLog(@"[true] | FILE GET | 200 | %@ ==> %@", url, fpath);
+                    if (response) {
+                        response(true);
                     }
                 });
                 
             }
             // failure to write file
             else {
-                NSLog(@"[Download NOK] %@ ==> %@", url, fpath);
                 // call success
                 dispatch_async(dispatch_get_main_queue(), ^{
-                    if (failure) {
-                        failure();
+                    NSLog(@"[false] | FILE GET | 0 | %@ ==> %@", url, fpath);
+                    if (response) {
+                        response(false);
                     }
                 });
             }
@@ -146,9 +137,9 @@ typedef void (^downloadresponse)(NSURL * location, NSURLResponse * response, NSE
         NSString *fullFilePath = [self filePathInDocuments:filePath];
         if ([_fileManager fileExistsAtPath:fullFilePath] && [_fileManager isDeletableFileAtPath:fullFilePath]) {
             [_fileManager removeItemAtPath:fullFilePath error:nil];
-            NSLog(@"Deleted %@ from docs dir", filePath);
+            NSLog(@"[true] | DEL | %@", filePath);
         } else {
-            NSLog(@"Could not delete %@ from docs dir", filePath);
+            NSLog(@"[false] | DEL | %@", filePath);
         }
     }
     

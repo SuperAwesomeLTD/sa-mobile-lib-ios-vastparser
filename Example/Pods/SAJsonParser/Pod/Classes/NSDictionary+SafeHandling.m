@@ -12,17 +12,21 @@
 
 // safe get
 
-- (id) safeObjectForKey:(id)aKey {
-    NSObject *object = self[aKey];
-    
-    if (object == [NSNull null]) {
+- (_Nullable id) safeObjectForKey:(_Nullable id)aKey {
+    if (aKey == nil || aKey == [NSNull null]) {
         return nil;
+    } else {
+        NSObject *object = self[aKey];
+        
+        if (object == [NSNull null]) {
+            return nil;
+        }
+        if (object == nil) {
+            return nil;
+        }
+        
+        return object;
     }
-    if (object == nil) {
-        return nil;
-    }
-    
-    return object;
 }
 
 @end

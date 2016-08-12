@@ -33,18 +33,13 @@
         
         if (ad && ad.creative.playableMediaURL != NULL) {
             
-            [[SAFileDownloader getInstance] downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withSuccess:^{
-                ad.creative.isOnDisk = TRUE;
-                if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
-                    [_delegate didParseVAST:ad];
-                }
-            } orFailure:^{
-                ad.creative.isOnDisk = FALSE;
+            SAFileDownloader *downloader = [[SAFileDownloader alloc] init];
+            [downloader downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withResponse:^(BOOL success) {
+                ad.creative.isOnDisk = success;
                 if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
                     [_delegate didParseVAST:ad];
                 }
             }];
-            
         } else {
             if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
                 [_delegate didParseVAST:nil];
@@ -59,11 +54,9 @@
         
         if (ad && ad.creative.playableMediaURL != NULL) {
             
-            [[SAFileDownloader getInstance] downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withSuccess:^{
-                ad.creative.isOnDisk = TRUE;
-                vastParsing(ad);
-            } orFailure:^{
-                ad.creative.isOnDisk = FALSE;
+            SAFileDownloader *downloader = [[SAFileDownloader alloc] init];
+            [downloader downloadFileFrom:ad.creative.playableDiskURL to:ad.creative.playableDiskURL withResponse:^(BOOL success) {
+                ad.creative.isOnDisk = success;
                 vastParsing(ad);
             }];
             
@@ -81,45 +74,46 @@
     [network sendGET:vastURL
            withQuery:@{}
            andHeader:@{@"Content-Type":@"application/json",
-                       @"User-Agent":[SAUtils getUserAgent]
-                       }
-          andSuccess:^(NSInteger status, NSString *payload) {
-        // parse XML element
-        SAXMLParser *parser = [[SAXMLParser alloc] init];
-        __block SAXMLElement *root = [parser parseXMLString:payload];
-        
-        // check for preliminary errors
-        if ([parser getError]) { done(nil); return; }
-        if (!root) { done(nil); return; }
-        if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(nil); return; }
-        
-        // get and parse *Only* first Ad
-        SAXMLElement *element = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:root forName:@"Ad"];
-        SAVASTAd *ad = [self parseAdXML:element];
-        
-        // in-line case
-        if (ad.type == InLine) {
-            done(ad);
-            return;
-        }
-        // wrapper case
-        else if (ad.type == Wrapper) {
-            [self parseVASTAds:ad.redirectUri withResult:^(SAVASTAd *wrapper) {
-                if (wrapper) {
-                    [ad sumAd:wrapper];
+                       @"User-Agent":[SAUtils getUserAgent]}
+        withResponse:^(NSInteger status, NSString *payload, BOOL success) {
+            if (!success) {
+                done(nil);
+            } else {
+                // parse XML element
+                SAXMLParser *parser = [[SAXMLParser alloc] init];
+                __block SAXMLElement *root = [parser parseXMLString:payload];
+                
+                // check for preliminary errors
+                if ([parser getError]) { done(nil); return; }
+                if (!root) { done(nil); return; }
+                if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(nil); return; }
+                
+                // get and parse *Only* first Ad
+                SAXMLElement *element = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:root forName:@"Ad"];
+                SAVASTAd *ad = [self parseAdXML:element];
+                
+                // in-line case
+                if (ad.type == InLine) {
+                    done(ad);
+                    return;
                 }
-                done(ad);
-                return;
-            }];
-        }
-        // some other type of failure case
-        else {
-            done(nil);
-            return;
-        }
-    } andFailure:^{
-        done(nil);
-    }];
+                // wrapper case
+                else if (ad.type == Wrapper) {
+                    [self parseVASTAds:ad.redirectUri withResult:^(SAVASTAd *wrapper) {
+                        if (wrapper) {
+                            [ad sumAd:wrapper];
+                        }
+                        done(ad);
+                        return;
+                    }];
+                }
+                // some other type of failure case
+                else {
+                    done(nil);
+                    return;
+                }
+            }
+        }];
 }
 
 - (SAVASTAd*) parseAdXML:(SAXMLElement *)adElement {
@@ -246,7 +240,7 @@
         if (_creative.MediaFiles > 0){
             _creative.playableMediaURL = [(SAVASTMediaFile*)_creative.MediaFiles.firstObject URL];
             if (_creative.playableMediaURL != NULL) {
-                _creative.playableDiskURL = [[SAFileDownloader getInstance] getDiskLocation];
+                _creative.playableDiskURL = [SAFileDownloader getDiskLocation];
             }
         }
         

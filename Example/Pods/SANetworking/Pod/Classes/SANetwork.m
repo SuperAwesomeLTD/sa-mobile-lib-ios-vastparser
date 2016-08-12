@@ -8,6 +8,9 @@
 
 #import "SANetwork.h"
 
+// callback for iOS's own [NSURLConnection sendAsynchronousRequest:]
+typedef void (^netResponse)(NSData * data, NSURLResponse * response, NSError * error);
+
 @implementation SANetwork
 
 - (void) sendRequestTo:(NSString*)endpoint
@@ -15,8 +18,7 @@
               andQuery:(NSDictionary*)query
              andHeader:(NSDictionary*)header
                andBody:(NSDictionary*)body
-            andSuccess:(success)success
-            andfailure:(failure)failure {
+         withResponse:(response) response {
     
     // form main URL
     __block NSMutableString *_mendpoint = [endpoint mutableCopy];
@@ -46,28 +48,28 @@
     }
     
     // get the response handler
-    netresponse resp = ^(NSData *data, NSURLResponse *response, NSError *error) {
+    netResponse resp = ^(NSData *data, NSURLResponse *httpresponse, NSError *error) {
         
         // handle two failure cases
         if (error != NULL || data == NULL) {
             dispatch_async(dispatch_get_main_queue(), ^{
-                NSLog(@"[NOK] %@ to %@", method, _mendpoint);
-                if (failure != NULL) {
-                    failure();
+                NSLog(@"[false] | HTTP %@ | 0 | %@", method, _mendpoint);
+                if (response != NULL) {
+                    response(0, NULL, false);
                 }
             });
             return;
         }
         
         // get actual result
-        NSInteger status = ((NSHTTPURLResponse*)response).statusCode;
+        NSInteger status = ((NSHTTPURLResponse*)httpresponse).statusCode;
         NSString *payload = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
         
         // send response on main thread
         dispatch_async(dispatch_get_main_queue(), ^{
-            NSLog(@"[OK] %ld | %@ to %@", status, method, _mendpoint);
-            if (success != NULL) {
-                success(status, payload);
+            NSLog(@"[true] | HTTP %@ | %ld | %@", method, (long)status, _mendpoint);
+            if (response != NULL) {
+                response(status, payload, true);
             }
         });
     };
@@ -81,18 +83,16 @@
 - (void) sendGET:(NSString*)endpoint
        withQuery:(NSDictionary*)query
        andHeader:(NSDictionary*)header
-      andSuccess:(success)success
-      andFailure:(failure)failure {
-    [self sendRequestTo:endpoint withMethod:@"GET" andQuery:query andHeader:header andBody:nil andSuccess:success andfailure:failure];
+    withResponse:(response)response {
+    [self sendRequestTo:endpoint withMethod:@"GET" andQuery:query andHeader:header andBody:nil withResponse:response];
 }
 
 - (void) sendPOST:(NSString*)endpoint
         withQuery:(NSDictionary*)query
         andHeader:(NSDictionary*)header
           andBody:(NSDictionary*)body
-       andSuccess:(success)success
-       andFailure:(failure)failure {
-    [self sendRequestTo:endpoint withMethod:@"POST" andQuery:query andHeader:header andBody:body andSuccess:success andfailure:failure];
+     withResponse:(response)response {
+    [self sendRequestTo:endpoint withMethod:@"POST" andQuery:query andHeader:header andBody:body withResponse:response];
 }
 
 // MARK: Private
