@@ -149,11 +149,7 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 + (NSString*) getUserAgent {
-    switch ([self getSystemSize]) {
-        case size_tablet: return iOS_Tablet_UserAgent;
-        case size_mobile: return iOS_Mobile_UserAgent;
-        
-    }
+    return [[[UIWebView alloc] initWithFrame:CGRectZero] stringByEvaluatingJavaScriptFromString:@"navigator.userAgent"];
 }
 
 + (NSInteger) getCachebuster {
