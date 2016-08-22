@@ -25,28 +25,24 @@
 
 @implementation SAVASTParser
 
-//
-// @brief: main Async function
-- (void) parseVASTURL:(NSString *)url {
-    
-    [self parseVASTAds:url withResult:^(SAVASTAd *ad) {
-        
-        if (ad && ad.creative.playableMediaURL != NULL) {
-            
-            SAFileDownloader *downloader = [[SAFileDownloader alloc] init];
-            [downloader downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withResponse:^(BOOL success) {
-                ad.creative.isOnDisk = success;
-                if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
-                    [_delegate didParseVAST:ad];
-                }
-            }];
-        } else {
-            if (_delegate && [_delegate respondsToSelector:@selector(didParseVAST:)]){
-                [_delegate didParseVAST:nil];
-            }
-        }
-    }];
+////////////////////////////////////////////////////////////////////////////////
+// MARK: View lifecycle
+////////////////////////////////////////////////////////////////////////////////
+
+- (id) init {
+    if (self = [super init]) {
+        // do nothing
+    }
+    return self;
 }
+
+- (void) dealloc {
+    NSLog(@"SAVASTParser dealloc");
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Parsing public function
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing {
     
@@ -66,8 +62,10 @@
     }];
 }
 
-//
-// @brief: get ads starting from a root
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Parsing private functions
+////////////////////////////////////////////////////////////////////////////////
+
 - (void) parseVASTAds:(NSString*)vastURL withResult:(vastParsingDone)done {
     
     SANetwork *network = [[SANetwork alloc] init];
@@ -251,10 +249,6 @@
     else {
         return NULL;
     }
-}
-
-- (void) dealloc {
-    NSLog(@"SAVASTParser dealloc");
 }
 
 @end

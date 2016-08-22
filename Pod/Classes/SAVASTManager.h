@@ -73,9 +73,6 @@
 - (id) initWithPlayer:(SAVideoPlayer*)player;
 
 // function to manage ads
-- (void) manageWithAd:(SAVASTAd*)ad;
-
-// parse VAST
-- (void) parseVASTURL:(NSString*)urlString;
+- (void) manageWithVASTAd:(SAVASTAd*)ad;
 
 @end

@@ -6,27 +6,38 @@
 //
 //
 
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Include headers
+////////////////////////////////////////////////////////////////////////////////
+
+// include main header
 #import "SAVideoPlayer.h"
+
+// include other needed libs
 #import "SABlackMask.h"
 #import "SACronograph.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 
-#define AV_END AVPlayerItemDidPlayToEndTimeNotification
-#define AV_NOEND AVPlayerItemFailedToPlayToEndTimeNotification
-#define AV_STALLED AVPlayerItemPlaybackStalledNotification
-#define AV_CHANGED AVAudioSessionRouteChangeNotification
-#define ENTER_BG UIApplicationDidEnterBackgroundNotification
-#define ENTER_FG UIApplicationWillEnterForegroundNotification
-#define AV_STATUS @"status"
-#define AV_RATE @"rate"
-#define AV_FULL @"playbackBufferFull"
-#define AV_EMPTY @"playbackBufferEmpty"
-#define AV_KEEPUP @"playbackLikelyToKeepUp"
-#define AV_TIME @"loadedTimeRanges"
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Player defines
+////////////////////////////////////////////////////////////////////////////////
 
-#define MIN_BUFFER_TO_PLAY 3.5
-#define MAX_NR_RECONNECTS 5
+#define AV_END              AVPlayerItemDidPlayToEndTimeNotification
+#define AV_NOEND            AVPlayerItemFailedToPlayToEndTimeNotification
+#define AV_STALLED          AVPlayerItemPlaybackStalledNotification
+#define AV_CHANGED          AVAudioSessionRouteChangeNotification
+#define ENTER_BG            UIApplicationDidEnterBackgroundNotification
+#define ENTER_FG            UIApplicationWillEnterForegroundNotification
+#define AV_STATUS           @"status"
+#define AV_RATE             @"rate"
+#define AV_FULL             @"playbackBufferFull"
+#define AV_EMPTY            @"playbackBufferEmpty"
+#define AV_KEEPUP           @"playbackLikelyToKeepUp"
+#define AV_TIME             @"loadedTimeRanges"
+
+#define MIN_BUFFER_TO_PLAY  3.5
+#define MAX_NR_RECONNECTS   5
 
 @interface SAVideoPlayer ()
 
@@ -61,23 +72,31 @@
 // buffer variables in case network is shaky and buffer goes empty too soon
 @property (nonatomic, assign) BOOL isPlaybackBufferEmpty;
 @property (nonatomic, assign) BOOL shouldShowSpinner;
+@property (nonatomic, assign) BOOL shouldShowSmallClickButton;
 
 // network reconnect variables
 @property (nonatomic, assign) NSInteger currentReconnectTries;
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) BOOL isNetworkHavingProblems;
 
+@property (nonatomic, strong) savideoplayerEventHandler eventHandler;
+@property (nonatomic, strong) savideoplayerClickHandler clickHandler;
+
 @end
 
 @implementation SAVideoPlayer
 
-#pragma mark <Init>
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Init functions
+////////////////////////////////////////////////////////////////////////////////
 
 - (id) init {
     if (self = [super init]) {
         _notif = [NSNotificationCenter defaultCenter];
         _shouldShowSpinner = false;
         _shouldShowSmallClickButton = false;
+        _eventHandler = ^(SAVideoPlayerEvent event) {};
+        _clickHandler = ^(){};
     }
     return self;
 }
@@ -87,6 +106,8 @@
         _notif = [NSNotificationCenter defaultCenter];
         _shouldShowSpinner = false;
         _shouldShowSmallClickButton = false;
+        _eventHandler = ^(SAVideoPlayerEvent event) {};
+        _clickHandler = ^(){};
     }
     return self;
 }
@@ -96,35 +117,28 @@
         _notif = [NSNotificationCenter defaultCenter];
         _shouldShowSpinner = false;
         _shouldShowSmallClickButton = false;
+        _eventHandler = ^(SAVideoPlayerEvent event) {};
+        _clickHandler = ^(){};
     }
     return self;
 }
 
-#pragma mark <Check handling>
-
-- (void) resetChecks {
-    _isStartHandled =
-    _isFirstQuartileHandled =
-    _isMidpointHandled =
-    _isThirdQuartileHandled =
-    _isEndHandled = false;
-
-    _isPlaybackBufferEmpty = false;
-    _currentReconnectTries = -1;
-    _isNetworkHavingProblems = false;
+- (void) dealloc {
+    NSLog(@"SAVideoPlayer dealloc");
 }
 
-#pragma mark <Setup> functions
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Setup player
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) setup {
     self.backgroundColor = [UIColor blackColor];
     [self setupPlayer];
     [self setupChome];
-    [self resetChecks];
+    [self setupChecks];
 }
 
 - (void) setupPlayer {
-    // create the video view
     _videoView = [[UIView alloc] initWithFrame:self.bounds];
     [self addSubview:_videoView];
 }
@@ -143,15 +157,23 @@
     _clicker.shouldShowSmallClickButton = _shouldShowSmallClickButton;
     [_clicker addTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     [_chrome addSubview:_clicker];
-
-//    _spinner = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleWhiteLarge];
-//    _spinner.center = _chrome.center;
-//    [_chrome addSubview:_spinner];
-//    [_spinner startAnimating];
-//    _spinner.hidden = !_shouldShowSpinner;
 }
 
-#pragma mark <Destroy> functions
+- (void) setupChecks {
+    _isStartHandled =
+    _isFirstQuartileHandled =
+    _isMidpointHandled =
+    _isThirdQuartileHandled =
+    _isEndHandled = false;
+    
+    _isPlaybackBufferEmpty = false;
+    _currentReconnectTries = -1;
+    _isNetworkHavingProblems = false;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Destroy player
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) destroy {
     [self destroyPlayer];
@@ -198,16 +220,15 @@
     [_clicker removeTarget:self action:@selector(onClick:) forControlEvents:UIControlEventTouchUpInside];
     [_clicker removeFromSuperview];
     [_chrome removeFromSuperview];
-//    [_spinner stopAnimating];
-//    [_spinner removeFromSuperview];
     _mask = NULL;
     _clicker = NULL;
     _chrono = NULL;
     _chrome = NULL;
-//    _spinner = NULL;
 }
 
-#pragma mark <Update> functions
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Update & reset player
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) updateToFrame:(CGRect)frame {
     self.frame = frame;
@@ -223,17 +244,9 @@
     [self setup];
 }
 
-#pragma mark <Resume & Pause> functions
-
-- (void) resume {
-    [_player play];
-}
-
-- (void) pause {
-    [_player pause];
-}
-
-#pragma mark <Play> function
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Pause, play, resume
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) playWithMediaURL:(NSURL *)url {
     [self setup];
@@ -282,23 +295,54 @@
     [_playerItem addObserver:self forKeyPath:AV_TIME options:NSKeyValueObservingOptionInitial | NSKeyValueObservingOptionNew context:nil];
 }
 
-#pragma mark <Click> function
-
-- (void) onClick:(id)sender {
-    if (_delegate && [_delegate respondsToSelector:@selector(didGoToURL)]) {
-        [_delegate didGoToURL];
-    }
+- (void) resume {
+    [_player play];
 }
 
-#pragma mark <AVPlayer> events
+- (void) pause {
+    [_player pause];
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Handle clicks
+////////////////////////////////////////////////////////////////////////////////
+
+- (void) onClick:(id)sender {
+    _clickHandler();
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// MARK: Setters & getters
+////////////////////////////////////////////////////////////////////////////////
+
+- (void) showSmallClickButton {
+    _shouldShowSmallClickButton = true;
+}
+
+- (void) setEventHandler:(savideoplayerEventHandler)eventHandler {
+    _eventHandler = eventHandler != NULL ? eventHandler : ^(SAVideoPlayerEvent event) {};
+}
+
+- (void) setClickHandler:(savideoplayerClickHandler)clickHandler {
+    _clickHandler = clickHandler != NULL ? clickHandler :  ^(){};
+}
+
+- (AVPlayer*) getPlayer {
+    return _player;
+}
+
+- (AVPlayerLayer*) getPlayerLayer {
+    return _playerLayer;
+}
+
+////////////////////////////////////////////////////////////////////////////////
+// MARK: AVPlayer events
+////////////////////////////////////////////////////////////////////////////////
 
 - (void) playerItemDidReachEnd: (NSNotification*)notification {
-//    _spinner.hidden = YES;
-    
-    // delegate
-    if (!_isEndHandled && _delegate && [_delegate respondsToSelector:@selector(didReachEnd)]){
+    if (!_isEndHandled){
         _isEndHandled = true;
-        [_delegate didReachEnd];
+        _eventHandler(Video_End);
     }
 }
 
@@ -311,7 +355,6 @@
 }
 
 - (void) playerItemEnterBackground: (NSNotification*)notification {
-    
     [_player pause];
 }
 
@@ -336,11 +379,6 @@
             NSLog(@"[KVO] %@: Ready", AV_STATUS);
             _isNetworkHavingProblems = false;
             
-            // delegate
-            if (!_isReadyHandled && _delegate && [_delegate respondsToSelector:@selector(didFindPlayerReady)]){
-                [_delegate didFindPlayerReady];
-            }
-            
             // weak self so I don't have a retain cycle in the block
             __weak typeof (self) weakSelf = self;
             
@@ -357,24 +395,24 @@
                 });
                 
                 // send events through delegation
-                if (time >= 1 && !weakSelf.isStartHandled && weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didStartPlayer)]) {
+                if (time >= 1 && !weakSelf.isStartHandled) {
                     weakSelf.isStartHandled = true;
-                    [weakSelf.delegate didStartPlayer];
+                    weakSelf.eventHandler(Video_Start);
                 };
                 
-                if (time >= (duration / 4) && !weakSelf.isFirstQuartileHandled && weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didReachFirstQuartile)]){
+                if (time >= (duration / 4) && !weakSelf.isFirstQuartileHandled){
                     weakSelf.isFirstQuartileHandled = true;
-                    [weakSelf.delegate didReachFirstQuartile];
+                    weakSelf.eventHandler(Video_1_4);
                 }
                 
-                if (time >= (duration / 2) && !weakSelf.isMidpointHandled && weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didReachMidpoint)]){
+                if (time >= (duration / 2) && !weakSelf.isMidpointHandled){
                     weakSelf.isMidpointHandled = true;
-                    [weakSelf.delegate didReachMidpoint];
+                    weakSelf.eventHandler(Video_1_2);
                 }
                 
-                if (time >= (3 * duration / 4) && !weakSelf.isThirdQuartileHandled && weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didReachThirdQuartile)]) {
+                if (time >= (3 * duration / 4) && !weakSelf.isThirdQuartileHandled) {
                     weakSelf.isThirdQuartileHandled = true;
-                    [weakSelf.delegate didReachThirdQuartile];
+                    weakSelf.eventHandler(Video_3_4);
                 }
             }];
         }
@@ -402,35 +440,11 @@
         // start spinner
         dispatch_async(dispatch_get_main_queue(), ^{
             _shouldShowSpinner = YES;
-//            _spinner.hidden = !_shouldShowSpinner;
         });
     }
     if (object == _playerItem && [keyPath isEqualToString:AV_KEEPUP]) {
         NSLog(@"[KVO] %@ %d", AV_KEEPUP, _playerItem.isPlaybackLikelyToKeepUp);
     }
-//    if (object == _playerItem && [keyPath isEqualToString:AV_TIME]) {
-//        NSValue *timeRangeValue = _playerItem.loadedTimeRanges.firstObject;
-//        CMTimeRange timeRange;
-//        [timeRangeValue getValue:&timeRange];
-//        
-//        CGFloat assetTime = CMTimeGetSeconds(_playerItem.currentTime);
-//        CGFloat assetDuration = CMTimeGetSeconds(_playerItem.asset.duration);
-//        CGFloat bufferStart = CMTimeGetSeconds(timeRange.start);
-//        CGFloat bufferDuration = CMTimeGetSeconds(timeRange.duration);
-//        NSLog(@"[KVO] Loaded time %.2f to %.2f at %.2f / %.2f", bufferStart, bufferDuration, assetTime, assetDuration);
-//    
-//        // there is enough data in the buffer to play
-//        if (_isPlaybackBufferEmpty && bufferDuration >= MIN_BUFFER_TO_PLAY) {
-//            _isPlaybackBufferEmpty = false;
-//            [_player play];
-//            
-//            // and stop spinner
-//            dispatch_async(dispatch_get_main_queue(), ^{
-//                _shouldShowSpinner = NO;
-//                _spinner.hidden = !_shouldShowSpinner;
-//            });
-//        }
-//    }
 }
 
 - (void) reconnectFunc {
@@ -447,9 +461,7 @@
             [self destroy];
             
             // delegate
-            if (_delegate && [_delegate respondsToSelector:@selector(didPlayWithError)]){
-                [_delegate didPlayWithError];
-            }
+            _eventHandler(Video_Error);
         }
     } else {
         if (_timer) {
@@ -457,20 +469,6 @@
             _timer = NULL;
         }
     }
-}
-
-- (AVPlayer*) getPlayer {
-    return _player;
-}
-
-- (AVPlayerLayer*) getPlayerLayer {
-    return _playerLayer;
-}
-
-#pragma mark <Dealloc> 
-
-- (void) dealloc {
-    NSLog(@"SAVideoPlayer dealloc");
 }
 
 @end
