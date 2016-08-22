@@ -51,7 +51,7 @@
         if (ad && ad.creative.playableMediaURL != NULL) {
             
             SAFileDownloader *downloader = [[SAFileDownloader alloc] init];
-            [downloader downloadFileFrom:ad.creative.playableDiskURL to:ad.creative.playableDiskURL withResponse:^(BOOL success) {
+            [downloader downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withResponse:^(BOOL success) {
                 ad.creative.isOnDisk = success;
                 vastParsing(ad);
             }];

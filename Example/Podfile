@@ -2,5 +2,7 @@ platform :ios, '7.0'
 
 target 'SAVASTParser_Example' do
   pod 'SAVASTParser', :path => '../'
+  pod 'SAVideoPlayer'
+  pod 'SAEvents'
 end
 

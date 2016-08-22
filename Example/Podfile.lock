@@ -11,16 +11,16 @@ PODS:
     - SAJsonParser (= 1.2.5)
   - SANetworking (0.1.4)
   - SAUtils (1.3.4)
-  - SAVASTParser (1.5.1):
-    - SAEvents (= 1.3.0)
+  - SAVASTParser (1.5.3):
     - SAModelSpace (= 0.1.6)
     - SANetworking (= 0.1.4)
     - SAUtils (= 1.3.4)
-    - SAVideoPlayer (= 1.1.5)
   - SAVideoPlayer (1.1.5)
 
 DEPENDENCIES:
+  - SAEvents
   - SAVASTParser (from `../`)
+  - SAVideoPlayer
 
 EXTERNAL SOURCES:
   SAVASTParser:
@@ -32,9 +32,9 @@ SPEC CHECKSUMS:
   SAModelSpace: 7b91f5d2794d8c5cd48c9acd41bebba1708ec68c
   SANetworking: 73b0ce5eb53d846c9faae6662073efad6910b4e8
   SAUtils: 0e47a80b2abca59f764aa95f06a6a0872462483e
-  SAVASTParser: 2fef208bc49b2ca0aca8293b4b33121fcd278dcd
+  SAVASTParser: 440a642eb67b4ef91dff2b1b97fc7989efeb6645
   SAVideoPlayer: 841d567e0cdfa0003fa4b152463a6dcbb5a4fa92
 
-PODFILE CHECKSUM: 454031bcddc5c746f840bf6a886409edd4657dea
+PODFILE CHECKSUM: 4204db564701dd33e659cf6d5393e8399f92cd79
 
 COCOAPODS: 1.0.1
