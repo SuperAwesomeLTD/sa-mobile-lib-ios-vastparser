@@ -22,10 +22,8 @@
         _html = [jsonDictionary safeObjectForKey:@"html"];
         _playableDiskUrl = [jsonDictionary safeObjectForKey:@"playableDiskUrl"];
         _playableMediaUrl = [jsonDictionary safeObjectForKey:@"playableMediaUrl"];
-        _width = [[jsonDictionary safeObjectForKey:@"width"] integerValue];
-        _height = [[jsonDictionary safeObjectForKey:@"height"] integerValue];
         _type = [jsonDictionary safeObjectForKey:@"type"];
-        _isOnDisk = [jsonDictionary safeObjectForKey:@"isOnDisk"];
+        _isOnDisk = [[jsonDictionary safeObjectForKey:@"isOnDisk"] boolValue];
     }
     return self;
 }
@@ -35,8 +33,6 @@
              @"html": nullSafe(_html),
              @"playableDiskUrl": nullSafe(_playableDiskUrl),
              @"playableMediaUrl": nullSafe(_playableMediaUrl),
-             @"width": @(_width),
-             @"height": @(_height),
              @"type": nullSafe(_type),
              @"isOnDisk": @(_isOnDisk)
              };

@@ -12,8 +12,6 @@
 @property (nonatomic, strong) NSString *html;
 @property (nonatomic, strong) NSString *playableDiskUrl;
 @property (nonatomic, strong) NSString *playableMediaUrl;
-@property (nonatomic, assign) NSInteger width;
-@property (nonatomic, assign) NSInteger height;
 @property (nonatomic, strong) NSString *type;
 @property (nonatomic, assign) BOOL isOnDisk;
 @end

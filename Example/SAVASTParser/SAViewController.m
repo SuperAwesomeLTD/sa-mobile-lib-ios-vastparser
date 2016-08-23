@@ -79,7 +79,7 @@
     NSString *vastURL11 = @"http://sa-test-moat.herokuapp.com/xmloutput/xml5";
     
     _parser = [[SAVASTParser alloc] init];
-    [_parser parseVASTURL:vastURL10 done:^(SAAd *ad) {
+    [_parser parseVASTURL:vastURL7 done:^(SAAd *ad) {
         
         weakSelf.vastAd = ad;
         

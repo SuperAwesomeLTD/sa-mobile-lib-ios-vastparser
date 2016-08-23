@@ -13,13 +13,13 @@
 #import "SATracking.h"
 
 // creative format typedef
-typedef enum SACreativeFormat {
+typedef NS_ENUM(NSInteger, SACreativeFormat) {
     invalid = -1,
     image = 0,
     video = 1,
     rich = 2,
     tag = 3
-}SACreativeFormat;
+};
 
 // forward declarations
 @class SADetails;

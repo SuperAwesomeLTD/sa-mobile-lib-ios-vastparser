@@ -15,6 +15,6 @@ Pod::Spec.new do |s|
   s.requires_arc = true
   s.source_files = 'Pod/Classes/**/*'
   s.dependency 'SAUtils', '1.3.4'
-  s.dependency 'SAModelSpace', '0.1.7'
+  s.dependency 'SAModelSpace', '0.1.9'
   s.dependency 'SANetworking', '0.1.4'
 end
