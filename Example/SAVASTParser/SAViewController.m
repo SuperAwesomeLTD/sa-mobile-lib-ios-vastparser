@@ -8,7 +8,6 @@
 
 #import "SAViewController.h"
 #import "SAVideoPlayer.h"
-#import "SAVASTManager.h"
 #import "SAVASTParser.h"
 #import "SAVASTAd.h"
 #import "SAVASTCreative.h"
@@ -16,7 +15,6 @@
 
 @interface SAViewController ()
 @property (nonatomic, strong) SAVideoPlayer *player;
-@property (nonatomic, strong) SAVASTManager *manager;
 @property (nonatomic, strong) SAVASTParser *parser;
 @property (nonatomic, strong) SAVASTAd *vastAd;
 @property (nonatomic, strong) SAVASTCreative *vastCreative;
@@ -77,17 +75,6 @@
         [weakSelf.player playWithMediaFile:finalFile];
         
     }];
-    
-//    _manager = [[SAVASTManager alloc] initWithPlayer:_player];
-//    _manager.delegate = self;
-//    [_manager parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/-1/-1/?sdkVersion=unknown&rnd=457960880"];
-    
-//    _player2 = [[SAVideoPlayer alloc] initWithFrame:CGRectMake(0, 200, 320, 220)];
-//    [self.view addSubview:_player2];
-//    
-//    _manager2 = [[SAVASTManager alloc] initWithPlayer:_player2];
-//    _manager2.delegate = self;
-//    [_manager2 parseVASTURL:@"https://ads.superawesome.tv/v2/video/vast/28000/31825/32136/?sdkVersion=ios_4.0.2&rnd=687506518&dauid=2097324019"];
 }
 
 - (void)didReceiveMemoryWarning
@@ -101,51 +88,6 @@
 
 - (IBAction)deleteAction:(id)sender {
     [_player destroy];
-    _manager = NULL;
 }
-
-//- (void) didNotFindAds {
-//    NSLog(@"didNotFindAds");
-//}
-//
-//- (void) didStartAd {
-//    NSLog(@"didStartAd");
-//}
-//
-//- (void) didStartCreative {
-//    NSLog(@"didStartCreative");
-//}
-//
-//- (void) didReachFirstQuartileOfCreative {
-//    NSLog(@"didReachFirstQuartileOfCreative");
-//}
-//
-//- (void) didReachMidpointOfCreative {
-//    NSLog(@"didReachMidpointOfCreative");
-//}
-//
-//- (void) didReachThirdQuartileOfCreative {
-//    NSLog(@"didReachThirdQuartileOfCreative");
-//}
-//
-//- (void) didEndOfCreative {
-//    NSLog(@"didEndOfCreative");
-//}
-//
-//- (void) didHaveErrorForCreative {
-//    NSLog(@"didHaveErrorForCreative");
-//}
-//
-//- (void) didEndAd {
-//    NSLog(@"didEndAd");
-//}
-//
-//- (void) didEndAllAds {
-//    NSLog(@"didEndAllAds");
-//}
-//
-//- (void) didGoToURL:(NSURL*)url withTrackingArray:(NSArray *)clickTarcking {
-//    NSLog(@">>>>>\ndidGoToURL %@\n& send to %@", url, clickTarcking);
-//}
 
 @end

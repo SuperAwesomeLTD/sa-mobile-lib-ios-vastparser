@@ -22,7 +22,6 @@
 		1B2D6CCB3F2AB4682BE7DB6C68175C10 /* SAEvents.h in Headers */ = {isa = PBXBuildFile; fileRef = 3214A60E1D67ED6DA713898581697A3A /* SAEvents.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		1CDDCF74E80EA5B40D20CE0258B856AB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8300F47EEB39E49255907D5DFC5B2A48 /* Foundation.framework */; };
 		1DB7A7AED01D424EE6E743D2A789229F /* SAVideoPlayer-dummy.m in Sources */ = {isa = PBXBuildFile; fileRef = 6873E66433CED57E141445CC91CEA7E6 /* SAVideoPlayer-dummy.m */; };
-		2083BC3F66FA732406C90CFE36C073A7 /* SAVASTManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E8957427AAB204997195CED50716C45 /* SAVASTManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		296A50C05A58F2EA6B159A558D3A32FB /* NSArray+SAJson.h in Headers */ = {isa = PBXBuildFile; fileRef = FD82BC5092CBC6F7607B6A6B8C5059CC /* NSArray+SAJson.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		318B032981FC4A584A1F830EE4EE546C /* SAVideoPlayer.h in Headers */ = {isa = PBXBuildFile; fileRef = 54D4175FAA54822682469330CF3424FA /* SAVideoPlayer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		31F807C296011B72B8C8DB0EDB06E518 /* SAVASTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 70243CD004B2BE8CA016A8B6978506F7 /* SAVASTMediaFile.m */; };
@@ -30,7 +29,6 @@
 		3D2349DA7DC2D7B4C236E6793B0E473D /* SACronograph.m in Sources */ = {isa = PBXBuildFile; fileRef = BFC618DD3893AD824281C3B632E84181 /* SACronograph.m */; };
 		417B8221DBF9F956C7F4281A4FC8BF3F /* SACreative.h in Headers */ = {isa = PBXBuildFile; fileRef = BBE8D15D8F1CDFF9BF6888BFD9BB2C0B /* SACreative.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		41F166462E99AFD3B25EFACD1F8145D0 /* SACronograph.h in Headers */ = {isa = PBXBuildFile; fileRef = DE3BB9E7552DBBBEDD10256F1DEBFD4D /* SACronograph.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		42D350CED92E6A1BCFBFF6F37710FE89 /* SAVASTManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 93BADBD6E951F27FBE02A98CBBE2751B /* SAVASTManager.m */; };
 		4454D7339BBDCC1D8B07E92CFE540B54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8300F47EEB39E49255907D5DFC5B2A48 /* Foundation.framework */; };
 		4545F32A9FC1B9DBB343C6850D75B294 /* SAExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 0F683F67F50E8C99BC6EE68C244B4694 /* SAExtensions.m */; };
 		4C2463B1EA23AD071133A1DBCAA1981A /* SAAd.h in Headers */ = {isa = PBXBuildFile; fileRef = 9E744BDA3190900070B6D85FA04EF220 /* SAAd.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -207,7 +205,6 @@
 		2B6AFD4294D986BBCCC0DCF1E73264C8 /* SAVASTParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SAVASTParser.h; sourceTree = "<group>"; };
 		2B8E0C3C21A83A9701A3DAAA0B58FA8D /* libSAVideoPlayer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libSAVideoPlayer.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		2D53D14DC215FBA5FC526130749531C2 /* SAEvents.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SAEvents.xcconfig; sourceTree = "<group>"; };
-		2E8957427AAB204997195CED50716C45 /* SAVASTManager.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SAVASTManager.h; sourceTree = "<group>"; };
 		2EC19B30523246878E3069E5E62B7D80 /* Pods-SAVASTParser_Example-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-SAVASTParser_Example-dummy.m"; sourceTree = "<group>"; };
 		2EDD9CCA9A35DDC1C21D2BDCB3CB3786 /* SAUtils.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SAUtils.h; path = Pod/Classes/SAUtils.h; sourceTree = "<group>"; };
 		31311F97B7196C76E0F2688EDDFBADC9 /* SAVASTCreative.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = SAVASTCreative.h; path = Pod/Classes/SAVASTCreative.h; sourceTree = "<group>"; };
@@ -247,7 +244,6 @@
 		8F9A63438205B8BE2C4111712357D52A /* NSDictionary+SafeHandling.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; name = "NSDictionary+SafeHandling.m"; path = "Pod/Classes/NSDictionary+SafeHandling.m"; sourceTree = "<group>"; };
 		9051A6F2C70A604222E44721B91DA42C /* SAModelSpace-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "SAModelSpace-dummy.m"; sourceTree = "<group>"; };
 		93A4A3777CF96A4AAC1D13BA6DCCEA73 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		93BADBD6E951F27FBE02A98CBBE2751B /* SAVASTManager.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = SAVASTManager.m; sourceTree = "<group>"; };
 		963F754FBDE349750DEACFFBD9EBF082 /* SAModelSpace.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = SAModelSpace.xcconfig; sourceTree = "<group>"; };
 		96B875AE37044A06384350A58E5B0230 /* SAXMLParser.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = SAXMLParser.h; sourceTree = "<group>"; };
 		984AB0F448CD2BF162377BC4D8252B37 /* SAVASTParser-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "SAVASTParser-prefix.pch"; sourceTree = "<group>"; };
@@ -425,8 +421,6 @@
 		2B1221A92E672A31E80438B5FAE75E0D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				2E8957427AAB204997195CED50716C45 /* SAVASTManager.h */,
-				93BADBD6E951F27FBE02A98CBBE2751B /* SAVASTManager.m */,
 				2B6AFD4294D986BBCCC0DCF1E73264C8 /* SAVASTParser.h */,
 				398C21D3D08840D2DE174DBE6D69A594 /* SAVASTParser.m */,
 				96B875AE37044A06384350A58E5B0230 /* SAXMLParser.h */,
@@ -696,7 +690,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2083BC3F66FA732406C90CFE36C073A7 /* SAVASTManager.h in Headers */,
 				BD8E87A5B06AEC5525104F0744EC001A /* SAVASTParser.h in Headers */,
 				0CA9016F3DE4570FDF20758BC3EABE10 /* SAXMLParser.h in Headers */,
 			);
@@ -1019,7 +1012,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42D350CED92E6A1BCFBFF6F37710FE89 /* SAVASTManager.m in Sources */,
 				630871298A4AEFFF3EF3D98E22774E61 /* SAVASTParser-dummy.m in Sources */,
 				71E00D97AC03E09C220442FE7FC48988 /* SAVASTParser.m in Sources */,
 				AC9BB2D48C974DF8C27944DC318FCF11 /* SAXMLParser.m in Sources */,

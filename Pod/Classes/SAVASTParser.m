@@ -176,10 +176,10 @@
         _creative.sequence = [element getAttribute:@"sequence"];
         
         // create arrays
-        _creative.ClickTracking = [[NSMutableArray alloc] init];
-        _creative.CustomClicks = [[NSMutableArray alloc] init];
-        _creative.MediaFiles = [[NSMutableArray alloc] init];
-        _creative.TrackingEvents = [[NSMutableArray alloc] init];
+        _creative.ClickTracking = [@[] mutableCopy];
+        _creative.CustomClicks = [@[] mutableCopy];
+        _creative.MediaFiles = [@[] mutableCopy];
+        _creative.TrackingEvents = [@[] mutableCopy];
         
         // populate duration
         [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Duration" andInterate:^(SAXMLElement *durElement) {
