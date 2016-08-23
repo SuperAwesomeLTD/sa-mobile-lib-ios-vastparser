@@ -10,13 +10,11 @@
 
 #import "SADetails.h"
 
-#import "SAData.h"
-
 @implementation SADetails
 
 - (id) init {
     if (self = [super init]) {
-        
+        _media = [[SAMedia alloc] init];
     }
     return self;
 }
@@ -26,41 +24,41 @@
         
         _width = [[jsonDictionary safeObjectForKey:@"width"] integerValue];
         _height = [[jsonDictionary safeObjectForKey:@"height"] integerValue];
-        _image = [jsonDictionary safeObjectForKey:@"image"];
-        _value = [[jsonDictionary safeObjectForKey:@"value"] integerValue];
         _name = [jsonDictionary safeObjectForKey:@"name"];
-        _video = [jsonDictionary safeObjectForKey:@"video"];
+        _placementFormat = [jsonDictionary safeObjectForKey:@"placement_format"];
         _bitrate = [[jsonDictionary safeObjectForKey:@"bitrate"] integerValue];
         _duration = [[jsonDictionary safeObjectForKey:@"duration"] integerValue];
+        _value = [[jsonDictionary safeObjectForKey:@"value"] integerValue];
+        _image = [jsonDictionary safeObjectForKey:@"image"];
+        _video = [jsonDictionary safeObjectForKey:@"video"];
         _vast = [jsonDictionary safeObjectForKey:@"vast"];
         _tag = [jsonDictionary safeObjectForKey:@"tag"];
         _zipFile = [jsonDictionary safeObjectForKey:@"zipFile"];
         _url = [jsonDictionary safeObjectForKey:@"url"];
-        _placementFormat = [jsonDictionary safeObjectForKey:@"placement_format"];
         _cdnUrl = [jsonDictionary safeObjectForKey:@"cdnUrl"];
-        _data = [[SAData alloc] initWithJsonDictionary:[jsonDictionary safeObjectForKey:@"data"]];
+        _media = [[SAMedia alloc] initWithJsonDictionary:[jsonDictionary safeObjectForKey:@"media"]];
     }
     return self;
 }
 
 - (NSDictionary*) dictionaryRepresentation {
     return @{
-        @"width": @(_width),
-        @"height": @(_height),
-        @"image": nullSafe(_image),
-        @"value": @(_value),
-        @"name": nullSafe(_name),
-        @"video": nullSafe(_video),
-        @"bitrate": @(_bitrate),
-        @"duration": @(_duration),
-        @"vast": nullSafe(_vast),
-        @"tag": nullSafe(_tag),
-        @"zipFile": nullSafe(_zipFile),
-        @"url": nullSafe(_url),
-        @"placement_format": nullSafe(_placementFormat),
-        @"cdnUrl": nullSafe(_cdnUrl),
-        @"data": nullSafe([_data dictionaryRepresentation])
-    };
+             @"width": @(_width),
+             @"height": @(_height),
+             @"name": nullSafe(_name),
+             @"placement_format": nullSafe(_placementFormat),
+             @"bitrate": @(_bitrate),
+             @"duration": @(_duration),
+             @"value": @(_value),
+             @"image": nullSafe(_image),
+             @"video": nullSafe(_video),
+             @"vast": nullSafe(_vast),
+             @"tag": nullSafe(_tag),
+             @"zipFile": nullSafe(_zipFile),
+             @"url": nullSafe(_url),
+             @"cdnUrl": nullSafe(_cdnUrl),
+             @"media": nullSafe([_media dictionaryRepresentation])
+             };
 }
 
 @end

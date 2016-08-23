@@ -12,10 +12,11 @@
 #import "SAXMLParser.h"
 
 // import helpes
-#import "SAVASTAd.h"
-#import "SAVASTCreative.h"
-#import "SAVASTTracking.h"
-#import "SAVASTMediaFile.h"
+#import "SAAd.h"
+#import "SACreative.h"
+#import "SADetails.h"
+#import "SAMedia.h"
+#import "SATracking.h"
 
 // import Utils
 #import "SAUtils.h"
@@ -46,19 +47,18 @@
 
 - (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing {
     
-    [self parseVASTAds:url withResult:^(SAVASTAd *ad) {
+    [self parseVASTAds:url withResult:^(SAAd *ad) {
         
-        if (ad && ad.creative.playableMediaURL != NULL) {
-            
+        if (ad.creative.details.media) {
             SAFileDownloader *downloader = [[SAFileDownloader alloc] init];
-            [downloader downloadFileFrom:ad.creative.playableMediaURL to:ad.creative.playableDiskURL withResponse:^(BOOL success) {
-                ad.creative.isOnDisk = success;
+            [downloader downloadFileFrom:ad.creative.details.media.playableMediaUrl to:ad.creative.details.media.playableDiskUrl withResponse:^(BOOL success) {
+                ad.creative.details.media.isOnDisk = success;
                 vastParsing(ad);
             }];
-            
         } else {
-            vastParsing(nil);
+            vastParsing(ad);
         }
+
     }];
 }
 
@@ -74,181 +74,182 @@
            andHeader:@{@"Content-Type":@"application/json",
                        @"User-Agent":[SAUtils getUserAgent]}
         withResponse:^(NSInteger status, NSString *payload, BOOL success) {
+            
+            // create empty ad
+            SAAd *empty = [[SAAd alloc] init];
+            
             if (!success) {
-                done(nil);
+                done(empty);
             } else {
                 // parse XML element
                 SAXMLParser *parser = [[SAXMLParser alloc] init];
                 __block SAXMLElement *root = [parser parseXMLString:payload];
                 
                 // check for preliminary errors
-                if ([parser getError]) { done(nil); return; }
-                if (!root) { done(nil); return; }
-                if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(nil); return; }
+                if ([parser getError]) { done(empty); return; }
+                if (!root) { done(empty); return; }
+                if (![SAXMLParser checkSiblingsAndChildrenOf:root forName:@"Ad"]) { done(empty); return; }
                 
                 // get and parse *Only* first Ad
                 SAXMLElement *element = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:root forName:@"Ad"];
-                SAVASTAd *ad = [self parseAdXML:element];
+                __block SAAd *ad = [self parseAdXML:element];
                 
-                // in-line case
-                if (ad.type == InLine) {
+                if (ad.vastType == InLine) {
                     done(ad);
                     return;
-                }
-                // wrapper case
-                else if (ad.type == Wrapper) {
-                    [self parseVASTAds:ad.redirectUri withResult:^(SAVASTAd *wrapper) {
-                        if (wrapper) {
-                            [ad sumAd:wrapper];
-                        }
-                        done(ad);
+                } else if (ad.vastType == Wrapper) {
+                    [self parseVASTAds:ad.vastRedirect withResult:^(SAAd *wrapper) {
+                        SAAd *final = [self sumAd:ad withDest:wrapper];
+                        done(final);
                         return;
                     }];
-                }
-                // some other type of failure case
-                else {
-                    done(nil);
+                } else {
+                    done(empty);
                     return;
                 }
+
             }
         }];
 }
 
-- (SAVASTAd*) parseAdXML:(SAXMLElement *)adElement {
+- (SAAd*) parseAdXML:(SAXMLElement *)adElement {
     // create ad
-    SAVASTAd *ad = [[SAVASTAd alloc] init];
+    SAAd *ad = [[SAAd alloc] init];
     
-    // get attributes
-    ad._id = [adElement getAttribute:@"id"];
-    ad.sequence = [adElement getAttribute:@"sequence"];
-    ad.type = Invalid;
+    ad.error = 0;
+    ad.isVAST = YES;
+    ad.vastType = InLine;
     
     // init arrays of data
-    ad.Errors = [[NSMutableArray alloc] init];
-    ad.Impressions = [[NSMutableArray alloc] init];
+    NSMutableArray *errors = [@[] mutableCopy];
+    NSMutableArray *impressions = [@[] mutableCopy];
     
     // check ad type
     BOOL isInLine = [SAXMLParser checkSiblingsAndChildrenOf:adElement forName:@"InLine"];
     BOOL isWrapper = [SAXMLParser checkSiblingsAndChildrenOf:adElement forName:@"Wrapper"];
     
-    if (isInLine) ad.type = InLine;
-    if (isWrapper) ad.type = Wrapper;
+    if (isInLine) ad.vastType = InLine;
+    if (isWrapper) ad.vastType = Wrapper;
     
     // get VAStAdTagURI
     SAXMLElement *redirect = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:adElement forName:@"VASTAdTagURI"];
     if (redirect) {
-        ad.redirectUri = [redirect getValue];
+        ad.vastRedirect = [redirect getValue];
     }
     
     // get errors
     [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Error" andInterate:^(SAXMLElement *errElement) {
         NSString *error = [SAUtils decodeHTMLEntitiesFrom:[errElement getValue]];
         error = [error stringByReplacingOccurrencesOfString:@" " withString:@""];
-        [ad.Errors addObject:error];
+        SATracking *tracking = [[SATracking alloc] init];
+        tracking.URL = error;
+        tracking.event = @"error";
+        [errors addObject:tracking];
     }];
-    
+
     // get impressions
-    ad.isImpressionSent = false;
     [SAXMLParser searchSiblingsAndChildrenOf:adElement forName:@"Impression" andInterate:^(SAXMLElement *impElement) {
-        [ad.Impressions addObject:[SAUtils decodeHTMLEntitiesFrom:[impElement value]]];
+        NSString *impression = [SAUtils decodeHTMLEntitiesFrom:[impElement value]];
+        SATracking *tracking = [[SATracking alloc] init];
+        tracking.URL = impression;
+        tracking.event = @"impression";
+        [impressions addObject:tracking];
     }];
     
     // get creatives
     SAXMLElement *creativeElement = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:adElement forName:@"Creative"];
     ad.creative = [self parseCreativeXML:creativeElement];
     
+    // add errors and impressions
+    [ad.creative.events addObjectsFromArray:errors];
+    [ad.creative.events addObjectsFromArray:impressions];
+    
+    // return the ad
     return ad;
 }
 
-- (SAVASTCreative*) parseCreativeXML:(SAXMLElement *)element {
-    // first find out what kind of content this creative has
-    // is it Linear, NonLinear or CompanionAds?
-    BOOL isLinear = [SAXMLParser checkSiblingsAndChildrenOf:element forName:@"Linear"];
+- (SACreative*) parseCreativeXML:(SAXMLElement *)element {
+    // create linear creative
+    SACreative *creative = [[SACreative alloc] init];
     
-    // init as a linear Creative
-    if (isLinear) {
-        // create linear creative
-        SAVASTCreative *_creative = [[SAVASTCreative alloc] init];
-        
-        // get attributes
-        _creative.type = Linear;
-        _creative._id = [element getAttribute:@"id"];
-        _creative.sequence = [element getAttribute:@"sequence"];
-        
-        // create arrays
-        _creative.ClickTracking = [@[] mutableCopy];
-        _creative.CustomClicks = [@[] mutableCopy];
-        _creative.MediaFiles = [@[] mutableCopy];
-        _creative.TrackingEvents = [@[] mutableCopy];
-        
-        // populate duration
-        [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Duration" andInterate:^(SAXMLElement *durElement) {
-            _creative.Duration = [durElement value];;
-        }];
-        
-        // populate clickthrough
-        [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"ClickThrough" andInterate:^(SAXMLElement *clickElement) {
-            _creative.ClickThrough = [clickElement value];;
-            _creative.ClickThrough = [SAUtils decodeHTMLEntitiesFrom:_creative.ClickThrough];
-            _creative.ClickThrough = [_creative.ClickThrough stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
-            _creative.ClickThrough = [_creative.ClickThrough stringByReplacingOccurrencesOfString:@"%3A" withString:@":"];
-            _creative.ClickThrough = [_creative.ClickThrough stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"];
-        }];
-        
-        // populate click tracking array
-        [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"ClickTracking" andInterate:^(SAXMLElement *ctrackElement) {
-            [_creative.ClickTracking addObject:[SAUtils decodeHTMLEntitiesFrom:[ctrackElement value]]];
-        }];
-        
-        // populate custom clicks array
-        [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"CustomClicks" andInterate:^(SAXMLElement *cclickElement) {
-            [_creative.CustomClicks addObject:[SAUtils decodeHTMLEntitiesFrom:[cclickElement value]]];
-        }];
-        
-        // populate media files
-        [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"MediaFile" andInterate:^(SAXMLElement *cMediaElement) {
-            // since this is a more "complex" object, wich takes data from
-            // attributes as well as tag value, split the
-            // declaration and array assignment
-            SAVASTMediaFile *mediaFile = [[SAVASTMediaFile alloc] init];
-            mediaFile.width = [cMediaElement getAttribute:@"width"];
-            mediaFile.height = [cMediaElement getAttribute:@"height"];
-            mediaFile.type = [cMediaElement getAttribute:@"type"];
-            mediaFile.URL = [SAUtils decodeHTMLEntitiesFrom:[cMediaElement value]];
-            
-            // only add the Media file if the type is MP4
-            if ([mediaFile.type rangeOfString:@"mp4"].location != NSNotFound ||
-                [mediaFile.URL rangeOfString:@".mp4"].location != NSNotFound) {
-                [_creative.MediaFiles addObject:mediaFile];
-            }
-        }];
-        
-        // populate tracking
-        [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Tracking" andInterate:^(SAXMLElement *cTrackingElement) {
-            // since this is also a more "complex" object, which takes data from
-            // attributes as well as tag value, split the declaration and
-            // array assignmenent
-            SAVASTTracking *tracking = [[SAVASTTracking alloc] init];
-            tracking.event = [cTrackingElement getAttribute:@"event"];
-            tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[cTrackingElement value]];
-            [_creative.TrackingEvents addObject:tracking];
-        }];
-        
-        // get the designated playable Media File
-        if (_creative.MediaFiles > 0){
-            _creative.playableMediaURL = [(SAVASTMediaFile*)_creative.MediaFiles.firstObject URL];
-            if (_creative.playableMediaURL != NULL) {
-                _creative.playableDiskURL = [SAFileDownloader getDiskLocation];
-            }
+    // create arrays
+    creative.events = [@[] mutableCopy];
+    creative.clicks = [@[] mutableCopy];
+    
+    // populate clickthrough
+    [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"ClickThrough" andInterate:^(SAXMLElement *clickElement) {
+        creative.clickUrl = [clickElement value];
+        creative.clickUrl = [SAUtils decodeHTMLEntitiesFrom:creative.clickUrl];
+        creative.clickUrl = [creative.clickUrl stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"];
+        creative.clickUrl = [creative.clickUrl stringByReplacingOccurrencesOfString:@"%3A" withString:@":"];
+        creative.clickUrl = [creative.clickUrl stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"];
+    }];
+    
+    // populate click tracking array
+    [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"ClickTracking" andInterate:^(SAXMLElement *ctrackElement) {
+        SATracking *tracking = [[SATracking alloc] init];
+        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[ctrackElement value]];
+        tracking.event = @"click_tracking";
+        [creative.clicks addObject:tracking];
+    }];
+    
+    // populate custom clicks array
+    [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"CustomClicks" andInterate:^(SAXMLElement *cclickElement) {
+        SATracking *tracking = [[SATracking alloc] init];
+        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[cclickElement value]];
+        tracking.event = @"custom_clicks";
+    }];
+    
+    // populate tracking
+    [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Tracking" andInterate:^(SAXMLElement *cTrackingElement) {
+        SATracking *tracking = [[SATracking alloc] init];
+        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[cTrackingElement value]];
+        tracking.event = [cTrackingElement getAttribute:@"event"];
+        [creative.events addObject:tracking];
+    }];
+    
+    // create the details
+    creative.details = [[SADetails alloc] init];
+    
+    // populate media files
+    [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"MediaFile" andInterate:^(SAXMLElement *cMediaElement) {
+        SAMedia *media = [self parseMediaXML:cMediaElement];
+        if ([media.type rangeOfString:@"mp4"].location != NSNotFound ||
+            [media.type rangeOfString:@".mp4"].location != NSNotFound) {
+            creative.details.media = media;
         }
-        
-        // return creative
-        return _creative;
+    }];
+    
+    // return creative
+    return creative;
+}
+
+- (SAMedia*) parseMediaXML:(SAXMLElement*)element {
+    SAMedia *media = [[SAMedia alloc] init];
+    media.type = [element getAttribute:@"type"];
+    media.playableMediaUrl = [[element value] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    media.playableDiskUrl = [SAFileDownloader getDiskLocation];
+    return media;
+}
+
+- (SAAd*) sumAd:(SAAd*)source withDest:(SAAd*)dest {
+    SAAd *localS = source;
+    
+    // replace click URL
+    if (dest.creative.clickUrl != NULL) {
+        localS.creative.clickUrl = dest.creative.clickUrl;
     }
-    // non-linear / companion ads is not yet supported
-    else {
-        return NULL;
+    
+    // append events and clicks
+    [localS.creative.events addObjectsFromArray:dest.creative.events];
+    [localS.creative.clicks addObjectsFromArray:dest.creative.clicks];
+    
+    // media
+    if (dest.creative.details.media != NULL) {
+        localS.creative.details.media = dest.creative.details.media;
     }
+    
+    return localS;
 }
 
 @end

@@ -2,13 +2,13 @@
 //  SATracking.m
 //  Pods
 //
-//  Created by Gabriel Coman on 09/03/2016.
+//  Created by Gabriel Coman on 22/08/2016.
 //
 //
 
-#import "SAVASTTracking.h"
+#import "SATracking.h"
 
-@implementation SAVASTTracking
+@implementation SATracking
 
 - (id) init{
     if (self = [super init]){
@@ -27,9 +27,9 @@
 
 - (NSDictionary*) dictionaryRepresentation {
     return @{
-        @"event": nullSafe(_event),
-        @"URL": nullSafe(_URL)
-    };
+             @"event": nullSafe(_event),
+             @"URL": nullSafe(_URL)
+             };
 }
 
 @end

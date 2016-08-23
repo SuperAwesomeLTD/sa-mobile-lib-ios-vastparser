@@ -9,10 +9,10 @@
 #import <Foundation/Foundation.h>
 
 // forward declaration
-@class SAVASTAd;
+@class SAAd;
 
 // callback
-typedef void (^vastParsingDone)(SAVASTAd *ad);
+typedef void (^vastParsingDone)(SAAd *ad);
 
 ////////////////////////////////////////////////////////////////////////////////
 // The VASTParser main class

@@ -16,7 +16,9 @@
 
 - (id) init {
     if (self = [super init]) {
-        
+        _details = [[SADetails alloc] init];
+        _events = [@[] mutableCopy];
+        _clicks = [@[] mutableCopy];
     }
     return self;
 }
@@ -28,43 +30,38 @@
         _name = [jsonDictionary safeObjectForKey:@"name"];
         _cpm = [[jsonDictionary safeObjectForKey:@"cpm"] integerValue];
         _format = [jsonDictionary safeObjectForKey:@"format"];
-        _impressionUrl = [jsonDictionary safeObjectForKey:@"impression_url"];
+        _creativeFormat = (SACreativeFormat)[[jsonDictionary safeObjectForKey:@"creativeFormat"] integerValue];
         _customPayload = [jsonDictionary safeObjectForKey:@"customPayload"];
-        _clickUrl = [jsonDictionary safeObjectForKey:@"click_url"];
         _live = [[jsonDictionary safeObjectForKey:@"live"] boolValue];
         _approved = [[jsonDictionary safeObjectForKey:@"approved"] boolValue];
+        _clickUrl = [jsonDictionary safeObjectForKey:@"click_url"];
+        _events = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"events"] andIterator:^id(id item) {
+            return [[SATracking alloc] initWithJsonDictionary:(NSDictionary*)item];
+        }] mutableCopy];
+        _clicks = [[[NSArray alloc] initWithJsonArray:[jsonDictionary safeObjectForKey:@"clicks"] andIterator:^id(id item) {
+            return [[SATracking alloc] initWithJsonDictionary:(NSDictionary*)item];
+        }] mutableCopy];
         _details = [[SADetails alloc] initWithJsonDictionary:[jsonDictionary safeObjectForKey:@"details"]];
-        _creativeFormat = (SACreativeFormat)[[jsonDictionary safeObjectForKey:@"creativeFormat"] integerValue];
-        _viewableImpressionUrl = [jsonDictionary safeObjectForKey:@"viewableImpressionUrl"];
-        _trackingUrl = [jsonDictionary safeObjectForKey:@"trackingUrl"];
-        _parentalGateFailUrl = [jsonDictionary safeObjectForKey:@"parentalGateFailUrl"];
-        _parentalGateOpenUrl = [jsonDictionary safeObjectForKey:@"parentalGateOpenUrl"];
-        _parentalGateCloseUrl = [jsonDictionary safeObjectForKey:@"parentalGateCloseUrl"];
-        _parentalGateSuccessUrl = [jsonDictionary safeObjectForKey:@"parentalGateSuccessUrl"];
+        
     }
     return self;
 }
 
 - (NSDictionary*) dictionaryRepresentation {
     return @{
-        @"id": @(__id),
-        @"name": nullSafe(_name),
-        @"cpm": @(_cpm),
-        @"format": nullSafe(_format),
-        @"impression_url": nullSafe(_impressionUrl),
-        @"customPayload": nullSafe(_customPayload),
-        @"click_url": nullSafe(_clickUrl),
-        @"live": @(_live),
-        @"approved": @(_approved),
-        @"details": nullSafe([_details dictionaryRepresentation]),
-        @"creativeFormat": @(_creativeFormat),
-        @"viewableImpressionUrl": nullSafe(_viewableImpressionUrl),
-        @"trackingUrl": nullSafe(_trackingUrl),
-        @"parentalGateFailUrl": nullSafe(_parentalGateFailUrl),
-        @"parentalGateOpenUrl": nullSafe(_parentalGateOpenUrl),
-        @"parentalGateCloseUrl": nullSafe(_parentalGateCloseUrl),
-        @"parentalGateSuccessUrl": nullSafe(_parentalGateSuccessUrl)
-    };
+             @"id": @(__id),
+             @"name": nullSafe(_name),
+             @"cpm": @(_cpm),
+             @"format": nullSafe(_format),
+             @"creativeFormat": @(_creativeFormat),
+             @"customPayload": nullSafe(_customPayload),
+             @"live": @(_live),
+             @"approved": @(_approved),
+             @"click_url": nullSafe(_clickUrl),
+             @"events": nullSafe([_events dictionaryRepresentation]),
+             @"clicks": nullSafe([_clicks dictionaryRepresentation]),
+             @"details": nullSafe([_details dictionaryRepresentation])
+             };
 }
 
 @end
