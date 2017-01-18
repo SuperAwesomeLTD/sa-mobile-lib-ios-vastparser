@@ -1,99 +1,141 @@
-//
-//  SAXMLParser.h
-//  SAXMLParser
-//
-//  Created by Gabriel Coman on 18/04/2016.
-//  Copyright © 2016 Gabriel Coman. All rights reserved.
-//
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 
 #import <UIKit/UIKit.h>
 
-//
-// The SAXMLElement object
+@class SAXMLElement;
+
+// typedef for an iterator block
+typedef void (^saDidFindXMLElement)(SAXMLElement *element);
+
+
+/**
+ * Class that represents a XML element, containing
+ * the element name, it's internal value, a dictionary of attributes,
+ * an array of children as well as a reference to it's parent
+ */
 @interface SAXMLElement : NSObject
 
-// members
-@property (nonatomic, strong) NSString *name;
-@property (nonatomic, strong) NSString *value;
-@property (nonatomic, strong) NSDictionary *attributes;
+// members variables
+@property (nonatomic, strong) NSString       *name;
+@property (nonatomic, strong) NSString       *value;
+@property (nonatomic, strong) NSDictionary   *attributes;
 @property (nonatomic, strong) NSMutableArray *children;
-@property (nonatomic, weak) SAXMLElement *parent;
+@property (nonatomic, weak)   SAXMLElement   *parent;
 
-// functions
+/**
+ * Method that safely gets the name of the XML element
+ *
+ * @return the XML tag name
+ */
 - (NSString*) getName;
+
+/**
+ * Method that safely gets the internal XML element value
+ *
+ * @return the value, as a string
+ */
 - (NSString*) getValue;
-- (NSString*) getAttribute:(NSString*)name;
+
+/**
+ * Method that returns the value of a given XML attribute
+ *
+ * @param name  the name of the XML attribute
+ * @return      the value of the XML attribute, as as string
+ */
+- (NSString*) getAttribute:(NSString*) name;
 
 @end
 
-//
-// main parser definition
+/**
+ * Class that abstracts away the complexities of XML parsing into a 
+ * series of utility methods
+ */
 @interface SAXMLParser : NSObject
 
 // the error - in case of any
 @property (nonatomic, strong) NSError *errorResult;
 
 /**
- *  Function that perses a bunch of XML data
+ * Method that parses a block of XML data as a NSData object
  *
- *  @param xml the XML data object
+ * @param   xml the XML data object
+ * @return  the start (root) XML element, as an SAXMLElement object
  */
 - (SAXMLElement*) parseXMLData:(NSData*)xml;
 
 /**
- *  Function that perses a bunch of XML strings
+ * Method that parses a block of XML data as string
  *
- *  @param xml the xml string
+ * @param   xml the XML data object
+ * @return  the start (root) XML element, as an SAXMLElement object
  */
 - (SAXMLElement*) parseXMLString:(NSString*)xml;
 
-/**
- *  Get the error
- *
- *  @return Error object
- */
-- (NSError*)getError;
-
-/**
- *  Function that prints all the level
- */
-- (void) printLevels;
-
 @end
 
-// typedef for an iterator block
-typedef void (^SAXMLIterateBlock)(SAXMLElement *element);
-
-// static functions over the parser
+/**
+ * Extension over SAXMLParser that adds static method
+ */
 @interface SAXMLParser (SAStaticFunctions)
 
-+ (void) searchSiblingsAndChildrenOf:(SAXMLElement*)element
-                             forName:(NSString*)name
-                                into:(NSMutableArray*)container;
-//
-// @brief: function that returns an array of found elements that correspond to
-// the name given for the search, given that the search starts from the current
-// element and checks all siblings and children
-+ (NSMutableArray*) searchSiblingsAndChildrenOf:(SAXMLElement*)element
-                                        forName:(NSString*)name;
+/**
+ * Method that makes a search in the current node's siblings and children by a
+ * given "name" string parameter.
+ * It will return the result into the list of XML elements given as paramter.
+ *
+ * @param node  the XML parent node
+ * @param name  the XML name ot search for
+ * @param array a list of returned Elements
+ */
++ (void) searchSiblingsAndChildrenOf:(SAXMLElement*) element
+                             forName:(NSString*) name
+                                into:(NSMutableArray*) array;
+/**
+ * Method that returns a list of XML elements after performing a thorough 
+ * search of all the node parameter's siblings and children, by a given "name".
+ *
+ * @param node  the parent node
+ * @param name  the name to search for
+ * @return      a List of XML elements
+ */
++ (NSMutableArray*) searchSiblingsAndChildrenOf:(SAXMLElement*) element
+                                        forName:(NSString*) name;
 
-//
-// @brief: doing the same thing as the function above, only the result is passed down
-// as an interation block
-+ (void) searchSiblingsAndChildrenOf:(SAXMLElement*)element
-                             forName:(NSString*)name
-                         andInterate:(SAXMLIterateBlock)block;
+/**
+ * Method that iterates over each children or sibling of the given XML node paramter.
+ * The block is a method with one XML element parameter.
+ *
+ * @param node  the XML parent node
+ * @param name  the name of the XML element
+ * @param block a block of type SAXMLIterator
+ */
++ (void) searchSiblingsAndChildrenOf:(SAXMLElement*) element
+                             forName:(NSString*) name
+                         andInterate:(saDidFindXMLElement) block;
 
-//
-// @brief: shorthand version of a function that returns the first intance of
-// a TBXMLElement wrapped as a NSValue
-+ (SAXMLElement*) findFirstIntanceInSiblingsAndChildrenOf:(SAXMLElement*)element
-                                                  forName:(NSString*)name;
+/**
+ * Finds only the first instance of a XML element with given name by 
+ * searching in all of the node parameter's siblings and children.
+ *
+ * @param node  the parent node
+ * @param name  the name to search for
+ * @return      the first element found
+ */
++ (SAXMLElement*) findFirstIntanceInSiblingsAndChildrenOf:(SAXMLElement*) element
+                                                  forName:(NSString*) name;
 
-//
-// @brief: a function that returns a boolean if at least one element given the name
-// is found in all siblings and children of the current element
-+ (BOOL) checkSiblingsAndChildrenOf:(SAXMLElement*)element
-                            forName:(NSString*)name;
+/**
+ * Method that checks if in all children and siblings of a XML node, 
+ * there exists at least one element with given name
+ *
+ * @param node  parent XML node
+ * @param name  name to search for
+ * @return      true if found any, false otherwise
+ */
++ (BOOL) checkSiblingsAndChildrenOf:(SAXMLElement*) element
+                            forName:(NSString*) name;
 
 @end

@@ -1,15 +1,10 @@
-//
-//  SAXMLParser.m
-//  SAXMLParser
-//
-//  Created by Gabriel Coman on 18/04/2016.
-//  Copyright © 2016 Gabriel Coman. All rights reserved.
-//
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 
 #import "SAXMLParser.h"
 
-//
-// The SAXMLElement object
 @implementation SAXMLElement
 
 - (NSString*) getName {
@@ -29,21 +24,16 @@
 
 @end
 
-//
-// The SAXMLParser object
-// That does the actual XML parsing
 @interface SAXMLParser ()  <NSXMLParserDelegate>
 
+// internal members variables needed to parse the dictionary
 @property (nonatomic, strong) NSMutableDictionary *stackDict;
-@property (nonatomic, assign) NSInteger indent;
-@property (nonatomic, strong) NSMutableString *textInProgress;
+@property (nonatomic, assign) NSInteger           indent;
+@property (nonatomic, strong) NSMutableString     *textInProgress;
 
 @end
 
 @implementation SAXMLParser
-
-#pragma mark -
-#pragma mark Public methods
 
 - (SAXMLElement*) parseXMLData:(NSData *)xml {
     return [self objectWithData:xml];
@@ -53,10 +43,16 @@
     return [self parseXMLData:[xml dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
-#pragma mark -
-#pragma mark Parsing
-
+/**
+ * This method is the actual parsing method, that tries to parse a 
+ * given XML block and return the post-hoc results
+ *
+ * @param data a NSData object containing XML
+ * @return     the root XML element, as a SAXMLElement object
+ */
 - (SAXMLElement*) objectWithData:(NSData *)data {
+    
+    // the text being parsed
     _textInProgress = [[NSMutableString alloc] init];
     
     // Initialize the stack with a fresh dictionary
@@ -121,11 +117,23 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark NSXMLParserDelegate methods
-
-- (void)parser:(NSXMLParser *)parser didStartElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName attributes:(NSDictionary *)attributeDict
-{
+/**
+ * Overridden NSXMLParserDelegate method that signals the start of parsing
+ * for a new XML element.
+ * 
+ * @param parser        the current parser instance
+ * @param elementName   the current XML element name
+ * @param namespaceURI  the namespace URI
+ * @param qName         the fully qualified XML element name
+ * @param attributeDict a dictionary with attributes for the XML element
+ *
+ */
+- (void) parser:(NSXMLParser*) parser
+didStartElement:(NSString*) elementName
+   namespaceURI:(NSString*) namespaceURI
+  qualifiedName:(NSString*) qName
+     attributes:(NSDictionary*) attributeDict {
+    
     // create current element
     SAXMLElement *current = [[SAXMLElement alloc] init];
     current.name = elementName;
@@ -149,14 +157,33 @@
     _indent++;
 }
 
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string
-{
+/**
+ * Overridden NSXMLParserDelegate method that signals characters were found
+ * associated with a XML element (basically it's content)
+ *
+ * @param parser the current parser instance
+ * @param string the string that's been found
+ */
+- (void) parser:(NSXMLParser*) parser
+foundCharacters:(NSString*) string {
     // Build the text value
     [_textInProgress appendString:string];
 }
 
-- (void)parser:(NSXMLParser *)parser didEndElement:(NSString *)elementName namespaceURI:(NSString *)namespaceURI qualifiedName:(NSString *)qName
-{
+/**
+ * Overridden NSXMLParserDelegate method that signals the end of parsing for 
+ * the current XML element.
+ *
+ * @param parser        the current parser instance
+ * @param elementName   the current XML element name
+ * @param namespaceURI  the namespace URI
+ * @param qName         the fully qualified XML element name
+ */
+- (void) parser:(NSXMLParser*) parser
+  didEndElement:(NSString*) elementName
+   namespaceURI:(NSString*) namespaceURI
+  qualifiedName:(NSString*) qName {
+    
     // get correct indent for writing end
     NSInteger cindent = _indent - 1;
     
@@ -191,91 +218,87 @@
     _indent--;
 }
 
-- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
+/**
+ * Overridden NSXMLParserDelegate method that signals an error was encountered
+ * while parsing the current XML element
+ * 
+ * @param parser     the current parser instance
+ * @param parseError the error (as a NSError object)
+ */
+- (void) parser:(NSXMLParser*) parser
+parseErrorOccurred:(NSError*) parseError {
     // Set the error pointer to the parser's error object
     _errorResult = parseError;
 }
 
-- (void) printLevels {
-    
-    // fort all keys in the stack dictionary (N .... 0 levels, ordered)
-    NSArray *ascendingKeys = [_stackDict.allKeys sortedArrayUsingComparator:^NSComparisonResult(id  _Nonnull obj1, id  _Nonnull obj2) {
-        if ([(NSNumber*)obj1 integerValue] < [(NSNumber*)obj2 integerValue]) {
-            return NSOrderedAscending;
-        }
-        return NSOrderedDescending;
-    }];
-    
-    // now print
-    for (NSNumber *key in ascendingKeys) {
-        NSArray *elements = [_stackDict objectForKey:key];
-        for (SAXMLElement *element in elements){
-            NSLog(@"%ld | %@ > %ld", (long)[key integerValue], element.name, (long)element.children.count);
-        }
-    }
-    
-}
-
-#pragma mark -
-#pragma mark Getters and Setters
-
-- (NSError*) getError {
-    return _errorResult;
-}
-
 @end
 
-// static functions over the parser
 @implementation SAXMLParser (SAStaticFunctions)
 
-+ (void) searchSiblingsAndChildrenOf:(SAXMLElement*)element
-                             forName:(NSString*)name
-                                into:(NSMutableArray*)container
-{
++ (void) searchSiblingsAndChildrenOf:(SAXMLElement*) element
+                             forName:(NSString*) name
+                                into:(NSMutableArray*) array {
+    
+    // explore the whole XML document tree and add matching elements
+    // into the array
     for (SAXMLElement *child in element.children) {
         if ([child.name isEqualToString:name]){
-            [container addObject:child];
+            [array addObject:child];
         }
         
-        [self searchSiblingsAndChildrenOf:child forName:name into:container];
+        [self searchSiblingsAndChildrenOf:child forName:name into:array];
     }
 }
 
-+ (NSMutableArray*) searchSiblingsAndChildrenOf:(SAXMLElement*)element
-                                        forName:(NSString*)name
-{
++ (NSMutableArray*) searchSiblingsAndChildrenOf:(SAXMLElement*) element
+                                        forName:(NSString*) name {
     // init container
-    NSMutableArray *container = [@[] mutableCopy];
+    NSMutableArray *array = [@[] mutableCopy];
     
     // call the above function to fill the array
-    [self searchSiblingsAndChildrenOf:element forName:name into:container];
-    return container;
+    [self searchSiblingsAndChildrenOf:element
+                              forName:name
+                                 into:array];
+    
+    // return the container
+    return array;
 }
 
-+ (SAXMLElement*) findFirstIntanceInSiblingsAndChildrenOf:(SAXMLElement*)element
-                                                  forName:(NSString*)name
-{
-    NSMutableArray *container = [self searchSiblingsAndChildrenOf:element forName:name];
-    if (container.count >= 1) {
-        return [container firstObject];
-    }
-    return NULL;
++ (SAXMLElement*) findFirstIntanceInSiblingsAndChildrenOf:(SAXMLElement*) element
+                                                  forName:(NSString*) name {
+    
+    // get the array of elements
+    NSMutableArray *array = [self searchSiblingsAndChildrenOf:element
+                                                      forName:name];
+    
+    // return either the first one or nil
+    return array.count >= 1 ? [array firstObject] : nil;
 }
 
-+ (void) searchSiblingsAndChildrenOf:(SAXMLElement*)element
-                             forName:(NSString*)name
-                         andInterate:(SAXMLIterateBlock)block
-{
-    NSMutableArray *container = [self searchSiblingsAndChildrenOf:element forName:name];
-    for (SAXMLElement *element in container) {
++ (void) searchSiblingsAndChildrenOf:(SAXMLElement*) element
+                             forName:(NSString*) name
+                         andInterate:(saDidFindXMLElement) block {
+    
+    
+    // get an array of matching elements
+    NSMutableArray *array = [self searchSiblingsAndChildrenOf:element
+                                                      forName:name];
+    
+    // iterate over it and call the block
+    for (SAXMLElement *element in array) {
         block(element);
     }
 }
 
-+ (BOOL) checkSiblingsAndChildrenOf:(SAXMLElement*)element
-                            forName:(NSString*)name {
-    NSMutableArray *container = [self searchSiblingsAndChildrenOf:element forName:name];
-    return [container count] > 0;
++ (BOOL) checkSiblingsAndChildrenOf:(SAXMLElement*) element
+                            forName:(NSString*) name {
+    
+    // get an array of matching elements
+    NSMutableArray *array = [self searchSiblingsAndChildrenOf:element
+                                                          forName:name];
+    
+    // return whether at least one element was found
+    return [array count] > 0;
 }
 
 @end

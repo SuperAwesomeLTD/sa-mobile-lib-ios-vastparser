@@ -1,10 +1,7 @@
-//
-//  SAVAST2Parser.m
-//  Pods
-//
-//  Created by Gabriel Coman on 17/12/2015.
-//
-//
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 
 #import "SAVASTParser.h"
 #import "SAXMLParser.h"
@@ -20,6 +17,12 @@
 
 @implementation SAVASTParser
 
+/**
+ * Simple constructor that initializes the Header dictionary to be sent along
+ * with every request.
+ *
+ * @return a new object instance
+ */
 - (id) init {
     if (self = [super init]) {
         _header = @{@"Content-Type":@"application/json",
@@ -29,7 +32,8 @@
     return self;
 }
 
-- (void) parseVAST:(NSString*) url withResponse:(saDidParseVAST) response {
+- (void) parseVAST:(NSString*) url
+      withResponse:(saDidParseVAST) response {
     
     // get a local block copy
     __block saDidParseVAST localDidParseVAST = response ? response : ^(SAVASTAd *ad) {};
@@ -96,7 +100,16 @@
     
 }
 
-- (void) recursiveParse:(NSString*) url fromStartingAd:(SAVASTAd*)startAd withResponse:(saDidParseVAST) response {
+/**
+ * Recursive method that handles all the VAST parsing
+ *
+ * @param url       url to get the vast from
+ * @param startAd   ad that gets passed down
+ * @param response  a copy of the saDidParseVAST callback block
+ */
+- (void) recursiveParse:(NSString*) url
+         fromStartingAd:(SAVASTAd*)startAd
+           withResponse:(saDidParseVAST) response {
     
     SANetwork *network = [[SANetwork alloc] init];
     [network sendGET:url withQuery:@{} andHeader:_header withResponse:^(NSInteger status, NSString *payload, BOOL success) {
@@ -171,7 +184,7 @@
     
     SAXMLElement *vastUri = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:element forName:@"VASTAdTagURI"];
     if (vastUri != nil) {
-        ad.vastRedirect = [vastUri getName];
+        ad.vastRedirect = [SAUtils decodeHTMLEntitiesFrom:[vastUri getValue]];
     }
     
     // get errors
