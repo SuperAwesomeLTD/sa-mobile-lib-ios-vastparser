@@ -45,21 +45,18 @@
 #pragma mark -
 #pragma mark Public methods
 
-- (SAXMLElement*) parseXMLData:(NSData *)xml
-{
+- (SAXMLElement*) parseXMLData:(NSData *)xml {
     return [self objectWithData:xml];
 }
 
-- (SAXMLElement*) parseXMLString:(NSString *)xml
-{
+- (SAXMLElement*) parseXMLString:(NSString *)xml {
     return [self parseXMLData:[xml dataUsingEncoding:NSUTF8StringEncoding]];
 }
 
 #pragma mark -
 #pragma mark Parsing
 
-- (SAXMLElement*) objectWithData:(NSData *)data
-{
+- (SAXMLElement*) objectWithData:(NSData *)data {
     _textInProgress = [[NSMutableString alloc] init];
     
     // Initialize the stack with a fresh dictionary
@@ -194,8 +191,7 @@
     _indent--;
 }
 
-- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError
-{
+- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
     // Set the error pointer to the parser's error object
     _errorResult = parseError;
 }

@@ -6,21 +6,19 @@
 //
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 
-// forward declaration
-@class SAAd;
+@class SAVASTAd;
+@class SAVASTMedia;
+@class SAXMLElement;
 
-// callback
-typedef void (^vastParsingDone)(SAAd *ad);
-
-////////////////////////////////////////////////////////////////////////////////
-// The VASTParser main class
-////////////////////////////////////////////////////////////////////////////////
+// method callback
+typedef void (^saDidParseVAST)(SAVASTAd *ad);
 
 @interface SAVASTParser : NSObject
 
-// functions
-- (void) parseVASTURL:(NSString *)url done:(vastParsingDone)vastParsing;
+- (void) parseVAST:(NSString*) url withResponse:(saDidParseVAST) response;
+- (SAVASTAd*) parseAdXML: (SAXMLElement*) element;
+- (SAVASTMedia*) parseMediaXML: (SAXMLElement*) element;
 
 @end

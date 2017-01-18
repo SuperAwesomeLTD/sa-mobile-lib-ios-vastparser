@@ -1,23 +1,18 @@
-//
-//  SABlackMask.m
-//  Pods
-//
-//  Created by Gabriel Coman on 08/01/2016.
-//
-//
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 
 #import "SABlackMask.h"
 #import "SAVideoPlayer.h"
 
 @implementation SABlackMask
 
-- (id) init {
-    if (self = [super init]) {
-        
-    }
-    return self;
-}
-
+/**
+ * Overridden "didMoveToSuperview" that resizes the black mask to 
+ * the correct size for the video (usually the superview in question) 
+ * every time it in turn changes.
+ */
 - (void) didMoveToSuperview {
     self.backgroundColor = [UIColor clearColor];
     CGRect _parentFrame = self.superview.frame;

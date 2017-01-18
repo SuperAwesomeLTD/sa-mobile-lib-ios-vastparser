@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="3.0">
+    <Ad id="undefined">
+        <InLine>
+            <AdSystem version="1.0">AwesomeAds</AdSystem>
+            <AdTitle><![CDATA[REX fake exchange creative]]></AdTitle>
+            <Description />
+            <Error><![CDATA[https://ads.staging.superawesome.tv/]]></Error>
+            <Impression id="23"><![CDATA[https://ads.staging.superawesome.tv/v2/impr1/]]></Impression>
+            <Impression id="23"><![CDATA[https://ads.staging.superawesome.tv/v2/impr2/]]></Impression>
+            <Impression id="23"><![CDATA[https://ads.staging.superawesome.tv/v2/impr3/]]></Impression>
+        </InLine>
+    </Ad>
+</VAST>

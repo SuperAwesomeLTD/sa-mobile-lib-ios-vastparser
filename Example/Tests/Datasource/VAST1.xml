@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="3.0">
+   <Ad id="undefined">
+      <InLine>
+         <AdSystem version="1.0">AwesomeAds</AdSystem>
+         <AdTitle><![CDATA[video]]></AdTitle>
+         <Description />
+         <Error><![CDATA[https://ads.superawesome.tv/v2/video/error?placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=3232269&amp;device=web&amp;country=GB&amp;code=[ERRORCODE]]]></Error>
+         <Impression id="23"><![CDATA[https://ads.superawesome.tv/v2/video/impression?placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=4538730&amp;device=web&amp;country=GB]]></Impression>
+         <Creatives>
+            <Creative id="-1">
+               <Linear>
+                  <Duration>00:00:00</Duration>
+                  <TrackingEvents>
+                     <Tracking event="creativeView">https://ads.superawesome.tv/v2/video/tracking?event=creativeView&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=4240693&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="start">https://ads.superawesome.tv/v2/video/tracking?event=start&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=3286915&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="firstQuartile">https://ads.superawesome.tv/v2/video/tracking?event=firstQuartile&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=6712493&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="midpoint">https://ads.superawesome.tv/v2/video/tracking?event=midpoint&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=6657530&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="thirdQuartile">https://ads.superawesome.tv/v2/video/tracking?event=thirdQuartile&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=5158651&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="complete">https://ads.superawesome.tv/v2/video/tracking?event=complete&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=2312316&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="mute">https://ads.superawesome.tv/v2/video/tracking?event=mute&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=531491&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="unmute">https://ads.superawesome.tv/v2/video/tracking?event=unmute&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=9637924&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="pause">https://ads.superawesome.tv/v2/video/tracking?event=pause&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=7850389&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="rewind">https://ads.superawesome.tv/v2/video/tracking?event=rewind&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=3914536&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="resume">https://ads.superawesome.tv/v2/video/tracking?event=resume&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=2031219&amp;device=web&amp;country=GB</Tracking>
+                     <Tracking event="skip">https://ads.superawesome.tv/v2/video/tracking?event=skip&amp;placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=13548&amp;device=web&amp;country=GB</Tracking>
+                  </TrackingEvents>
+                  <VideoClicks>
+                     <ClickThrough id="">https://ads.superawesome.tv/v2/video/click?placement=30479&amp;creative=-1&amp;line_item=-1&amp;sdkVersion=unknown&amp;rnd=1809240&amp;device=web&amp;country=GB</ClickThrough>
+                  </VideoClicks>
+                  <MediaFiles>
+                     <MediaFile type="video/mp4" width="640" height="480" delivery="progressive" id="-1" bitrate="720"><![CDATA[https://ads.superawesome.tv/v2/demo_images/video.mp4]]></MediaFile>
+                     <MediaFile type="application/x-mpegURL" width="640" height="480" delivery="streaming" id="-1" bitrate="1800"><![CDATA[https://ads.superawesome.tv/v2/demo_images/video.m3u8]]></MediaFile>
+                  </MediaFiles>
+               </Linear>
+            </Creative>
+         </Creatives>
+      </InLine>
+   </Ad>
+</VAST>

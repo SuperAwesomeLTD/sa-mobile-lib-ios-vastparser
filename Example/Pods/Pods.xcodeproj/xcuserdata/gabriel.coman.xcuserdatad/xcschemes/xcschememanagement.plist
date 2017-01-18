@@ -9,7 +9,7 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>SAEvents.xcscheme</key>
+		<key>Pods-SAVASTParser_Tests.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -47,42 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>0FE91BD88F0D00C2B08235E68AE9A58F</key>
+		<key>03443B1AF286EE92E79409D9C69F2293</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4C265CF7616F41420DAD3987FDCA953F</key>
+		<key>12F6525759956BA0C10A01682B46125B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>61E40F67AF695E73ECE9E96DF146E981</key>
+		<key>61FA40CBED186DD82CB3290062D28235</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>976EC603C504D2642E54F95AA25AA6BF</key>
+		<key>9D32B13351BB01798EF34157DC4F76C2</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>97818E33C3D452F20CBAB7C50A24928E</key>
+		<key>C9CD9214F888756988B4C37AF10A0ED7</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B50BE44B3D9AC05997DE8E7D361A4F47</key>
+		<key>D664F2DD80E4B520F629C03DE31523E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D86D285B41CCC19C3884DCE93B072B55</key>
+		<key>D817D7D7C76B8B2F2480C07A8C67CABD</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>EBD66BCEF06E67301D3F305EE187C706</key>
+		<key>DB22FB8066B43E90953BEE608687F090</key>
 		<dict>
 			<key>primary</key>
 			<true/>

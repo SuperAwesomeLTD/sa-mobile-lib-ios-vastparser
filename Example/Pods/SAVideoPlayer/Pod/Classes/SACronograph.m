@@ -1,17 +1,21 @@
-//
-//  SACronograph.m
-//  TestVASTParser
-//
-//  Created by Gabriel Coman on 15/12/2015.
-//  Copyright © 2015 Gabriel Coman. All rights reserved.
-//
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 
 #import "SACronograph.h"
 
-//
-// @brief: Category for label
+/**
+ * Category class for "UILabel" that adds the "createChrono" method.
+ */
 @interface UILabel (Chronograph)
-+ (UILabel*)createChrono;
+
+/**
+ * Factory method that creates a special type of label, suitable to act as a 
+ * timer for a video.
+ */
++ (UILabel*) createChrono;
+
 @end
 
 @implementation UILabel (Cronograph)
@@ -31,17 +35,21 @@
 
 @interface SACronograph ()
 
-// parent frame
+// the cronograph parent frame
 @property (nonatomic, assign) CGRect parentFrame;
 
-// subviews
+// the ad label defining the chronograph
 @property (nonatomic, strong) UILabel *adLabel;
 
 @end
 
 @implementation SACronograph
 
-// customize init
+/**
+ * Overridden init method that sets the background color as transparent
+ *
+ * @return an instance of the cronograph
+ */
 - (id) init {
     if (self = [super init]) {
         self.backgroundColor = [UIColor clearColor];
@@ -50,7 +58,13 @@
     return self;
 }
 
+/**
+ * Overridden "didMoveToSuperview" that resizes the cronograph to
+ * the correct size for the video (usually the superview in question)
+ * every time it in turn changes.
+ */
 - (void) didMoveToSuperview {
+    
     // get the parent frame
     _parentFrame = self.superview.frame;
     

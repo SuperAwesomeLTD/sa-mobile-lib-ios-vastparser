@@ -1,1 +1,1 @@
-../../../SANetworking/Pod/Classes/SAFileDownloader.h
+../../../SANetworking/Pod/Classes/File/SAFileDownloader.h

@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1BBD74EC1E2F642600F3EF6B /* xml1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74E91E2F642600F3EF6B /* xml1.xml */; };
+		1BBD74ED1E2F642600F3EF6B /* xml2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74EA1E2F642600F3EF6B /* xml2.xml */; };
+		1BBD74EE1E2F642600F3EF6B /* xml3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74EB1E2F642600F3EF6B /* xml3.xml */; };
+		1BBD74F21E2F6CD800F3EF6B /* SAVAST_Parser_Local_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BBD74F11E2F6CD800F3EF6B /* SAVAST_Parser_Local_Tests.m */; };
+		1BBD74F71E2F6F4D00F3EF6B /* xml4.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74F31E2F6D1200F3EF6B /* xml4.xml */; };
+		1BBD74F81E2F6F4F00F3EF6B /* xml5.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74F41E2F6D1200F3EF6B /* xml5.xml */; };
+		1BBD74FB1E2F6FB300F3EF6B /* xml6.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74F91E2F6FB000F3EF6B /* xml6.xml */; };
+		1BBD75101E2F72F700F3EF6B /* VAST1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74FC1E2F72F300F3EF6B /* VAST1.xml */; };
+		1BBD75111E2F72F700F3EF6B /* VAST2.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74FD1E2F72F300F3EF6B /* VAST2.0.xml */; };
+		1BBD75121E2F72F700F3EF6B /* VAST2.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74FE1E2F72F300F3EF6B /* VAST2.1.xml */; };
+		1BBD75131E2F72F700F3EF6B /* VAST3.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD74FF1E2F72F300F3EF6B /* VAST3.0.xml */; };
+		1BBD75141E2F72F700F3EF6B /* VAST3.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD75001E2F72F300F3EF6B /* VAST3.1.xml */; };
+		1BBD75151E2F72F700F3EF6B /* VAST4.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD75011E2F72F300F3EF6B /* VAST4.0.xml */; };
+		1BBD75161E2F72F700F3EF6B /* VAST5.0.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD75021E2F72F300F3EF6B /* VAST5.0.xml */; };
+		1BBD75171E2F72F700F3EF6B /* VAST5.1.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD75031E2F72F300F3EF6B /* VAST5.1.xml */; };
+		1BBD75181E2F72F700F3EF6B /* VAST5.2.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD75041E2F72F300F3EF6B /* VAST5.2.xml */; };
+		1BBD75191E2F72F700F3EF6B /* VAST5.3.xml in Resources */ = {isa = PBXBuildFile; fileRef = 1BBD75051E2F72F300F3EF6B /* VAST5.3.xml */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -19,8 +36,9 @@
 		6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
-		6003F5BC195388D20070C39A /* Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* Tests.m */; };
+		6003F5BC195388D20070C39A /* SAXML_Parser_Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* SAXML_Parser_Tests.m */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
+		9BB19E514B94405A952A26F0 /* libPods-SAVASTParser_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D7AFD730C415E81E6CAB39FE /* libPods-SAVASTParser_Tests.a */; };
 		A7A00DB7DAAC959AB5710B91 /* libPods-SAVASTParser_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1CA81EEDC2D59A3F6508E0EE /* libPods-SAVASTParser_Example.a */; };
 /* End PBXBuildFile section */
 
@@ -36,7 +54,26 @@
 
 /* Begin PBXFileReference section */
 		056AA0CF45BAA9AD9FAB3C26 /* SAVASTParser.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SAVASTParser.podspec; path = ../SAVASTParser.podspec; sourceTree = "<group>"; };
+		0C0FA522C7AA1F94D4385510 /* Pods-SAVASTParser_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests.debug.xcconfig"; sourceTree = "<group>"; };
+		1BBD74E91E2F642600F3EF6B /* xml1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml1.xml; sourceTree = "<group>"; };
+		1BBD74EA1E2F642600F3EF6B /* xml2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml2.xml; sourceTree = "<group>"; };
+		1BBD74EB1E2F642600F3EF6B /* xml3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml3.xml; sourceTree = "<group>"; };
+		1BBD74F11E2F6CD800F3EF6B /* SAVAST_Parser_Local_Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAVAST_Parser_Local_Tests.m; sourceTree = "<group>"; };
+		1BBD74F31E2F6D1200F3EF6B /* xml4.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml4.xml; sourceTree = "<group>"; };
+		1BBD74F41E2F6D1200F3EF6B /* xml5.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml5.xml; sourceTree = "<group>"; };
+		1BBD74F91E2F6FB000F3EF6B /* xml6.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = xml6.xml; sourceTree = "<group>"; };
+		1BBD74FC1E2F72F300F3EF6B /* VAST1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST1.xml; sourceTree = "<group>"; };
+		1BBD74FD1E2F72F300F3EF6B /* VAST2.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST2.0.xml; sourceTree = "<group>"; };
+		1BBD74FE1E2F72F300F3EF6B /* VAST2.1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST2.1.xml; sourceTree = "<group>"; };
+		1BBD74FF1E2F72F300F3EF6B /* VAST3.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST3.0.xml; sourceTree = "<group>"; };
+		1BBD75001E2F72F300F3EF6B /* VAST3.1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST3.1.xml; sourceTree = "<group>"; };
+		1BBD75011E2F72F300F3EF6B /* VAST4.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST4.0.xml; sourceTree = "<group>"; };
+		1BBD75021E2F72F300F3EF6B /* VAST5.0.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST5.0.xml; sourceTree = "<group>"; };
+		1BBD75031E2F72F300F3EF6B /* VAST5.1.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST5.1.xml; sourceTree = "<group>"; };
+		1BBD75041E2F72F300F3EF6B /* VAST5.2.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST5.2.xml; sourceTree = "<group>"; };
+		1BBD75051E2F72F300F3EF6B /* VAST5.3.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = VAST5.3.xml; sourceTree = "<group>"; };
 		1CA81EEDC2D59A3F6508E0EE /* libPods-SAVASTParser_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SAVASTParser_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2F46D802CD26F3A940F0A69B /* Pods-SAVASTParser_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		5CD58D8AE25071FF65924A38 /* Pods-SAVASTParser_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example.release.xcconfig"; sourceTree = "<group>"; };
 		6003F58A195388D20070C39A /* SAVASTParser_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAVASTParser_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -55,9 +92,10 @@
 		6003F5AF195388D20070C39A /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		6003F5B7195388D20070C39A /* Tests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Tests-Info.plist"; sourceTree = "<group>"; };
 		6003F5B9195388D20070C39A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		6003F5BB195388D20070C39A /* Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Tests.m; sourceTree = "<group>"; };
+		6003F5BB195388D20070C39A /* SAXML_Parser_Tests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SAXML_Parser_Tests.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		D7AFD730C415E81E6CAB39FE /* libPods-SAVASTParser_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SAVASTParser_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D88B4854BEF932C9E3D2DA47 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		E381881076F5A098ECAFF0E3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
 		F1F77585804364C58173D2B5 /* Pods-SAVASTParser_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example.debug.xcconfig"; sourceTree = "<group>"; };
@@ -82,17 +120,43 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
+				9BB19E514B94405A952A26F0 /* libPods-SAVASTParser_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1BBD74E81E2F642600F3EF6B /* Datasource */ = {
+			isa = PBXGroup;
+			children = (
+				1BBD74FC1E2F72F300F3EF6B /* VAST1.xml */,
+				1BBD74FD1E2F72F300F3EF6B /* VAST2.0.xml */,
+				1BBD74FE1E2F72F300F3EF6B /* VAST2.1.xml */,
+				1BBD74FF1E2F72F300F3EF6B /* VAST3.0.xml */,
+				1BBD75001E2F72F300F3EF6B /* VAST3.1.xml */,
+				1BBD75011E2F72F300F3EF6B /* VAST4.0.xml */,
+				1BBD75021E2F72F300F3EF6B /* VAST5.0.xml */,
+				1BBD75031E2F72F300F3EF6B /* VAST5.1.xml */,
+				1BBD75041E2F72F300F3EF6B /* VAST5.2.xml */,
+				1BBD75051E2F72F300F3EF6B /* VAST5.3.xml */,
+				1BBD74E91E2F642600F3EF6B /* xml1.xml */,
+				1BBD74EA1E2F642600F3EF6B /* xml2.xml */,
+				1BBD74EB1E2F642600F3EF6B /* xml3.xml */,
+				1BBD74F31E2F6D1200F3EF6B /* xml4.xml */,
+				1BBD74F41E2F6D1200F3EF6B /* xml5.xml */,
+				1BBD74F91E2F6FB000F3EF6B /* xml6.xml */,
+			);
+			path = Datasource;
+			sourceTree = "<group>";
+		};
 		29D2C47AF5C02983F7667D89 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
 				F1F77585804364C58173D2B5 /* Pods-SAVASTParser_Example.debug.xcconfig */,
 				5CD58D8AE25071FF65924A38 /* Pods-SAVASTParser_Example.release.xcconfig */,
+				0C0FA522C7AA1F94D4385510 /* Pods-SAVASTParser_Tests.debug.xcconfig */,
+				2F46D802CD26F3A940F0A69B /* Pods-SAVASTParser_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -126,6 +190,7 @@
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
 				1CA81EEDC2D59A3F6508E0EE /* libPods-SAVASTParser_Example.a */,
+				D7AFD730C415E81E6CAB39FE /* libPods-SAVASTParser_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -159,7 +224,9 @@
 		6003F5B5195388D20070C39A /* Tests */ = {
 			isa = PBXGroup;
 			children = (
-				6003F5BB195388D20070C39A /* Tests.m */,
+				1BBD74E81E2F642600F3EF6B /* Datasource */,
+				6003F5BB195388D20070C39A /* SAXML_Parser_Tests.m */,
+				1BBD74F11E2F6CD800F3EF6B /* SAVAST_Parser_Local_Tests.m */,
 				6003F5B6195388D20070C39A /* Supporting Files */,
 			);
 			path = Tests;
@@ -212,9 +279,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "SAVASTParser_Tests" */;
 			buildPhases = (
+				A736ABA7AC634C9E0322BC28 /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
+				919A551D5FD5A9F4334DA0FB /* [CP] Embed Pods Frameworks */,
+				ACEA01EBB3C2E64F6DE5413B /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -266,6 +336,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */,
+				1BBD74ED1E2F642600F3EF6B /* xml2.xml in Resources */,
+				1BBD75141E2F72F700F3EF6B /* VAST3.1.xml in Resources */,
+				1BBD75151E2F72F700F3EF6B /* VAST4.0.xml in Resources */,
+				1BBD74EC1E2F642600F3EF6B /* xml1.xml in Resources */,
+				1BBD75171E2F72F700F3EF6B /* VAST5.1.xml in Resources */,
+				1BBD75191E2F72F700F3EF6B /* VAST5.3.xml in Resources */,
+				1BBD74FB1E2F6FB300F3EF6B /* xml6.xml in Resources */,
+				1BBD74EE1E2F642600F3EF6B /* xml3.xml in Resources */,
+				1BBD75101E2F72F700F3EF6B /* VAST1.xml in Resources */,
+				1BBD74F71E2F6F4D00F3EF6B /* xml4.xml in Resources */,
+				1BBD75111E2F72F700F3EF6B /* VAST2.0.xml in Resources */,
+				1BBD74F81E2F6F4F00F3EF6B /* xml5.xml in Resources */,
+				1BBD75161E2F72F700F3EF6B /* VAST5.0.xml in Resources */,
+				1BBD75121E2F72F700F3EF6B /* VAST2.1.xml in Resources */,
+				1BBD75131E2F72F700F3EF6B /* VAST3.0.xml in Resources */,
+				1BBD75181E2F72F700F3EF6B /* VAST5.2.xml in Resources */,
 				6003F5A9195388D20070C39A /* Images.xcassets in Resources */,
 				6003F598195388D20070C39A /* InfoPlist.strings in Resources */,
 			);
@@ -309,7 +395,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		8D1CAFB40B85B558AA5B2A45 /* [CP] Embed Pods Frameworks */ = {
@@ -325,6 +411,51 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		919A551D5FD5A9F4334DA0FB /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		A736ABA7AC634C9E0322BC28 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		ACEA01EBB3C2E64F6DE5413B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -344,7 +475,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6003F5BC195388D20070C39A /* Tests.m in Sources */,
+				1BBD74F21E2F6CD800F3EF6B /* SAVAST_Parser_Local_Tests.m in Sources */,
+				6003F5BC195388D20070C39A /* SAXML_Parser_Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -491,6 +623,7 @@
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C0FA522C7AA1F94D4385510 /* Pods-SAVASTParser_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -514,6 +647,7 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 2F46D802CD26F3A940F0A69B /* Pods-SAVASTParser_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (

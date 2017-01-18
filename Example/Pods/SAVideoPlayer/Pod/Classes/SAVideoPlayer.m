@@ -1,28 +1,15 @@
-//
-//  SAVideoPlayer.m
-//  Pods
-//
-//  Created by Gabriel Coman on 05/03/2016.
-//
-//
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Include headers
-////////////////////////////////////////////////////////////////////////////////
-
-// include main header
 #import "SAVideoPlayer.h"
-
-// include other needed libs
 #import "SABlackMask.h"
 #import "SACronograph.h"
 #import <AVFoundation/AVFoundation.h>
 #import <AVKit/AVKit.h>
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Player defines
-////////////////////////////////////////////////////////////////////////////////
-
+// constants used by the video player to check for playback state
 #define AV_END              AVPlayerItemDidPlayToEndTimeNotification
 #define AV_NOEND            AVPlayerItemFailedToPlayToEndTimeNotification
 #define AV_STALLED          AVPlayerItemPlaybackStalledNotification
@@ -36,12 +23,13 @@
 #define AV_KEEPUP           @"playbackLikelyToKeepUp"
 #define AV_TIME             @"loadedTimeRanges"
 
+// constants used in remote playback
 #define MIN_BUFFER_TO_PLAY  3.5
 #define MAX_NR_RECONNECTS   5
 
 @interface SAVideoPlayer ()
 
-// the URL
+// the media URL
 @property (nonatomic, strong) NSURL *mediaURL;
 
 // subviews
@@ -50,14 +38,13 @@
 @property (nonatomic, strong) AVPlayerLayer *playerLayer;
 @property (nonatomic, strong) AVPlayerItem *playerItem;
 
-
 @property (nonatomic, strong) UIView *chrome;
 @property (nonatomic, strong) SABlackMask *mask;
 @property (nonatomic, strong) SACronograph *chrono;
 @property (nonatomic, strong) SAURLClicker *clicker;
 @property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
-// states
+// state variables
 @property (nonatomic, assign) BOOL isReadyHandled;
 @property (nonatomic, assign) BOOL isStartHandled;
 @property (nonatomic, assign) BOOL isFirstQuartileHandled;
@@ -79,17 +66,18 @@
 @property (nonatomic, strong) NSTimer *timer;
 @property (nonatomic, assign) BOOL isNetworkHavingProblems;
 
-@property (nonatomic, strong) savideoplayerEventHandler eventHandler;
-@property (nonatomic, strong) savideoplayerClickHandler clickHandler;
+@property (nonatomic, strong) saVideoPlayerDidReceiveEvent eventHandler;
+@property (nonatomic, strong) saVideoPlayerDidReceiveClick clickHandler;
 
 @end
 
 @implementation SAVideoPlayer
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Init functions
-////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Overridden init method in case library user wants to init from code
+ *
+ * @return a new SAVideoPlayer instance
+ */
 - (id) init {
     if (self = [super init]) {
         _notif = [NSNotificationCenter defaultCenter];
@@ -101,6 +89,11 @@
     return self;
 }
 
+/**
+ * Overridden init method in case library user wants to init from XIB
+ *
+ * @return a new SAVideoPlayer instance
+ */
 - (id) initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         _notif = [NSNotificationCenter defaultCenter];
@@ -112,6 +105,11 @@
     return self;
 }
 
+/**
+ * Overridden init method in case library user wants to init with frame
+ *
+ * @return a new SAVideoPlayer instance
+ */
 - (id) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _notif = [NSNotificationCenter defaultCenter];
@@ -123,14 +121,19 @@
     return self;
 }
 
+/**
+ * Overridden dealloc method
+ */
 - (void) dealloc {
     NSLog(@"SAVideoPlayer dealloc");
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Setup player
-////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Internal setup method that sets up:
+ * - the player
+ * - aux chrome
+ * - all state variables
+ */
 - (void) setup {
     self.backgroundColor = [UIColor blackColor];
     [self setupPlayer];
@@ -138,11 +141,22 @@
     [self setupChecks];
 }
 
+/**
+ * Internal setup method that inits a video view where the video will be
+ * rendered by the AVPlayer / AVPlayerLayer instance
+ */
 - (void) setupPlayer {
     _videoView = [[UIView alloc] initWithFrame:self.bounds];
     [self addSubview:_videoView];
 }
 
+/**
+ * Internal setup method that inits:
+ * - the chrome
+ * - the mask
+ * - the cronograph
+ * - the clicker
+ */
 - (void) setupChome {
     _chrome = [[UIView alloc] initWithFrame:self.bounds];
     [self addSubview:_chrome];
@@ -159,6 +173,10 @@
     [_chrome addSubview:_clicker];
 }
 
+/**
+ * Internal setup method that inits all state variables with their default
+ * values
+ */
 - (void) setupChecks {
     _isStartHandled =
     _isFirstQuartileHandled =
@@ -171,10 +189,6 @@
     _isNetworkHavingProblems = false;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Destroy player
-////////////////////////////////////////////////////////////////////////////////
-
 - (void) destroy {
     [self destroyPlayer];
     [self destroyChrome];
@@ -185,6 +199,10 @@
     }
 }
 
+/**
+ * Internal method that makes sure the player is properly destroyed 
+ * by pausing it, removing it from the view and remove all observers
+ */
 - (void) destroyPlayer {
     [_notif removeObserver:self name:AV_END object:nil];
     [_notif removeObserver:self name:AV_NOEND object:nil];
@@ -214,6 +232,9 @@
     _videoView = NULL;
 }
 
+/**
+ * Internal method that makes sure all the chrome is destroyed
+ */
 - (void) destroyChrome {
     [_mask removeFromSuperview];
     [_chrono removeFromSuperview];
@@ -225,10 +246,6 @@
     _chrono = NULL;
     _chrome = NULL;
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Update & reset player
-////////////////////////////////////////////////////////////////////////////////
 
 - (void) updateToFrame:(CGRect)frame {
     self.frame = frame;
@@ -244,11 +261,16 @@
     [self setup];
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Pause, play, resume
-////////////////////////////////////////////////////////////////////////////////
-
 - (void) playWithMediaURL:(NSURL *)url {
+    
+    // handle error case
+    if (url == nil || url == (NSURL*)[NSNull null] || [[url absoluteString] isEqualToString:@""]) {
+        _eventHandler(Video_Error);
+        return;
+    }
+    
+    // if file isn't nil, then go forward and play it
+    
     [self setup];
     _mediaURL = url;
     _playerItem = [AVPlayerItem playerItemWithURL:_mediaURL];
@@ -263,6 +285,15 @@
 }
 
 - (void) playWithMediaFile:(NSString *)file {
+    
+    // handle error case
+    if (file == nil || file == (NSString*)[NSNull null] || [file isEqualToString:@""]) {
+        _eventHandler(Video_Error);
+        return;
+    }
+    
+    // if file isn't nil, then go forward and play it
+    
     [self setup];
     NSURL *url = [[NSURL alloc] initFileURLWithPath:file isDirectory:false];
     AVAsset *asset = [AVURLAsset URLAssetWithURL:url options:nil];
@@ -276,10 +307,14 @@
     [self setObservers];
 }
 
+/**
+ * Internal method that sets all observers for the notification center as well
+ * as for the player and player item
+ */
 - (void) setObservers {
     
-    NSError *setCategoryErr;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryErr];
+//    NSError *setCategoryErr;
+//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryErr];
     
     [_notif addObserver:self selector:@selector(playerItemDidReachEnd:) name:AV_END object:nil];
     [_notif addObserver:self selector:@selector(playerItemFailedToPlayEndTime:) name:AV_NOEND object:nil];
@@ -303,28 +338,25 @@
     [_player pause];
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Handle clicks
-////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Internal method used to handle button clicks.
+ *
+ * @param: sender the button that send the click event
+ */
 - (void) onClick:(id)sender {
     _clickHandler();
 }
-
-////////////////////////////////////////////////////////////////////////////////
-// MARK: Setters & getters
-////////////////////////////////////////////////////////////////////////////////
 
 - (void) showSmallClickButton {
     _shouldShowSmallClickButton = true;
 }
 
-- (void) setEventHandler:(savideoplayerEventHandler)eventHandler {
-    _eventHandler = eventHandler != NULL ? eventHandler : ^(SAVideoPlayerEvent event) {};
+- (void) setEventHandler:(saVideoPlayerDidReceiveEvent) handler {
+    _eventHandler = handler != NULL ? handler : ^(SAVideoPlayerEvent event) {};
 }
 
-- (void) setClickHandler:(savideoplayerClickHandler)clickHandler {
-    _clickHandler = clickHandler != NULL ? clickHandler :  ^(){};
+- (void) setClickHandler:(saVideoPlayerDidReceiveClick) handler {
+    _clickHandler = handler != NULL ? handler :  ^(){};
 }
 
 - (AVPlayer*) getPlayer {
@@ -335,10 +367,12 @@
     return _playerLayer;
 }
 
-////////////////////////////////////////////////////////////////////////////////
-// MARK: AVPlayer events
-////////////////////////////////////////////////////////////////////////////////
-
+/**
+ * Method for the NSNotification center that tells when the video player
+ * reached the end of the video content.
+ *
+ * @param notification the notification object that triggered the call
+ */
 - (void) playerItemDidReachEnd: (NSNotification*)notification {
     if (!_isEndHandled){
         _isEndHandled = true;
@@ -346,22 +380,52 @@
     }
 }
 
+/**
+ * Method for the NSNotification center that tells that the video player
+ * failed to reach the end.
+ *
+ * @param notification the notification object that triggered the call
+ */
 - (void) playerItemFailedToPlayEndTime: (NSNotification*)notification {
     
 }
 
+/**
+ * Method for the NSNotification center that tells that the video player
+ * has stalled in playing video.
+ *
+ * @param notification the notification object that triggered the call
+ */
 - (void) playerItemPlaybackStall: (NSNotification*)notification {
     [_player play];
 }
 
+/**
+ * Method for the NSNotification center that tells that the video player
+ * entered background mode and should pause.
+ *
+ * @param notification the notification object that triggered the call
+ */
 - (void) playerItemEnterBackground: (NSNotification*)notification {
     [_player pause];
 }
 
+/**
+ * Method for the NSNotification center that tells that the video player
+ * entered foreground mode and should resume.
+ *
+ * @param notification the notification object that triggered the call
+ */
 - (void) playerItemEnterForeground: (NSNotification*)notification {
     [_player play];
 }
 
+/**
+ * Method for the NSNotification center that tells that the video player
+ * has changed audio session and should force playing again.
+ *
+ * @param notification the notification object that triggered the call
+ */
 - (void) audioSessionChanged: (NSNotification*) notification {
     NSInteger routeChangeReason = [notification.userInfo[AVAudioSessionRouteChangeReasonKey] integerValue];
     if (routeChangeReason == AVAudioSessionRouteChangeReasonOldDeviceUnavailable) {
@@ -369,7 +433,16 @@
     }
 }
 
+/**
+ * Over value for KVO for the video player.
+ *
+ * @param keyPath   the current key path that has changed
+ * @param object    the object that sent the change
+ * @param change    a dictionary containing the old and the new values
+ * @param context   the current context
+ */
 - (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary*)change context:(void *)context {
+    
     if (object == _player && [keyPath isEqualToString:AV_RATE]){
         NSLog(@"[KVO] %@ %f", AV_RATE, _player.rate);
     }
@@ -447,6 +520,10 @@
     }
 }
 
+/**
+ * Unused method used to reconnect the video in acse it playes videos from
+ * network. The way the SDK is architectured right now, it's not the case.
+ */
 - (void) reconnectFunc {
     if (_isNetworkHavingProblems) {
         if (_currentReconnectTries < MAX_NR_RECONNECTS) {

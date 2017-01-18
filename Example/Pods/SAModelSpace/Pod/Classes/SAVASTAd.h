@@ -1,0 +1,75 @@
+/**
+ * @Copyright:   SuperAwesome Trading Limited 2017
+ * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
+ */
+
+#import <UIKit/UIKit.h>
+
+@class SATracking;
+@class SAVASTMedia;
+
+#if defined(__has_include)
+#if __has_include(<SAJsonParser/SAJsonParser.h>)
+#import <SAJsonParser/SAJsonParser.h>
+#else
+#import "SAJsonParser.h"
+#endif
+#endif
+
+#if defined(__has_include)
+#if __has_include(<SAJsonParser/SABaseObject.h>)
+#import <SAJsonParser/SABaseObject.h>
+#else
+#import "SABaseObject.h"
+#endif
+#endif
+
+/**
+ * Enum that defines the types of VAST ads available
+ *  - Invalid: when a valid vast ad could not be found
+ *  - InLine: when a direct vast ad could be found (which should also contain a video)
+ *  - Wrapper: when the current vast tag should redirect to another one down the line
+ */
+typedef NS_ENUM (NSInteger, SAVASTAdType) {
+    SA_Invalid = 0,
+    SA_InLine  = 1,
+    SA_Wrapper = 2
+};
+
+/**
+ * This external static method is used to init the SAVASTAdType enum
+ * starting from an integer value.
+ *
+ * @param type an int that will get translated to an enum
+ * @return     a new SAVASTAdType variable.
+ *             - if type == 2 -> then SA_Wrapper
+ *             - if type == 1 -> then SA_InLine
+ *             - else SA_Invalid
+ */
+static inline SAVASTAdType getSAVASTAdTypeFromInt (NSInteger type) {
+    return type == 2 ? SA_Wrapper : type == 1 ? SA_InLine : SA_Invalid;
+}
+
+/**
+ * Class that represents a VAST Ad
+ *  - a VAST URL redirect
+ *  - a VAST type (starting out as Invalid, but should either be InLine or Wrapper)
+ *  - a media URL
+ *  - an array of vast tracking elements
+ */
+@interface SAVASTAd : SABaseObject
+
+@property (nonatomic, strong) NSString                      *vastRedirect;
+@property (nonatomic, assign) SAVASTAdType                  vastType;
+@property (nonatomic, strong) NSString                      *mediaUrl;
+@property (nonatomic, strong) NSMutableArray <SAVASTMedia*> *mediaList;
+@property (nonatomic, strong) NSMutableArray <SATracking*>  *vastEvents;
+
+/**
+ * Specific method that sums two ads together
+ *
+ * @param toBeAdded the ad that's going to be added
+ */
+- (void) sumAd: (SAVASTAd*) toBeAdded;
+
+@end

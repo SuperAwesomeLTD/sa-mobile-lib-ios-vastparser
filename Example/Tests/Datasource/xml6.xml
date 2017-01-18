@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<VAST version="3.0">
+    <Ad id="undefined">
+        <InLine>
+            <AdSystem version="1.0">AwesomeAds</AdSystem>
+            <AdTitle><![CDATA[REX fake exchange creative]]></AdTitle>
+            <Description />
+            <Error><![CDATA[https://ads.staging.superawesome.tv/v2/video/error?placement=544&amp;creative=5728&amp;line_item=1022&amp;sdkVersion=unknown&amp;rnd=7062039&amp;prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&amp;device=web&amp;country=GB&amp;code=[ERRORCODE]]]></Error>
+            <Impression id="23"><![CDATA[https://ads.staging.superawesome.tv/v2/video/impression?placement=544&amp;creative=5728&amp;line_item=1022&amp;sdkVersion=unknown&amp;rnd=9788452&amp;prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&amp;device=web&amp;country=GB]]></Impression>
+            <Creatives>
+                <Creative id="5728">
+                    <Linear>
+                        <Duration>00:00:05</Duration>
+                        <TrackingEvents>
+                            <Tracking event="creativeView">https://ads.staging.superawesome.tv/v2/video/tracking?event=creativeView&amp;placement=544&amp;creative=5728&amp;line_item=1022&amp;sdkVersion=unknown&amp;rnd=3266878&amp;prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&amp;device=web&amp;country=GB</Tracking>
+                            <Tracking event="start">https://ads.staging.superawesome.tv/v2/video/tracking?event=start&amp;placement=544&amp;creative=5728&amp;line_item=1022&amp;sdkVersion=unknown&amp;rnd=9640628&amp;prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&amp;device=web&amp;country=GB</Tracking>
+                            <Tracking event="firstQuartile">https://ads.staging.superawesome.tv/v2/video/tracking?event=firstQuartile&amp;placement=544&amp;creative=5728&amp;line_item=1022&amp;sdkVersion=unknown&amp;rnd=2560539&amp;prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&amp;device=web&amp;country=GB</Tracking>
+                        </TrackingEvents>
+                        <VideoClicks>
+                            <ClickThrough id="">https://ads.staging.superawesome.tv/v2/video/click?placement=544&amp;creative=5728&amp;line_item=1022&amp;sdkVersion=unknown&amp;rnd=9970101&amp;prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&amp;device=web&amp;country=GB</ClickThrough>
+                        </VideoClicks>
+                        <MediaFiles>
+                            <MediaFile type="video/mp4" width="600" height="480" delivery="progressive" id="5728" bitrate="720"><![CDATA[https://s3-eu-west-1.amazonaws.com/sb-ads-video-transcoded/c0sKSRTuPu8dDkok2HQTnLS1k3A6vL6c.mp4]]></MediaFile>
+                            <MediaFile type="application/x-mpegURL" width="600" height="480" delivery="streaming" id="5728" bitrate="1800"><![CDATA[https://s3-eu-west-1.amazonaws.com/sb-ads-video-transcoded/c0sKSRTuPu8dDkok2HQTnLS1k3A6vL6c.m3u8]]></MediaFile>
+                        </MediaFiles>
+                    </Linear>
+                </Creative>
+            </Creatives>
+        </InLine>
+    </Ad>
+</VAST>

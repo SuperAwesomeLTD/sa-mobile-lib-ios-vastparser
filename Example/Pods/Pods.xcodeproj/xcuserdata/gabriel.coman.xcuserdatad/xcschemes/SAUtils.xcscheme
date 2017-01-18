@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'D86D285B41CCC19C3884DCE93B072B55'
+               BlueprintIdentifier = 'D817D7D7C76B8B2F2480C07A8C67CABD'
                BlueprintName = 'SAUtils'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libSAUtils.a'>
