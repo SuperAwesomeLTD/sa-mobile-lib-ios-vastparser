@@ -1,11 +1,12 @@
 PODS:
   - SAJsonParser (1.3.2)
-  - SAModelSpace (0.3.8):
+  - SAModelSpace (0.3.9):
     - SAJsonParser (= 1.3.2)
+    - SAUtils (= 1.5.0)
   - SANetworking (0.2.9)
   - SAUtils (1.5.0)
-  - SAVASTParser (1.5.5):
-    - SAModelSpace (= 0.3.8)
+  - SAVASTParser (1.5.7):
+    - SAModelSpace (= 0.3.9)
     - SANetworking (= 0.2.9)
     - SAUtils (= 1.5.0)
   - SAVideoPlayer (1.1.9)
@@ -20,10 +21,10 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   SAJsonParser: d0db6d8c737c04f8bf4e9474e82825347aa24f58
-  SAModelSpace: 980d28480ba22ac98d6d7a866ae061a530ccd4af
+  SAModelSpace: 83e2c836b23e15bc84fa2255e233e9a2801d2886
   SANetworking: 40e2a8ffd5c680be57dfd91426f3c74933ad1d80
   SAUtils: 1e8b881ca8c7fac2749c8fd9b851f0b344611035
-  SAVASTParser: 3c6eef9ad0b36fa1f0b82601203d7166a7d9156a
+  SAVASTParser: 16092e6cf9658a7fa73ed7cfe2d72305f9eff0c7
   SAVideoPlayer: 184e92d57c1b11e45534279649eb5b6a39b3c0d3
 
 PODFILE CHECKSUM: 6ffcc3301d1d2e152ea4e128bd620328bfeb6fd8

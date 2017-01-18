@@ -6,6 +6,14 @@
 #import "SADetails.h"
 #import "SAMedia.h"
 
+#if defined(__has_include)
+#if __has_include(<SAUtils/SAUtils.h>)
+#import <SAUtils/SAUtils.h>
+#else
+#import "SAUtils.h"
+#endif
+#endif
+
 @implementation SADetails
 
 /**
@@ -49,7 +57,11 @@
         _tag = [jsonDictionary safeStringForKey:@"tag" orDefault:_tag];
         _zipFile = [jsonDictionary safeStringForKey:@"zipFile" orDefault:_zipFile];
         _url = [jsonDictionary safeStringForKey:@"url" orDefault:_url];
+        
         _cdnUrl = [jsonDictionary safeStringForKey:@"cdnUrl" orDefault:_cdnUrl];
+        if (_cdnUrl == nil) _cdnUrl = [SAUtils findBaseURLFromResourceURL:_image];
+        if (_cdnUrl == nil) _cdnUrl = [SAUtils findBaseURLFromResourceURL:_video];
+        if (_cdnUrl == nil) _cdnUrl = [SAUtils findBaseURLFromResourceURL:_url];
         
         NSDictionary *mediaDict = [jsonDictionary safeDictionaryForKey:@"media" orDefault:nil];
         if (mediaDict) {
