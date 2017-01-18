@@ -31,9 +31,9 @@
  *  - Wrapper: when the current vast tag should redirect to another one down the line
  */
 typedef NS_ENUM (NSInteger, SAVASTAdType) {
-    SA_Invalid = 0,
-    SA_InLine  = 1,
-    SA_Wrapper = 2
+    SA_Invalid_VAST = 0,
+    SA_InLine_VAST  = 1,
+    SA_Wrapper_VAST = 2
 };
 
 /**
@@ -47,7 +47,7 @@ typedef NS_ENUM (NSInteger, SAVASTAdType) {
  *             - else SA_Invalid
  */
 static inline SAVASTAdType getSAVASTAdTypeFromInt (NSInteger type) {
-    return type == 2 ? SA_Wrapper : type == 1 ? SA_InLine : SA_Invalid;
+    return type == 2 ? SA_Wrapper_VAST : type == 1 ? SA_InLine_VAST : SA_Invalid_VAST;
 }
 
 /**

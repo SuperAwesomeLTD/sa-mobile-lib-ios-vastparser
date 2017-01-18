@@ -144,18 +144,18 @@
                 
                 switch (ad.vastType) {
                     // if it's invalid, return the start a
-                    case SA_Invalid: {
+                    case SA_Invalid_VAST: {
                         response (startAd);
                         break;
                     }
                     // if it's inline, then I'm at the end of the VAST chain, I sum up ads and return
-                    case SA_InLine: {
+                    case SA_InLine_VAST: {
                         [ad sumAd:startAd];
                         response (ad);
                         break;
                     }
                     // if it's a wrapper, I sum up what I have and call the method recursively
-                    case SA_Wrapper: {
+                    case SA_Wrapper_VAST: {
                         [ad sumAd:startAd];
                         [self recursiveParse:ad.vastRedirect fromStartingAd:ad withResponse:response];
                         break;
@@ -179,8 +179,8 @@
     BOOL isInLine = [SAXMLParser checkSiblingsAndChildrenOf:element forName:@"InLine"];
     BOOL isWrapper = [SAXMLParser checkSiblingsAndChildrenOf:element forName:@"Wrapper"];
     
-    if (isInLine) ad.vastType = SA_InLine;
-    if (isWrapper) ad.vastType = SA_Wrapper;
+    if (isInLine) ad.vastType = SA_InLine_VAST;
+    if (isWrapper) ad.vastType = SA_Wrapper_VAST;
     
     SAXMLElement *vastUri = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:element forName:@"VASTAdTagURI"];
     if (vastUri != nil) {

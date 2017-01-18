@@ -66,7 +66,7 @@
  * @return true or false
  */
 - (BOOL) isValid {
-    return _mediaUrl != nil && _vastType != SA_Invalid && [_mediaList count] >= 1;
+    return _mediaUrl != nil && _vastType != SA_Invalid_VAST && [_mediaList count] >= 1;
 }
 
 /**
@@ -91,7 +91,7 @@
  */
 - (void) initDefaults {
     _vastRedirect = nil;
-    _vastType = SA_Invalid;
+    _vastType = SA_Invalid_VAST;
     _mediaUrl = nil;
     _mediaList = [@[] mutableCopy];
     _vastEvents = [@[] mutableCopy];
