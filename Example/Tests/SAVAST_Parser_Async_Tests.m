@@ -36,7 +36,7 @@
     
     [parser parseVAST:vast withResponse:^(SAVASTAd *ad) {
         
-        SAVASTAdType adType = SA_InLine;
+        SAVASTAdType adType = SA_InLine_VAST;
         NSString *expected_mediaUrl = @"https://ads.superawesome.tv/v2/demo_images/video.mp4";
         int expected_vastEventsL = 15;
         NSString *expected_error = @"https://ads.superawesome.tv/v2/video/error?placement=30479&creative=-1&line_item=-1&sdkVersion=unknown&rnd=3232269&device=web&country=GB&code=[ERRORCODE]";

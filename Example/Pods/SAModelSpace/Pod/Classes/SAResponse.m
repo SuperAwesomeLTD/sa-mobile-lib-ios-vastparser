@@ -56,7 +56,16 @@
  * @return true or false
  */
 - (BOOL) isValid {
-    return [_ads count] > 0;
+    BOOL allAdsValid = true;
+    
+    for (SAAd *ad in _ads) {
+        if (![ad isValid]) {
+            allAdsValid = false;
+            break;
+        }
+    }
+    
+    return [_ads count] > 0 && allAdsValid;
 }
 
 /**
