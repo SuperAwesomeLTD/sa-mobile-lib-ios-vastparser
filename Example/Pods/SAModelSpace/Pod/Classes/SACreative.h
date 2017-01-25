@@ -118,7 +118,7 @@ static inline NSString* getStringFromSACreativeFormat (SACreativeFormat format) 
  *  - live & approved
  *  - a custom payload
  *  - click url
- *  - external impression & install url
+ *  - external impression, click counter & install url
  *  - bundle Id
  *  - a list of events to be triggered on different stages of ad execution
  *  - a SADetails object
@@ -134,6 +134,7 @@ static inline NSString* getStringFromSACreativeFormat (SACreativeFormat format) 
 @property (nonatomic, assign) BOOL                          approved;
 @property (nonatomic, strong) NSString                      *customPayload;
 @property (nonatomic, strong) NSString                      *clickUrl;
+@property (nonatomic, strong) NSString                      *clickCounterUrl;
 @property (nonatomic, strong) NSString                      *installUrl;
 @property (nonatomic, strong) NSString                      *impressionUrl;
 @property (nonatomic, strong) NSString                      *bundleId;

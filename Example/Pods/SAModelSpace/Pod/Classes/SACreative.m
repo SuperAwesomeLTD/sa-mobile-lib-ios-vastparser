@@ -47,9 +47,12 @@
         _customPayload = [jsonDictionary safeStringForKey:@"customPayload" orDefault:_customPayload];
         _live = [jsonDictionary safeBoolForKey:@"live" orDefault:_live];
         _approved = [jsonDictionary safeBoolForKey:@"approved" orDefault:_approved];
+        
         _clickUrl = [jsonDictionary safeStringForKey:@"click_url" orDefault:_clickUrl];
+        _clickCounterUrl = [jsonDictionary safeStringForKey:@"clickCounterUrl" orDefault:_clickCounterUrl];
         _impressionUrl = [jsonDictionary safeStringForKey:@"impression_url" orDefault:_impressionUrl];
         _installUrl = [jsonDictionary safeStringForKey:@"installUrl" orDefault:_installUrl];
+        
         _bundleId = [jsonDictionary safeStringForKey:@"bundleId" orDefault:_bundleId];
         
         NSArray *eventsArr = [jsonDictionary safeArrayForKey:@"events" orDefault:@[]];
@@ -92,6 +95,7 @@
              @"live": @(_live),
              @"approved": @(_approved),
              @"click_url": nullSafe(_clickUrl),
+             @"clickCounterUrl": nullSafe(_clickCounterUrl),
              @"impression_url": nullSafe(_impressionUrl),
              @"installUrl": nullSafe(_installUrl),
              @"bundleId": nullSafe(_bundleId),
@@ -114,6 +118,7 @@
     _approved = true;
     _customPayload = nil;
     _clickUrl = nil;
+    _clickCounterUrl = nil;
     _installUrl = nil;
     _impressionUrl = nil;
     _bundleId = nil;
