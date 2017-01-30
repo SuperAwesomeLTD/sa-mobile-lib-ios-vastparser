@@ -113,7 +113,7 @@
     SAVASTAd *ad = [vastParser parseAdXML:Ad];
     XCTAssertNotNil(ad);
     
-    SAVASTAdType expected_vastType = SA_InLine;
+    SAVASTAdType expected_vastType = SA_InLine_VAST;
     int expected_vastEventsSize = 6;
     int expected_mediaListSize = 1;
     NSString *expected_mediaUrl = @"https://s3-eu-west-1.amazonaws.com/sb-ads-video-transcoded/c0sKSRTuPu8dDkok2HQTnLS1k3A6vL6c.mp4";

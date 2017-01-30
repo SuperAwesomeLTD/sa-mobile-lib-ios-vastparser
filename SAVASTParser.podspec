@@ -11,7 +11,7 @@ Pod::Spec.new do |s|
   s.license          = { :type => "GNU GENERAL PUBLIC LICENSE Version 3", :file => "LICENSE" }
   s.author           = { "Gabriel Coman" => "gabriel.coman@superawesome.tv" }
   s.source           = { :git  => "https://github.com/SuperAwesomeLTD/sa-mobile-lib-ios-vastparser.git", :tag => "1.6.0" }
-  s.platform     = :ios, '7.0'
+  s.platform     = :ios, '8.0'
   s.requires_arc = true
   s.source_files = 'Pod/Classes/**/*'
   s.dependency 'SAUtils', '1.5.0'
