@@ -122,7 +122,7 @@
     int expected_height = 480;
     
     NSArray<NSString*> *expected_types = @[
-                                @"error", @"impression", @"click_through", @"creativeView", @"start", @"firstQuartile"
+                                @"vast_error", @"vast_impression", @"vast_click_through", @"vast_creativeView", @"vast_start", @"vast_firstQuartile"
                                 ];
     NSArray<NSString*> *expected_urls = @[
                                          @"https://ads.staging.superawesome.tv/v2/video/error?placement=544&creative=5728&line_item=1022&sdkVersion=unknown&rnd=7062039&prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&device=web&country=GB&code=[ERRORCODE]",

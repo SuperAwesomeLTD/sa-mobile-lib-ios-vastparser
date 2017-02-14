@@ -54,9 +54,9 @@
         SATracking *impression = nil;
         SATracking *click = nil;
         for (SATracking *tracking in ad.vastEvents) {
-            if ([tracking.event containsString:@"error"]) error = tracking;
-            if ([tracking.event containsString:@"impression"]) impression = tracking;
-            if ([tracking.event containsString:@"click_through"]) click = tracking;
+            if ([tracking.event containsString:@"vast_error"]) error = tracking;
+            if ([tracking.event containsString:@"vast_impression"]) impression = tracking;
+            if ([tracking.event containsString:@"vast_click_through"]) click = tracking;
         }
         
         XCTAssertNotNil(error);
@@ -107,10 +107,10 @@
         NSMutableArray *click_through = [@[] mutableCopy];
         
         for (SATracking *tracking in ad.vastEvents) {
-            if ([tracking.event containsString:@"error"]) [errors addObject:tracking];
-            if ([tracking.event containsString:@"impression"]) [impressions addObject:tracking];
-            if ([tracking.event containsString:@"click_tracking"]) [clicks_tracking addObject:tracking];
-            if ([tracking.event containsString:@"click_through"]) [click_through addObject:tracking];
+            if ([tracking.event containsString:@"vast_error"]) [errors addObject:tracking];
+            if ([tracking.event containsString:@"vast_impression"]) [impressions addObject:tracking];
+            if ([tracking.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:tracking];
+            if ([tracking.event containsString:@"vast_click_through"]) [click_through addObject:tracking];
         }
         
         XCTAssertEqual(expected_errorL, [errors count]);
@@ -280,10 +280,10 @@
         NSMutableArray *click_through = [@[] mutableCopy];
         
         for (SATracking *tracking in ad.vastEvents) {
-            if ([tracking.event containsString:@"error"]) [errors addObject:tracking];
-            if ([tracking.event containsString:@"impression"]) [impressions addObject:tracking];
-            if ([tracking.event containsString:@"click_tracking"]) [clicks_tracking addObject:tracking];
-            if ([tracking.event containsString:@"click_through"]) [click_through addObject:tracking];
+            if ([tracking.event containsString:@"vast_error"]) [errors addObject:tracking];
+            if ([tracking.event containsString:@"vast_impression"]) [impressions addObject:tracking];
+            if ([tracking.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:tracking];
+            if ([tracking.event containsString:@"vast_click_through"]) [click_through addObject:tracking];
         }
         
         XCTAssertEqual(expected_errorL, [errors count]);

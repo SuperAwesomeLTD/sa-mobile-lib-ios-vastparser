@@ -190,7 +190,7 @@
     // get errors
     [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Error" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"error";
+        tracking.event = @"vast_error";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
         [ad.vastEvents addObject:tracking];
     }];
@@ -198,7 +198,7 @@
     // get impressions
     [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Impression" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"impression";
+        tracking.event = @"vast_impression";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
         [ad.vastEvents addObject:tracking];
     }];
@@ -208,7 +208,7 @@
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"ClickThrough" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"click_through";
+        tracking.event = @"vast_click_through";
         tracking.URL = [[[[SAUtils decodeHTMLEntitiesFrom:[element getValue]]
                         stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"]
                         stringByReplacingOccurrencesOfString:@"%3A" withString:@":"]
@@ -218,21 +218,21 @@
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"ClickTracking" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"click_tracking";
+        tracking.event = @"vast_click_tracking";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
         [ad.vastEvents addObject:tracking];
     }];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"CustomClicks" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"custom_clicks";
+        tracking.event = @"vast_custom_clicks";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
         [ad.vastEvents addObject:tracking];
     }];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"Tracking" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = [element getAttribute:@"event"];
+        tracking.event = [NSString stringWithFormat:@"vast_%@",[element getAttribute:@"event"]];
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
         [ad.vastEvents addObject:tracking];
     }];
