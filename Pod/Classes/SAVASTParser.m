@@ -223,13 +223,6 @@
         [ad.vastEvents addObject:tracking];
     }];
     
-    [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"CustomClicks" andInterate:^(SAXMLElement *element) {
-        SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"vast_custom_clicks";
-        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.vastEvents addObject:tracking];
-    }];
-    
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"Tracking" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
         tracking.event = [NSString stringWithFormat:@"vast_%@",[element getAttribute:@"event"]];
