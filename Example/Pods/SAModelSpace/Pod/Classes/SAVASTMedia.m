@@ -35,7 +35,7 @@
         [self initDefaults];
         
         _type = [jsonDictionary safeStringForKey:@"type" orDefault:_type];
-        _mediaUrl = [jsonDictionary safeStringForKey:@"mediaUrl" orDefault:_mediaUrl];
+        _url = [jsonDictionary safeStringForKey:@"url" orDefault:_url];
         _bitrate = [jsonDictionary safeIntForKey:@"bitrate" orDefault:_bitrate];
         _width = [jsonDictionary safeIntForKey:@"width" orDefault:_width];
         _height = [jsonDictionary safeIntForKey:@"height" orDefault:_height];
@@ -50,7 +50,7 @@
  * @return true or false
  */
 - (BOOL) isValid {
-    return _mediaUrl != nil;
+    return _url != nil;
 }
 
 /**
@@ -63,7 +63,7 @@
 - (NSDictionary*) dictionaryRepresentation {
     return @{
              @"type": nullSafe(_type),
-             @"mediaUrl": nullSafe(_mediaUrl),
+             @"url": nullSafe(_url),
              @"bitrate": @(_bitrate),
              @"width": @(_width),
              @"height": @(_height)
@@ -75,7 +75,7 @@
  */
 - (void) initDefaults {
     _type = nil;
-    _mediaUrl = nil;
+    _url = nil;
     _bitrate = 0;
     _width = 0;
     _height = 0;

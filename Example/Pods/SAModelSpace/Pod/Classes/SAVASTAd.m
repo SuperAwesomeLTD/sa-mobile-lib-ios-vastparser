@@ -37,22 +37,22 @@
         [self initDefaults];
         
         // get simple strings
-        _vastRedirect = [jsonDictionary safeStringForKey:@"vastRedirect" orDefault:_vastRedirect];
-        _mediaUrl = [jsonDictionary safeStringForKey:@"mediaUrl" orDefault:_mediaUrl];
+        _redirect = [jsonDictionary safeStringForKey:@"redirect" orDefault:_redirect];
+        _url = [jsonDictionary safeStringForKey:@"url" orDefault:_url];
         
         // read the vast type
-        NSInteger type = [jsonDictionary safeIntForKey:@"vastType" orDefault:0];
-        _vastType = getSAVASTAdTypeFromInt(type);
+        NSInteger type = [jsonDictionary safeIntForKey:@"type" orDefault:0];
+        _type = getSAVASTAdTypeFromInt(type);
         
         // get array of media
-        NSArray *media = [jsonDictionary safeArrayForKey:@"mediaList" orDefault:@[]];
-        _mediaList = [[[NSArray alloc] initWithJsonArray:media andIterator:^id(id item) {
+        NSArray *media = [jsonDictionary safeArrayForKey:@"media" orDefault:@[]];
+        _media = [[[NSArray alloc] initWithJsonArray:media andIterator:^id(id item) {
             return [[SAVASTMedia alloc] initWithJsonDictionary:(NSDictionary*)item];
         }] mutableCopy];
         
         // get array of events
-        NSArray *events = [jsonDictionary safeArrayForKey:@"vastEvents" orDefault:@[]];
-        _vastEvents = [[[NSArray alloc] initWithJsonArray:events andIterator:^id(id item) {
+        NSArray *events = [jsonDictionary safeArrayForKey:@"events" orDefault:@[]];
+        _events = [[[NSArray alloc] initWithJsonArray:events andIterator:^id(id item) {
             return [[SATracking alloc] initWithJsonDictionary:(NSDictionary*)item];
         }] mutableCopy];
     }
@@ -66,7 +66,7 @@
  * @return true or false
  */
 - (BOOL) isValid {
-    return _mediaUrl != nil && _vastType != SA_Invalid_VAST && [_mediaList count] >= 1;
+    return _url != nil && _type != SA_Invalid_VAST && [_media count] >= 1;
 }
 
 /**
@@ -78,11 +78,11 @@
  */
 - (NSDictionary*) dictionaryRepresentation {
     return @{
-             @"vastRedirect": nullSafe(_vastRedirect),
-             @"mediaUrl": nullSafe(_mediaUrl),
-             @"vastType": @(_vastType),
-             @"mediaList": nullSafe([_mediaList dictionaryRepresentation]),
-             @"vastEvents": nullSafe([_vastEvents dictionaryRepresentation])
+             @"redirect": nullSafe(_redirect),
+             @"url": nullSafe(_url),
+             @"type": @(_type),
+             @"media": nullSafe([_media dictionaryRepresentation]),
+             @"events": nullSafe([_events dictionaryRepresentation])
              };
 }
 
@@ -90,17 +90,17 @@
  * Method that initializes all the values for the model
  */
 - (void) initDefaults {
-    _vastRedirect = nil;
-    _vastType = SA_Invalid_VAST;
-    _mediaUrl = nil;
-    _mediaList = [@[] mutableCopy];
-    _vastEvents = [@[] mutableCopy];
+    _redirect = nil;
+    _type = SA_Invalid_VAST;
+    _media = nil;
+    _media = [@[] mutableCopy];
+    _events = [@[] mutableCopy];
 }
 
 - (void) sumAd:(SAVASTAd *)toBeAdded {
-    _mediaUrl = toBeAdded.mediaUrl ? toBeAdded.mediaUrl : _mediaUrl;
-    [_vastEvents addObjectsFromArray:toBeAdded.vastEvents];
-    [_mediaList addObjectsFromArray:toBeAdded.mediaList];
+    _url = toBeAdded.url ? toBeAdded.url : _url;
+    [_events addObjectsFromArray:toBeAdded.events];
+    [_media addObjectsFromArray:toBeAdded.media];
 }
 
 @end

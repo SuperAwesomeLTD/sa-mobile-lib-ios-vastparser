@@ -59,11 +59,11 @@ static inline SAVASTAdType getSAVASTAdTypeFromInt (NSInteger type) {
  */
 @interface SAVASTAd : SABaseObject
 
-@property (nonatomic, strong) NSString                      *vastRedirect;
-@property (nonatomic, assign) SAVASTAdType                  vastType;
-@property (nonatomic, strong) NSString                      *mediaUrl;
-@property (nonatomic, strong) NSMutableArray <SAVASTMedia*> *mediaList;
-@property (nonatomic, strong) NSMutableArray <SATracking*>  *vastEvents;
+@property (nonatomic, strong) NSString                      *redirect;
+@property (nonatomic, assign) SAVASTAdType                  type;
+@property (nonatomic, strong) NSString                      *url;
+@property (nonatomic, strong) NSMutableArray <SAVASTMedia*> *media;
+@property (nonatomic, strong) NSMutableArray <SATracking*>  *events;
 
 /**
  * Specific method that sums two ads together

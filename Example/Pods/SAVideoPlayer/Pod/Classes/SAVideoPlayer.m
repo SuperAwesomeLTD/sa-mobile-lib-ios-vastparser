@@ -51,6 +51,7 @@
 @property (nonatomic, assign) BOOL isMidpointHandled;
 @property (nonatomic, assign) BOOL isThirdQuartileHandled;
 @property (nonatomic, assign) BOOL isEndHandled;
+@property (nonatomic, assign) BOOL is15sHandled;
 
 // notification center reference
 @property (nonatomic, strong) NSNotificationCenter *notif;
@@ -182,7 +183,8 @@
     _isFirstQuartileHandled =
     _isMidpointHandled =
     _isThirdQuartileHandled =
-    _isEndHandled = false;
+    _isEndHandled =
+    _is15sHandled = false;
     
     _isPlaybackBufferEmpty = false;
     _currentReconnectTries = -1;
@@ -486,6 +488,11 @@
                 if (time >= (3 * duration / 4) && !weakSelf.isThirdQuartileHandled) {
                     weakSelf.isThirdQuartileHandled = true;
                     weakSelf.eventHandler(Video_3_4);
+                }
+                
+                if (time >= 15.0f && !weakSelf.is15sHandled) {
+                    weakSelf.is15sHandled = true;
+                    weakSelf.eventHandler(Video_15s);
                 }
             }];
         }

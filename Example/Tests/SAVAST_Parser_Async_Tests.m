@@ -44,16 +44,16 @@
         NSString *expected_click = @"https://ads.superawesome.tv/v2/video/click?placement=30479&creative=-1&line_item=-1&sdkVersion=unknown&rnd=1809240&device=web&country=GB";
 
         XCTAssertNotNil(ad);
-        XCTAssertEqual(ad.vastType, adType);
-        XCTAssertNotNil(ad.mediaUrl);
-        XCTAssertEqualObjects(expected_mediaUrl, ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
+        XCTAssertEqual(ad.type, adType);
+        XCTAssertNotNil(ad.url);
+        XCTAssertEqualObjects(expected_mediaUrl, ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
         
         SATracking *error = nil;
         SATracking *impression = nil;
         SATracking *click = nil;
-        for (SATracking *tracking in ad.vastEvents) {
+        for (SATracking *tracking in ad.events) {
             if ([tracking.event containsString:@"vast_error"]) error = tracking;
             if ([tracking.event containsString:@"vast_impression"]) impression = tracking;
             if ([tracking.event containsString:@"vast_click_through"]) click = tracking;
@@ -96,17 +96,17 @@
         int expected_click_throughL = 1;
         int expected_click_trackingL = 3;
         
-        XCTAssertNotNil(ad.mediaUrl);
-        XCTAssertEqualObjects(expected_mediaURL, ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
+        XCTAssertNotNil(ad.url);
+        XCTAssertEqualObjects(expected_mediaURL, ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
         
         NSMutableArray *errors = [@[] mutableCopy];
         NSMutableArray *impressions = [@[] mutableCopy];
         NSMutableArray *clicks_tracking = [@[] mutableCopy];
         NSMutableArray *click_through = [@[] mutableCopy];
         
-        for (SATracking *tracking in ad.vastEvents) {
+        for (SATracking *tracking in ad.events) {
             if ([tracking.event containsString:@"vast_error"]) [errors addObject:tracking];
             if ([tracking.event containsString:@"vast_impression"]) [impressions addObject:tracking];
             if ([tracking.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:tracking];
@@ -143,10 +143,10 @@
         int expected_vastEventsL = 21;
         
         XCTAssertNotNil(ad);
-        XCTAssertNil(ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
-        XCTAssertNotNil(ad.vastRedirect);
+        XCTAssertNil(ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
+        XCTAssertNotNil(ad.redirect);
         
         [expectation fulfill];
     }];
@@ -173,10 +173,10 @@
         int expected_vastEventsL = 0;
         
         XCTAssertNotNil(ad);
-        XCTAssertNil(ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
-        XCTAssertNil(ad.vastRedirect);
+        XCTAssertNil(ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
+        XCTAssertNil(ad.redirect);
         
         [expectation fulfill];
     }];
@@ -203,10 +203,10 @@
         int expected_vastEventsL = 0;
         
         XCTAssertNotNil(ad);
-        XCTAssertNil(ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
-        XCTAssertNil(ad.vastRedirect);
+        XCTAssertNil(ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
+        XCTAssertNil(ad.redirect);
         
         [expectation fulfill];
     }];
@@ -233,10 +233,10 @@
         int expected_vastEventsL = 0;
         
         XCTAssertNotNil(ad);
-        XCTAssertNil(ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
-        XCTAssertNil(ad.vastRedirect);
+        XCTAssertNil(ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
+        XCTAssertNil(ad.redirect);
         
         [expectation fulfill];
     }];
@@ -269,17 +269,17 @@
         int expected_click_throughL = 0;
         int expected_click_trackingL = 4;
         
-        XCTAssertNotNil(ad.mediaUrl);
-        XCTAssertEqualObjects(expected_mediaURL, ad.mediaUrl);
-        XCTAssertNotNil(ad.vastEvents);
-        XCTAssertEqual(expected_vastEventsL, [ad.vastEvents count]);
+        XCTAssertNotNil(ad.url);
+        XCTAssertEqualObjects(expected_mediaURL, ad.url);
+        XCTAssertNotNil(ad.events);
+        XCTAssertEqual(expected_vastEventsL, [ad.events count]);
         
         NSMutableArray *errors = [@[] mutableCopy];
         NSMutableArray *impressions = [@[] mutableCopy];
         NSMutableArray *clicks_tracking = [@[] mutableCopy];
         NSMutableArray *click_through = [@[] mutableCopy];
         
-        for (SATracking *tracking in ad.vastEvents) {
+        for (SATracking *tracking in ad.events) {
             if ([tracking.event containsString:@"vast_error"]) [errors addObject:tracking];
             if ([tracking.event containsString:@"vast_impression"]) [impressions addObject:tracking];
             if ([tracking.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:tracking];

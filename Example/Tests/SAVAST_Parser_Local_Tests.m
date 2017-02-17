@@ -56,7 +56,7 @@
     XCTAssertEqual(expected_width, savastMedia.width);
     XCTAssertEqual(expected_height, savastMedia.height);
     XCTAssertEqual(expected_bitrate, savastMedia.bitrate);
-    XCTAssertEqualObjects(expected_url, savastMedia.mediaUrl);
+    XCTAssertEqualObjects(expected_url, savastMedia.url);
 }
 
 - (void) testParseMediaXML2 {
@@ -89,7 +89,7 @@
     XCTAssertEqual(expected_width, savastMedia.width);
     XCTAssertEqual(expected_height, savastMedia.height);
     XCTAssertEqual(expected_bitrate, savastMedia.bitrate);
-    XCTAssertEqualObjects(expected_url, savastMedia.mediaUrl);
+    XCTAssertEqualObjects(expected_url, savastMedia.url);
     
 }
 
@@ -133,22 +133,22 @@
                                          @"https://ads.staging.superawesome.tv/v2/video/tracking?event=firstQuartile&placement=544&creative=5728&line_item=1022&sdkVersion=unknown&rnd=2560539&prog=a35a7dab-86f1-437f-b3d9-3b58ef069390&device=web&country=GB"
                                          ];
     
-    XCTAssertEqual(expected_vastType, ad.vastType);
-    XCTAssertNil(ad.vastRedirect);
-    XCTAssertNotNil(ad.vastEvents);
-    XCTAssertNotNil(ad.mediaList);
-    XCTAssertEqual(expected_vastEventsSize, [ad.vastEvents count]);
-    XCTAssertEqual(expected_mediaListSize, [ad.mediaList count]);
+    XCTAssertEqual(expected_vastType, ad.type);
+    XCTAssertNil(ad.redirect);
+    XCTAssertNotNil(ad.events);
+    XCTAssertNotNil(ad.media);
+    XCTAssertEqual(expected_vastEventsSize, [ad.events count]);
+    XCTAssertEqual(expected_mediaListSize, [ad.media count]);
     
-    for (int i = 0; i < [ad.vastEvents count]; i++) {
-        XCTAssertEqualObjects(expected_types[i], ad.vastEvents[i].event);
-        XCTAssertEqualObjects(expected_urls[i], ad.vastEvents[i].URL);
+    for (int i = 0; i < [ad.events count]; i++) {
+        XCTAssertEqualObjects(expected_types[i], ad.events[i].event);
+        XCTAssertEqualObjects(expected_urls[i], ad.events[i].URL);
     }
     
-    SAVASTMedia *savastMedia = ad.mediaList[0];
+    SAVASTMedia *savastMedia = ad.media[0];
     XCTAssertNotNil(savastMedia);
     XCTAssertTrue([savastMedia isValid]);
-    XCTAssertEqualObjects(expected_mediaUrl, savastMedia.mediaUrl);
+    XCTAssertEqualObjects(expected_mediaUrl, savastMedia.url);
     XCTAssertEqual(expected_bitrate, savastMedia.bitrate);
     XCTAssertEqual(expected_width, savastMedia.width);
     XCTAssertEqual(expected_height, savastMedia.height);

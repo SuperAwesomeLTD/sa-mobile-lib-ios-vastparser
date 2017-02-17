@@ -31,7 +31,7 @@
 @interface SAVASTMedia : SABaseObject <SASerializationProtocol, SADeserializationProtocol>
 
 @property (nonatomic, strong) NSString  *type;
-@property (nonatomic, strong) NSString  *mediaUrl;
+@property (nonatomic, strong) NSString  *url;
 @property (nonatomic, assign) NSInteger bitrate;
 @property (nonatomic, assign) NSInteger width;
 @property (nonatomic, assign) NSInteger height;

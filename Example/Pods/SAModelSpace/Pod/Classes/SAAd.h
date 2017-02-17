@@ -66,21 +66,27 @@ static inline SACampaignType getSACampaignTypeFromInt (NSInteger campaign) {
 @interface SAAd : SABaseObject <SASerializationProtocol, SADeserializationProtocol>
 
 @property (nonatomic, assign) NSInteger      error;
+
 @property (nonatomic, assign) NSInteger      advertiserId;
 @property (nonatomic, assign) NSInteger      publisherId;
-@property (nonatomic, assign) NSInteger      app;
+@property (nonatomic, assign) NSInteger      appId;
 @property (nonatomic, assign) NSInteger      lineItemId;
 @property (nonatomic, assign) NSInteger      campaignId;
 @property (nonatomic, assign) NSInteger      placementId;
+
 @property (nonatomic, assign) SACampaignType campaignType;
+
 @property (nonatomic, assign) CGFloat        moat;
-@property (nonatomic, assign) BOOL           test;
+
+@property (nonatomic, assign) BOOL           isTest;
 @property (nonatomic, assign) BOOL           isFallback;
 @property (nonatomic, assign) BOOL           isFill;
 @property (nonatomic, assign) BOOL           isHouse;
-@property (nonatomic, assign) BOOL           safeAdApproved;
-@property (nonatomic, assign) BOOL           showPadlock;
+@property (nonatomic, assign) BOOL           isSafeAdApproved;
+@property (nonatomic, assign) BOOL           isPadlockVisible;
+
 @property (nonatomic, strong) NSString       *device;
+
 @property (nonatomic, strong) SACreative     *creative;
 
 @end

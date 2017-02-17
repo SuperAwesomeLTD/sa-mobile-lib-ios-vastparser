@@ -31,10 +31,10 @@
 @interface SAMedia : SABaseObject <SASerializationProtocol, SADeserializationProtocol>
 
 @property (nonatomic, strong) NSString  *html;
-@property (nonatomic, strong) NSString  *playableDiskUrl;
-@property (nonatomic, strong) NSString  *playableMediaUrl;
+@property (nonatomic, strong) NSString  *path;
+@property (nonatomic, strong) NSString  *url;
 @property (nonatomic, strong) NSString  *type;
 @property (nonatomic, assign) NSInteger bitrate;
-@property (nonatomic, assign) BOOL      isOnDisk;
+@property (nonatomic, assign) BOOL      isDownloaded;
 
 @end

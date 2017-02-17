@@ -35,11 +35,11 @@
         
         // take from json
         _html = [jsonDictionary safeStringForKey:@"html" orDefault:_html];
-        _playableDiskUrl = [jsonDictionary safeStringForKey:@"playableDiskUrl" orDefault:_playableDiskUrl];
-        _playableMediaUrl = [jsonDictionary safeStringForKey:@"playableMediaUrl" orDefault:_playableMediaUrl];
+        _path = [jsonDictionary safeStringForKey:@"path" orDefault:_path];
+        _url = [jsonDictionary safeStringForKey:@"url" orDefault:_url];
         _type = [jsonDictionary safeStringForKey:@"type" orDefault:_type];
         _bitrate = [jsonDictionary safeIntForKey:@"bitrate" orDefault:_bitrate];
-        _isOnDisk = [jsonDictionary safeBoolForKey:@"isOnDisk" orDefault:_isOnDisk];
+        _isDownloaded = [jsonDictionary safeBoolForKey:@"isDownloaded" orDefault:_isDownloaded];
     }
     return self;
 }
@@ -63,11 +63,11 @@
 - (NSDictionary*) dictionaryRepresentation {
     return @{
              @"html": nullSafe(_html),
-             @"playableDiskUrl": nullSafe(_playableDiskUrl),
-             @"playableMediaUrl": nullSafe(_playableMediaUrl),
+             @"path": nullSafe(_path),
+             @"url": nullSafe(_url),
              @"type": nullSafe(_type),
              @"bitrate": @(_bitrate),
-             @"isOnDisk": @(_isOnDisk)
+             @"isDownloaded": @(_isDownloaded)
              };
 }
 
@@ -76,11 +76,11 @@
  */
 - (void) initDefaults {
     _html = nil;
-    _playableDiskUrl = nil;
-    _playableMediaUrl = nil;
+    _path = nil;
+    _url = nil;
     _type = nil;
     _bitrate = 0;
-    _isOnDisk = false;
+    _isDownloaded = false;
 }
 
 @end

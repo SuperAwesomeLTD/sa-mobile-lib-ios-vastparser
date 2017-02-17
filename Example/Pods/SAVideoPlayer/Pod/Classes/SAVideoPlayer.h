@@ -27,7 +27,8 @@ typedef NS_ENUM(NSInteger, SAVideoPlayerEvent) {
     Video_1_2 = 2,
     Video_3_4 = 3,
     Video_End = 4,
-    Video_Error = 5
+    Video_15s = 5,
+    Video_Error = 6
 };
 
 // callback method for video events

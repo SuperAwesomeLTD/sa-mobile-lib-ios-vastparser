@@ -132,12 +132,14 @@ static inline NSString* getStringFromSACreativeFormat (SACreativeFormat format) 
 @property (nonatomic, assign) SACreativeFormat              format;
 @property (nonatomic, assign) BOOL                          live;
 @property (nonatomic, assign) BOOL                          approved;
-@property (nonatomic, strong) NSString                      *customPayload;
+@property (nonatomic, strong) NSString                      *payload;
+
 @property (nonatomic, strong) NSString                      *clickUrl;
 @property (nonatomic, strong) NSString                      *clickCounterUrl;
 @property (nonatomic, strong) NSString                      *installUrl;
 @property (nonatomic, strong) NSString                      *impressionUrl;
-@property (nonatomic, strong) NSString                      *bundleId;
+
+@property (nonatomic, strong) NSString                      *bundle;
 @property (nonatomic, strong) NSMutableArray<SATracking*>   *events;
 @property (nonatomic, strong) SADetails                     *details;
 

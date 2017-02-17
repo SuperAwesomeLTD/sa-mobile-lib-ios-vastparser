@@ -45,19 +45,19 @@
         SAVASTMedia *medMedia = nil;
         
         // get the min media
-        for (SAVASTMedia *media in ad.mediaList) {
+        for (SAVASTMedia *media in ad.media) {
             if (minMedia == nil || (media.bitrate < minMedia.bitrate)) {
                 minMedia = media;
             }
         }
         // get the max media
-        for (SAVASTMedia *media in ad.mediaList) {
+        for (SAVASTMedia *media in ad.media) {
             if (maxMedia == nil || (media.bitrate > maxMedia.bitrate)) {
                 maxMedia = media;
             }
         }
         // get everything in between
-        for (SAVASTMedia *media in ad.mediaList) {
+        for (SAVASTMedia *media in ad.media) {
             if (media != minMedia && media != maxMedia) {
                 medMedia = media;
             }
@@ -71,12 +71,12 @@
                 // try to get the lowest media possible
             case cellular_unknown:
             case cellular_2g: {
-                ad.mediaUrl = minMedia != nil ? minMedia.mediaUrl : nil;
+                ad.url = minMedia != nil ? minMedia.url : nil;
                 break;
             }
                 // try to get one of the medium media possible
             case cellular_3g: {
-                ad.mediaUrl = medMedia != nil ? medMedia.mediaUrl : nil;
+                ad.url = medMedia != nil ? medMedia.url : nil;
                 break;
             }
                 // try to get the best media possible
@@ -84,14 +84,14 @@
             case ethernet:
             case wifi:
             case cellular_4g: {
-                ad.mediaUrl = maxMedia != nil ? maxMedia.mediaUrl : nil;
+                ad.url = maxMedia != nil ? maxMedia.url : nil;
                 break;
             }
         }
         
         // if somehow all of that has failed, just get the last element of the list
-        if (ad.mediaUrl == nil && [ad.mediaList count] >= 1) {
-            ad.mediaUrl = [[ad.mediaList lastObject] mediaUrl];
+        if (ad.url == nil && [ad.media count] >= 1) {
+            ad.url = [[ad.media lastObject] url];
         }
         
         // send final message
@@ -142,7 +142,7 @@
                 // use the internal "parseAdXML" method to form an SAVASTAd object
                 SAVASTAd *ad = [self parseAdXML:Ad];
                 
-                switch (ad.vastType) {
+                switch (ad.type) {
                     // if it's invalid, return the start a
                     case SA_Invalid_VAST: {
                         response (startAd);
@@ -157,7 +157,7 @@
                     // if it's a wrapper, I sum up what I have and call the method recursively
                     case SA_Wrapper_VAST: {
                         [ad sumAd:startAd];
-                        [self recursiveParse:ad.vastRedirect fromStartingAd:ad withResponse:response];
+                        [self recursiveParse:ad.redirect fromStartingAd:ad withResponse:response];
                         break;
                     }
                 }
@@ -179,12 +179,12 @@
     BOOL isInLine = [SAXMLParser checkSiblingsAndChildrenOf:element forName:@"InLine"];
     BOOL isWrapper = [SAXMLParser checkSiblingsAndChildrenOf:element forName:@"Wrapper"];
     
-    if (isInLine) ad.vastType = SA_InLine_VAST;
-    if (isWrapper) ad.vastType = SA_Wrapper_VAST;
+    if (isInLine) ad.type = SA_InLine_VAST;
+    if (isWrapper) ad.type = SA_Wrapper_VAST;
     
     SAXMLElement *vastUri = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:element forName:@"VASTAdTagURI"];
     if (vastUri != nil) {
-        ad.vastRedirect = [SAUtils decodeHTMLEntitiesFrom:[vastUri getValue]];
+        ad.redirect = [SAUtils decodeHTMLEntitiesFrom:[vastUri getValue]];
     }
     
     // get errors
@@ -192,7 +192,7 @@
         SATracking *tracking = [[SATracking alloc] init];
         tracking.event = @"vast_error";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.vastEvents addObject:tracking];
+        [ad.events addObject:tracking];
     }];
     
     // get impressions
@@ -200,7 +200,7 @@
         SATracking *tracking = [[SATracking alloc] init];
         tracking.event = @"vast_impression";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.vastEvents addObject:tracking];
+        [ad.events addObject:tracking];
     }];
     
     // get the creative
@@ -213,28 +213,28 @@
                         stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"]
                         stringByReplacingOccurrencesOfString:@"%3A" withString:@":"]
                         stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"];
-        [ad.vastEvents addObject:tracking];
+        [ad.events addObject:tracking];
     }];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"ClickTracking" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
         tracking.event = @"vast_click_tracking";
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.vastEvents addObject:tracking];
+        [ad.events addObject:tracking];
     }];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"Tracking" andInterate:^(SAXMLElement *element) {
         SATracking *tracking = [[SATracking alloc] init];
         tracking.event = [NSString stringWithFormat:@"vast_%@",[element getAttribute:@"event"]];
         tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.vastEvents addObject:tracking];
+        [ad.events addObject:tracking];
     }];
     
     // append only valid, mp4 type ads
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"MediaFile" andInterate:^(SAXMLElement *element) {
         SAVASTMedia *media = [self parseMediaXML:element];
         if ([media isValid] && [media.type rangeOfString:@"mp4"].location != NSNotFound) {
-            [ad.mediaList addObject:media];
+            [ad.media addObject:media];
         }
     }];
     
@@ -251,7 +251,7 @@
     if (element == nil) return media;
     
     // get the media url
-    media.mediaUrl = [[element getValue] stringByReplacingOccurrencesOfString:@" " withString:@""];
+    media.url = [[element getValue] stringByReplacingOccurrencesOfString:@" " withString:@""];
     
     // get the attribute
     media.type = [element getAttribute:@"type"];

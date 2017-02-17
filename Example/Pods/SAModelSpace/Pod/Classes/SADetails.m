@@ -46,7 +46,7 @@
         _width = [jsonDictionary safeIntForKey:@"width" orDefault:_width];
         _height = [jsonDictionary safeIntForKey:@"height" orDefault:_height];
         _name = [jsonDictionary safeStringForKey:@"name" orDefault:_name];
-        _placementFormat = [jsonDictionary safeStringForKey:@"placement_format" orDefault:_placementFormat];
+        _format = [jsonDictionary safeStringForKey:@"placement_format" orDefault:_format];
         _bitrate = [jsonDictionary safeIntForKey:@"bitrate" orDefault:_bitrate];
         _duration = [jsonDictionary safeIntForKey:@"duration" orDefault:_duration];
         _value = [jsonDictionary safeIntForKey:@"value" orDefault:_value];
@@ -55,13 +55,13 @@
         _video = [jsonDictionary safeStringForKey:@"video" orDefault:_video];
         _vast = [jsonDictionary safeStringForKey:@"vast" orDefault:_vast];
         _tag = [jsonDictionary safeStringForKey:@"tag" orDefault:_tag];
-        _zipFile = [jsonDictionary safeStringForKey:@"zipFile" orDefault:_zipFile];
+        _zip = [jsonDictionary safeStringForKey:@"zipFile" orDefault:_zip];
         _url = [jsonDictionary safeStringForKey:@"url" orDefault:_url];
         
-        _cdnUrl = [jsonDictionary safeStringForKey:@"cdnUrl" orDefault:_cdnUrl];
-        if (_cdnUrl == nil) _cdnUrl = [SAUtils findBaseURLFromResourceURL:_image];
-        if (_cdnUrl == nil) _cdnUrl = [SAUtils findBaseURLFromResourceURL:_video];
-        if (_cdnUrl == nil) _cdnUrl = [SAUtils findBaseURLFromResourceURL:_url];
+        _cdn = [jsonDictionary safeStringForKey:@"cdn" orDefault:_cdn];
+        if (_cdn == nil) _cdn = [SAUtils findBaseURLFromResourceURL:_image];
+        if (_cdn == nil) _cdn = [SAUtils findBaseURLFromResourceURL:_video];
+        if (_cdn == nil) _cdn = [SAUtils findBaseURLFromResourceURL:_url];
         
         NSDictionary *mediaDict = [jsonDictionary safeDictionaryForKey:@"media" orDefault:nil];
         if (mediaDict) {
@@ -92,7 +92,7 @@
              @"width": @(_width),
              @"height": @(_height),
              @"name": nullSafe(_name),
-             @"placement_format": nullSafe(_placementFormat),
+             @"placement_format": nullSafe(_format),
              @"bitrate": @(_bitrate),
              @"duration": @(_duration),
              @"value": @(_value),
@@ -100,9 +100,9 @@
              @"video": nullSafe(_video),
              @"vast": nullSafe(_vast),
              @"tag": nullSafe(_tag),
-             @"zipFile": nullSafe(_zipFile),
+             @"zipFile": nullSafe(_zip),
              @"url": nullSafe(_url),
-             @"cdnUrl": nullSafe(_cdnUrl),
+             @"cdn": nullSafe(_cdn),
              @"media": nullSafe([_media dictionaryRepresentation])
              };
 }
@@ -116,16 +116,16 @@
     _width = 0;
     _height = 0;
     _name = nil;
-    _placementFormat = nil;
+    _format = nil;
     _bitrate = 0;
     _duration = 0;
     _value = 0;
     _image = nil;
     _video = nil;
     _tag = nil;
-    _zipFile = nil;
+    _zip = nil;
     _url = nil;
-    _cdnUrl = nil;
+    _cdn = nil;
     _vast = nil;
     
     // media

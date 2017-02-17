@@ -44,7 +44,7 @@
         NSString *format = [jsonDictionary safeStringForKey:@"format" orDefault:nil];
         _format = getSACreativeFormatFromString(format);
         
-        _customPayload = [jsonDictionary safeStringForKey:@"customPayload" orDefault:_customPayload];
+        _payload = [jsonDictionary safeStringForKey:@"customPayload" orDefault:_payload];
         _live = [jsonDictionary safeBoolForKey:@"live" orDefault:_live];
         _approved = [jsonDictionary safeBoolForKey:@"approved" orDefault:_approved];
         
@@ -53,7 +53,7 @@
         _impressionUrl = [jsonDictionary safeStringForKey:@"impression_url" orDefault:_impressionUrl];
         _installUrl = [jsonDictionary safeStringForKey:@"installUrl" orDefault:_installUrl];
         
-        _bundleId = [jsonDictionary safeStringForKey:@"bundleId" orDefault:_bundleId];
+        _bundle = [jsonDictionary safeStringForKey:@"bundleId" orDefault:_bundle];
         
         NSArray *eventsArr = [jsonDictionary safeArrayForKey:@"events" orDefault:@[]];
         _events = [[[NSArray alloc] initWithJsonArray:eventsArr andIterator:^id(id item) {
@@ -91,14 +91,14 @@
              @"name": nullSafe(_name),
              @"cpm": @(_cpm),
              @"format": getStringFromSACreativeFormat(_format),
-             @"customPayload": nullSafe(_customPayload),
+             @"customPayload": nullSafe(_payload),
              @"live": @(_live),
              @"approved": @(_approved),
              @"click_url": nullSafe(_clickUrl),
              @"clickCounterUrl": nullSafe(_clickCounterUrl),
              @"impression_url": nullSafe(_impressionUrl),
              @"installUrl": nullSafe(_installUrl),
-             @"bundleId": nullSafe(_bundleId),
+             @"bundleId": nullSafe(_bundle),
              @"events": nullSafe([_events dictionaryRepresentation]),
              @"details": nullSafe([_details dictionaryRepresentation])
              };
@@ -116,12 +116,12 @@
     _format = SA_Invalid;
     _live = true;
     _approved = true;
-    _customPayload = nil;
+    _payload = nil;
     _clickUrl = nil;
     _clickCounterUrl = nil;
     _installUrl = nil;
     _impressionUrl = nil;
-    _bundleId = nil;
+    _bundle = nil;
     
     // details & events
     _details = [[SADetails alloc] init];
