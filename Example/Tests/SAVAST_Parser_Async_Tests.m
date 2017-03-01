@@ -10,7 +10,7 @@
 #import "SAVASTParser.h"
 #import "SAVASTAd.h"
 #import "SAVASTMedia.h"
-#import "SATracking.h"
+#import "SAVASTEvent.h"
 
 @interface SAVAST_Parser_Async_Tests : XCTestCase
 @end
@@ -50,13 +50,13 @@
         XCTAssertNotNil(ad.events);
         XCTAssertEqual(expected_vastEventsL, [ad.events count]);
         
-        SATracking *error = nil;
-        SATracking *impression = nil;
-        SATracking *click = nil;
-        for (SATracking *tracking in ad.events) {
-            if ([tracking.event containsString:@"vast_error"]) error = tracking;
-            if ([tracking.event containsString:@"vast_impression"]) impression = tracking;
-            if ([tracking.event containsString:@"vast_click_through"]) click = tracking;
+        SAVASTEvent *error = nil;
+        SAVASTEvent *impression = nil;
+        SAVASTEvent *click = nil;
+        for (SAVASTEvent *event in ad.events) {
+            if ([event.event containsString:@"vast_error"]) error = event;
+            if ([event.event containsString:@"vast_impression"]) impression = event;
+            if ([event.event containsString:@"vast_click_through"]) click = event;
         }
         
         XCTAssertNotNil(error);
@@ -106,11 +106,11 @@
         NSMutableArray *clicks_tracking = [@[] mutableCopy];
         NSMutableArray *click_through = [@[] mutableCopy];
         
-        for (SATracking *tracking in ad.events) {
-            if ([tracking.event containsString:@"vast_error"]) [errors addObject:tracking];
-            if ([tracking.event containsString:@"vast_impression"]) [impressions addObject:tracking];
-            if ([tracking.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:tracking];
-            if ([tracking.event containsString:@"vast_click_through"]) [click_through addObject:tracking];
+        for (SAVASTEvent *event in ad.events) {
+            if ([event.event containsString:@"vast_error"]) [errors addObject:event];
+            if ([event.event containsString:@"vast_impression"]) [impressions addObject:event];
+            if ([event.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:event];
+            if ([event.event containsString:@"vast_click_through"]) [click_through addObject:event];
         }
         
         XCTAssertEqual(expected_errorL, [errors count]);
@@ -279,11 +279,11 @@
         NSMutableArray *clicks_tracking = [@[] mutableCopy];
         NSMutableArray *click_through = [@[] mutableCopy];
         
-        for (SATracking *tracking in ad.events) {
-            if ([tracking.event containsString:@"vast_error"]) [errors addObject:tracking];
-            if ([tracking.event containsString:@"vast_impression"]) [impressions addObject:tracking];
-            if ([tracking.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:tracking];
-            if ([tracking.event containsString:@"vast_click_through"]) [click_through addObject:tracking];
+        for (SAVASTEvent *event in ad.events) {
+            if ([event.event containsString:@"vast_error"]) [errors addObject:event];
+            if ([event.event containsString:@"vast_impression"]) [impressions addObject:event];
+            if ([event.event containsString:@"vast_click_tracking"]) [clicks_tracking addObject:event];
+            if ([event.event containsString:@"vast_click_through"]) [click_through addObject:event];
         }
         
         XCTAssertEqual(expected_errorL, [errors count]);

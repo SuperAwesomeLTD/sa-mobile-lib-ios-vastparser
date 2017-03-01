@@ -5,7 +5,6 @@
 
 #import <Foundation/Foundation.h>
 
-@class SATracking;
 @class SADetails;
 
 #if defined(__has_include)
@@ -140,7 +139,6 @@ static inline NSString* getStringFromSACreativeFormat (SACreativeFormat format) 
 @property (nonatomic, strong) NSString                      *impressionUrl;
 
 @property (nonatomic, strong) NSString                      *bundle;
-@property (nonatomic, strong) NSMutableArray<SATracking*>   *events;
 @property (nonatomic, strong) SADetails                     *details;
 
 @end

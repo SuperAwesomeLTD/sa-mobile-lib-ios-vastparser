@@ -7,7 +7,6 @@
 #import "SACreative.h"
 #import "SADetails.h"
 #import "SAMedia.h"
-#import "SATracking.h"
 
 @implementation SAAd
 
@@ -63,6 +62,15 @@
         if (creativeDict) {
             _creative = [[SACreative alloc] initWithJsonDictionary:creativeDict];
         }
+    }
+    
+    return self;
+}
+
+- (id) initWithPlacementId: (NSInteger) placementId
+         andJsonDictionary: (NSDictionary*) jsonDictionary {
+    if (self = [super initWithJsonDictionary:jsonDictionary]) {
+        _placementId = placementId;
     }
     
     return self;

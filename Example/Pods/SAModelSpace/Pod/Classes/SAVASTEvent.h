@@ -27,7 +27,7 @@
  *  - event name (a string)
  *  - an URL to be hit
  */
-@interface SATracking : SABaseObject <SADeserializationProtocol, SASerializationProtocol>
+@interface SAVASTEvent : SABaseObject <SADeserializationProtocol, SASerializationProtocol>
 
 @property (nonatomic, strong) NSString *event;
 @property (nonatomic, strong) NSString *URL;

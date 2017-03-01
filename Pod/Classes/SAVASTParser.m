@@ -7,7 +7,7 @@
 #import "SAXMLParser.h"
 #import "SAVASTMedia.h"
 #import "SAVASTAd.h"
-#import "SATracking.h"
+#import "SAVASTEvent.h"
 #import "SANetwork.h"
 #import "SAUtils.h"
 
@@ -189,45 +189,45 @@
     
     // get errors
     [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Error" andInterate:^(SAXMLElement *element) {
-        SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"vast_error";
-        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.events addObject:tracking];
+        SAVASTEvent *event = [[SAVASTEvent alloc] init];
+        event.event = @"vast_error";
+        event.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
+        [ad.events addObject:event];
     }];
     
     // get impressions
     [SAXMLParser searchSiblingsAndChildrenOf:element forName:@"Impression" andInterate:^(SAXMLElement *element) {
-        SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"vast_impression";
-        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.events addObject:tracking];
+        SAVASTEvent *event = [[SAVASTEvent alloc] init];
+        event.event = @"vast_impression";
+        event.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
+        [ad.events addObject:event];
     }];
     
     // get the creative
     SAXMLElement *creativeXML = [SAXMLParser findFirstIntanceInSiblingsAndChildrenOf:element forName:@"Creative"];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"ClickThrough" andInterate:^(SAXMLElement *element) {
-        SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"vast_click_through";
-        tracking.URL = [[[[SAUtils decodeHTMLEntitiesFrom:[element getValue]]
+        SAVASTEvent *event = [[SAVASTEvent alloc] init];
+        event.event = @"vast_click_through";
+        event.URL = [[[[SAUtils decodeHTMLEntitiesFrom:[element getValue]]
                         stringByReplacingOccurrencesOfString:@"&amp;" withString:@"&"]
                         stringByReplacingOccurrencesOfString:@"%3A" withString:@":"]
                         stringByReplacingOccurrencesOfString:@"%2F" withString:@"/"];
-        [ad.events addObject:tracking];
+        [ad.events addObject:event];
     }];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"ClickTracking" andInterate:^(SAXMLElement *element) {
-        SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = @"vast_click_tracking";
-        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.events addObject:tracking];
+        SAVASTEvent *event = [[SAVASTEvent alloc] init];
+        event.event = @"vast_click_tracking";
+        event.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
+        [ad.events addObject:event];
     }];
     
     [SAXMLParser searchSiblingsAndChildrenOf:creativeXML forName:@"Tracking" andInterate:^(SAXMLElement *element) {
-        SATracking *tracking = [[SATracking alloc] init];
-        tracking.event = [NSString stringWithFormat:@"vast_%@",[element getAttribute:@"event"]];
-        tracking.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
-        [ad.events addObject:tracking];
+        SAVASTEvent *event = [[SAVASTEvent alloc] init];
+        event.event = [NSString stringWithFormat:@"vast_%@",[element getAttribute:@"event"]];
+        event.URL = [SAUtils decodeHTMLEntitiesFrom:[element getValue]];
+        [ad.events addObject:event];
     }];
     
     // append only valid, mp4 type ads

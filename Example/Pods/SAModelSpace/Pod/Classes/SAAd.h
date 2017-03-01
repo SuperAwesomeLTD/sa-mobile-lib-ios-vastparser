@@ -8,7 +8,6 @@
 @class SACreative;
 @class SADetails;
 @class SAMedia;
-@class SATracking;
 
 #if defined(__has_include)
 #if __has_include(<SAJsonParser/SAJsonParser.h>)
@@ -88,5 +87,14 @@ static inline SACampaignType getSACampaignTypeFromInt (NSInteger campaign) {
 @property (nonatomic, strong) NSString       *device;
 
 @property (nonatomic, strong) SACreative     *creative;
+
+/**
+ * Custom init with placement and json dictionary
+ * 
+ * @param placementId       to copy inside the model
+ * @param jsonDictionary    with data about the ad
+ */
+- (id) initWithPlacementId: (NSInteger) placementId
+         andJsonDictionary: (NSDictionary*) jsonDictionary;
 
 @end

@@ -4,6 +4,7 @@
  */
 
 #import "SAMedia.h"
+#import "SAVASTAd.h"
 
 @implementation SAMedia
 
@@ -40,6 +41,11 @@
         _type = [jsonDictionary safeStringForKey:@"type" orDefault:_type];
         _bitrate = [jsonDictionary safeIntForKey:@"bitrate" orDefault:_bitrate];
         _isDownloaded = [jsonDictionary safeBoolForKey:@"isDownloaded" orDefault:_isDownloaded];
+        
+        NSDictionary *vastDict = [jsonDictionary safeDictionaryForKey:@"vastAd" orDefault:nil];
+        if (vastDict) {
+            _vastAd = [[SAVASTAd alloc] initWithJsonDictionary:vastDict];
+        }
     }
     return self;
 }
@@ -67,7 +73,8 @@
              @"url": nullSafe(_url),
              @"type": nullSafe(_type),
              @"bitrate": @(_bitrate),
-             @"isDownloaded": @(_isDownloaded)
+             @"isDownloaded": @(_isDownloaded),
+             @"vastAd": nullSafe([_vastAd dictionaryRepresentation])
              };
 }
 
@@ -81,6 +88,7 @@
     _type = nil;
     _bitrate = 0;
     _isDownloaded = false;
+    _vastAd = [[SAVASTAd alloc] init];
 }
 
 @end

@@ -5,7 +5,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class SATracking;
+@class SAVASTEvent;
 @class SAVASTMedia;
 
 #if defined(__has_include)
@@ -63,7 +63,7 @@ static inline SAVASTAdType getSAVASTAdTypeFromInt (NSInteger type) {
 @property (nonatomic, assign) SAVASTAdType                  type;
 @property (nonatomic, strong) NSString                      *url;
 @property (nonatomic, strong) NSMutableArray <SAVASTMedia*> *media;
-@property (nonatomic, strong) NSMutableArray <SATracking*>  *events;
+@property (nonatomic, strong) NSMutableArray <SAVASTEvent*> *events;
 
 /**
  * Specific method that sums two ads together

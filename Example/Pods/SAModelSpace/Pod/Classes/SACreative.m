@@ -5,7 +5,6 @@
 
 // import this model's header
 #import "SACreative.h"
-#import "SATracking.h"
 #import "SADetails.h"
 
 @implementation SACreative
@@ -55,12 +54,6 @@
         
         _bundle = [jsonDictionary safeStringForKey:@"bundleId" orDefault:_bundle];
         
-        NSArray *eventsArr = [jsonDictionary safeArrayForKey:@"events" orDefault:@[]];
-        _events = [[[NSArray alloc] initWithJsonArray:eventsArr andIterator:^id(id item) {
-            return [[SATracking alloc] initWithJsonDictionary:(NSDictionary*)item];
-        }] mutableCopy];
-        
-        
         NSDictionary *detailsDict = [jsonDictionary safeDictionaryForKey:@"details" orDefault:nil];
         if (detailsDict) {
             _details = [[SADetails alloc] initWithJsonDictionary:detailsDict];
@@ -99,7 +92,6 @@
              @"impression_url": nullSafe(_impressionUrl),
              @"installUrl": nullSafe(_installUrl),
              @"bundleId": nullSafe(_bundle),
-             @"events": nullSafe([_events dictionaryRepresentation]),
              @"details": nullSafe([_details dictionaryRepresentation])
              };
 }
@@ -125,7 +117,6 @@
     
     // details & events
     _details = [[SADetails alloc] init];
-    _events = [@[] mutableCopy];
 }
 
 @end

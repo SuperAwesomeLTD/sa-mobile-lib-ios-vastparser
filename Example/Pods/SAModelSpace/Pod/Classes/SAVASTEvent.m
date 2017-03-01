@@ -3,9 +3,9 @@
  * @Author:      Gabriel Coman (gabriel.coman@superawesome.tv)
  */
 
-#import "SATracking.h"
+#import "SAVASTEvent.h"
 
-@implementation SATracking
+@implementation SAVASTEvent
 
 /**
  * Base init method

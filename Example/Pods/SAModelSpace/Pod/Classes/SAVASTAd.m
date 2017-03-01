@@ -4,7 +4,7 @@
  */
 
 #import "SAVASTAd.h"
-#import "SATracking.h"
+#import "SAVASTEvent.h"
 #import "SAVASTMedia.h"
 
 @implementation SAVASTAd
@@ -53,7 +53,7 @@
         // get array of events
         NSArray *events = [jsonDictionary safeArrayForKey:@"events" orDefault:@[]];
         _events = [[[NSArray alloc] initWithJsonArray:events andIterator:^id(id item) {
-            return [[SATracking alloc] initWithJsonDictionary:(NSDictionary*)item];
+            return [[SAVASTEvent alloc] initWithJsonDictionary:(NSDictionary*)item];
         }] mutableCopy];
     }
     

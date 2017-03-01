@@ -6,6 +6,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class SAVASTAd;
+
 #if defined(__has_include)
 #if __has_include(<SAJsonParser/SAJsonParser.h>)
 #import <SAJsonParser/SAJsonParser.h>
@@ -36,5 +38,6 @@
 @property (nonatomic, strong) NSString  *type;
 @property (nonatomic, assign) NSInteger bitrate;
 @property (nonatomic, assign) BOOL      isDownloaded;
+@property (nonatomic, strong) SAVASTAd  *vastAd;
 
 @end
