@@ -69,7 +69,7 @@
 
 - (id) initWithPlacementId: (NSInteger) placementId
          andJsonDictionary: (NSDictionary*) jsonDictionary {
-    if (self = [super initWithJsonDictionary:jsonDictionary]) {
+    if (self = [self initWithJsonDictionary:jsonDictionary]) {
         _placementId = placementId;
     }
     

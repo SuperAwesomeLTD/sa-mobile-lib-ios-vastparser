@@ -58,6 +58,39 @@
         if (detailsDict) {
             _details = [[SADetails alloc] initWithJsonDictionary:detailsDict];
         }
+        
+        switch (_format) {
+            case SA_Image:{
+                if (_details.image != nil) {
+                    NSURL *url = [NSURL URLWithString:_details.image];
+                    _details.base = [NSString stringWithFormat:@"%@://%@", [url scheme], [url host]];
+                }
+                break;
+            }
+            case SA_Video: {
+                if (_details.video != nil) {
+                    NSURL *url = [NSURL URLWithString:_details.video];
+                    _details.base = [NSString stringWithFormat:@"%@://%@", [url scheme], [url host]];
+                }
+                break;
+            }
+            case SA_Tag:{
+                _details.base = @"https://ads.superawesome.tv";
+                break;
+            }
+            case SA_Rich:{
+                if (_details.url != nil) {
+                    NSURL *url = [NSURL URLWithString:_details.url];
+                    _details.base = [NSString stringWithFormat:@"%@://%@", [url scheme], [url host]];
+                }
+                break;
+            }
+            case SA_Appwall:
+            case SA_Invalid: {
+                // do nothing
+                break;
+            }
+        }
     }
     return self;
 }

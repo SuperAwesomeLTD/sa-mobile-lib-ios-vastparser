@@ -50,6 +50,7 @@
 @property (nonatomic, strong) NSString  *zip;
 @property (nonatomic, strong) NSString  *url;
 @property (nonatomic, strong) NSString  *cdn;
+@property (nonatomic, strong) NSString  *base;
 @property (nonatomic, strong) NSString  *vast;
 @property (nonatomic, strong) SAMedia   *media;
 

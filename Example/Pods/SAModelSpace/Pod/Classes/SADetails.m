@@ -103,6 +103,7 @@
              @"zipFile": nullSafe(_zip),
              @"url": nullSafe(_url),
              @"cdn": nullSafe(_cdn),
+             @"base": nullSafe(_base),
              @"media": nullSafe([_media dictionaryRepresentation])
              };
 }
@@ -127,6 +128,7 @@
     _url = nil;
     _cdn = nil;
     _vast = nil;
+    _base = nil;
     
     // media
     _media = [[SAMedia alloc] init];
