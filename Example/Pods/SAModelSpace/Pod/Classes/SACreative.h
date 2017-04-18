@@ -138,6 +138,8 @@ static inline NSString* getStringFromSACreativeFormat (SACreativeFormat format) 
 @property (nonatomic, strong) NSString                      *installUrl;
 @property (nonatomic, strong) NSString                      *impressionUrl;
 
+@property (nonatomic, strong) NSMutableArray<NSString*>     *osTarget;
+
 @property (nonatomic, strong) NSString                      *bundle;
 @property (nonatomic, strong) SADetails                     *details;
 

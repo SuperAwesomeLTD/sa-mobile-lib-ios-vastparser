@@ -48,11 +48,28 @@
         _approved = [jsonDictionary safeBoolForKey:@"approved" orDefault:_approved];
         
         _clickUrl = [jsonDictionary safeStringForKey:@"click_url" orDefault:_clickUrl];
-        _clickCounterUrl = [jsonDictionary safeStringForKey:@"clickCounterUrl" orDefault:_clickCounterUrl];
+        if (!_clickUrl) {
+            _clickUrl = [jsonDictionary safeStringForKey:@"clickUrl"];
+        }
+        
         _impressionUrl = [jsonDictionary safeStringForKey:@"impression_url" orDefault:_impressionUrl];
-        _installUrl = [jsonDictionary safeStringForKey:@"installUrl" orDefault:_installUrl];
+        if (!_impressionUrl) {
+            _impressionUrl = [jsonDictionary safeStringForKey:@"impressionUrl"];
+        }
+        
+        _installUrl = [jsonDictionary safeStringForKey:@"install_url" orDefault:_installUrl];
+        if (!_installUrl) {
+            _installUrl = [jsonDictionary safeStringForKey:@"installUrl"];
+        }
+        
+        _clickCounterUrl = [jsonDictionary safeStringForKey:@"clickCounterUrl" orDefault:_clickCounterUrl];
         
         _bundle = [jsonDictionary safeStringForKey:@"bundleId" orDefault:_bundle];
+        
+        NSArray *osTarget = [jsonDictionary safeArrayForKey:@"osTarget" orDefault:@[]];
+        _osTarget = [[[NSArray alloc] initWithJsonArray:osTarget andIterator:^id(id item) {
+            return (NSString*) item;
+        }] mutableCopy];
         
         NSDictionary *detailsDict = [jsonDictionary safeDictionaryForKey:@"details" orDefault:nil];
         if (detailsDict) {
@@ -124,6 +141,7 @@
              @"clickCounterUrl": nullSafe(_clickCounterUrl),
              @"impression_url": nullSafe(_impressionUrl),
              @"installUrl": nullSafe(_installUrl),
+             @"osTarget": nullSafe([_osTarget dictionaryRepresentation]),
              @"bundleId": nullSafe(_bundle),
              @"details": nullSafe([_details dictionaryRepresentation])
              };
@@ -145,6 +163,7 @@
     _clickUrl = nil;
     _clickCounterUrl = nil;
     _installUrl = nil;
+    _osTarget = [@[] mutableCopy];
     _impressionUrl = nil;
     _bundle = nil;
     
