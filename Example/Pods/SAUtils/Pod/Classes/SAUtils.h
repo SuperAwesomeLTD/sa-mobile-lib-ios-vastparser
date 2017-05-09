@@ -55,7 +55,7 @@ typedef NS_ENUM (NSInteger, SAConnectionType) {
  * Method that checks whether one rect is completely inside another one
  *
  * @param target    the rect I want to test
- * @param fraeme    the rect I want to test against
+ * @param frame    the rect I want to test against
  * @return          true or false
  */
 + (BOOL) isRect:(CGRect)target inRect:(CGRect)frame;
