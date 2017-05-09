@@ -93,6 +93,7 @@
         case SA_Video:
             return _creative.details.vast != nil &&
                     _creative.details.media.path != nil &&
+                    _creative.details.media.path != (NSString*)[NSNull null] &&
                     _creative.details.media.url != nil &&
                     _creative.details.media.isDownloaded;
         case SA_Tag:
@@ -100,6 +101,7 @@
         case SA_Appwall:
             return _creative.details.image != nil &&
                     _creative.details.media.path != nil &&
+                    _creative.details.media.path != (NSString*)[NSNull null] &&
                     _creative.details.media.url != nil &&
                     _creative.details.media.isDownloaded;
     }
