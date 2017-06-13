@@ -96,8 +96,8 @@
  * Implementation of SADeserialization "initWithJsonData" method
  * for a dictionary object
  *
- * @param jsonDictionary    a NSData object containing JSON data
- * @return                  a new instance of a NSDictionary object
+ * @param jsonData    a NSData object containing JSON data
+ * @return            a new instance of a NSDictionary object
  */
 - (id) initWithJsonData:(NSData*) jsonData {
     NSDictionary *temp = [self dictionaryFromData:jsonData];
@@ -119,8 +119,8 @@
  * Implementation of SADeserialization "initWithJsonString" method
  * for a dictionary object
  *
- * @param jsonDictionary    a string containing JSON data
- * @return                  a new instance of a NSDictionary object
+ * @param jsonString    a string containing JSON data
+ * @return              a new instance of a NSDictionary object
  */
 - (id) initWithJsonString:(NSString*) jsonString {
     if (jsonString != nil && ![jsonString isEqual:[NSNull null]]) {

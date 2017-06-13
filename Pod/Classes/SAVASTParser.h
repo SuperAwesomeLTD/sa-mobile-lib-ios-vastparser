@@ -30,7 +30,7 @@ typedef void (^saDidParseVAST)(SAVASTAd *ad);
 /**
  * Method that parses an XML containing a VAST ad into a SAVASTAd object
  *
- * @param adElement the XML Element
+ * @param element   the XML Element
  * @return          a SAVASTAd object
  */
 - (SAVASTAd*) parseAdXML: (SAXMLElement*) element;

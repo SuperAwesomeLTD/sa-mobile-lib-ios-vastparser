@@ -343,7 +343,7 @@
 /**
  * Internal method used to handle button clicks.
  *
- * @param: sender the button that send the click event
+ * @param sender  the button that send the click event
  */
 - (void) onClick:(id)sender {
     _clickHandler();

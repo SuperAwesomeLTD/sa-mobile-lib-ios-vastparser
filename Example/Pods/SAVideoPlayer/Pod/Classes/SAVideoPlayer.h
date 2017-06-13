@@ -52,7 +52,7 @@ typedef void (^saVideoPlayerDidReceiveClick)();
 /**
  * Method that plays a video from a local location
  *
- * @param path local URL location
+ * @param file  local URL location
  */
 - (void) playWithMediaFile:(NSString*)file;
 

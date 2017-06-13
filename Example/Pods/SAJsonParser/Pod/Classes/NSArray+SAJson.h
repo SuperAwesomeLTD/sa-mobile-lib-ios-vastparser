@@ -76,7 +76,7 @@ typedef id (^SAArrayIterator)(id item);
 /**
  * Factory function that inits an array with a json string and iterator
  *
- * @param array     json string of array of dictionaries (or values)
+ * @param json      json string of array of dictionaries (or values)
  * @param iterator  iterator instance
  * @return          a new array
  */
@@ -94,7 +94,7 @@ typedef id (^SAArrayIterator)(id item);
 /**
  * Factory function that inits an array with a json data object and iterator
  *
- * @param array     json as nsdata
+ * @param json      json as nsdata
  * @param iterator  iterator instnce
  * @return          a new array
  */

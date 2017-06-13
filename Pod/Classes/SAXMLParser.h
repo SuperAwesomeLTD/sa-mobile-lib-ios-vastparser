@@ -86,9 +86,9 @@ typedef void (^saDidFindXMLElement)(SAXMLElement *element);
  * given "name" string parameter.
  * It will return the result into the list of XML elements given as paramter.
  *
- * @param node  the XML parent node
- * @param name  the XML name ot search for
- * @param array a list of returned Elements
+ * @param element   the XML parent node
+ * @param name      the XML name ot search for
+ * @param array     a list of returned Elements
  */
 + (void) searchSiblingsAndChildrenOf:(SAXMLElement*) element
                              forName:(NSString*) name
@@ -97,9 +97,9 @@ typedef void (^saDidFindXMLElement)(SAXMLElement *element);
  * Method that returns a list of XML elements after performing a thorough 
  * search of all the node parameter's siblings and children, by a given "name".
  *
- * @param node  the parent node
- * @param name  the name to search for
- * @return      a List of XML elements
+ * @param element   the parent node
+ * @param name      the name to search for
+ * @return          a List of XML elements
  */
 + (NSMutableArray*) searchSiblingsAndChildrenOf:(SAXMLElement*) element
                                         forName:(NSString*) name;
@@ -108,9 +108,9 @@ typedef void (^saDidFindXMLElement)(SAXMLElement *element);
  * Method that iterates over each children or sibling of the given XML node paramter.
  * The block is a method with one XML element parameter.
  *
- * @param node  the XML parent node
- * @param name  the name of the XML element
- * @param block a block of type SAXMLIterator
+ * @param element   the XML parent node
+ * @param name      the name of the XML element
+ * @param block     a block of type SAXMLIterator
  */
 + (void) searchSiblingsAndChildrenOf:(SAXMLElement*) element
                              forName:(NSString*) name
@@ -120,9 +120,9 @@ typedef void (^saDidFindXMLElement)(SAXMLElement *element);
  * Finds only the first instance of a XML element with given name by 
  * searching in all of the node parameter's siblings and children.
  *
- * @param node  the parent node
- * @param name  the name to search for
- * @return      the first element found
+ * @param element   the parent node
+ * @param name      the name to search for
+ * @return          the first element found
  */
 + (SAXMLElement*) findFirstIntanceInSiblingsAndChildrenOf:(SAXMLElement*) element
                                                   forName:(NSString*) name;
@@ -131,9 +131,9 @@ typedef void (^saDidFindXMLElement)(SAXMLElement *element);
  * Method that checks if in all children and siblings of a XML node, 
  * there exists at least one element with given name
  *
- * @param node  parent XML node
- * @param name  name to search for
- * @return      true if found any, false otherwise
+ * @param element   parent XML node
+ * @param name      name to search for
+ * @return          true if found any, false otherwise
  */
 + (BOOL) checkSiblingsAndChildrenOf:(SAXMLElement*) element
                             forName:(NSString*) name;
