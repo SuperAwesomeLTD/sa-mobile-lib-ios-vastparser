@@ -88,6 +88,8 @@ static inline SACampaignType getSACampaignTypeFromInt (NSInteger campaign) {
 
 @property (nonatomic, strong) SACreative     *creative;
 
+@property (nonatomic, assign) NSInteger      loadTime;
+
 /**
  * Custom init with placement and json dictionary
  * 

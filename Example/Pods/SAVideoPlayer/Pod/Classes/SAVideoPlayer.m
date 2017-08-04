@@ -23,14 +23,7 @@
 #define AV_KEEPUP           @"playbackLikelyToKeepUp"
 #define AV_TIME             @"loadedTimeRanges"
 
-// constants used in remote playback
-#define MIN_BUFFER_TO_PLAY  3.5
-#define MAX_NR_RECONNECTS   5
-
 @interface SAVideoPlayer ()
-
-// the media URL
-@property (nonatomic, strong) NSURL *mediaURL;
 
 // subviews
 @property (nonatomic, strong) UIView *videoView;
@@ -42,7 +35,6 @@
 @property (nonatomic, strong) SABlackMask *mask;
 @property (nonatomic, strong) SACronograph *chrono;
 @property (nonatomic, strong) SAURLClicker *clicker;
-@property (nonatomic, strong) UIActivityIndicatorView *spinner;
 
 // state variables
 @property (nonatomic, assign) BOOL isReadyHandled;
@@ -58,14 +50,7 @@
 @property (nonatomic, strong) NSObject *observer;
 
 // buffer variables in case network is shaky and buffer goes empty too soon
-@property (nonatomic, assign) BOOL isPlaybackBufferEmpty;
-@property (nonatomic, assign) BOOL shouldShowSpinner;
 @property (nonatomic, assign) BOOL shouldShowSmallClickButton;
-
-// network reconnect variables
-@property (nonatomic, assign) NSInteger currentReconnectTries;
-@property (nonatomic, strong) NSTimer *timer;
-@property (nonatomic, assign) BOOL isNetworkHavingProblems;
 
 @property (nonatomic, strong) saVideoPlayerDidReceiveEvent eventHandler;
 @property (nonatomic, strong) saVideoPlayerDidReceiveClick clickHandler;
@@ -82,7 +67,6 @@
 - (id) init {
     if (self = [super init]) {
         _notif = [NSNotificationCenter defaultCenter];
-        _shouldShowSpinner = false;
         _shouldShowSmallClickButton = false;
         _eventHandler = ^(SAVideoPlayerEvent event) {};
         _clickHandler = ^(){};
@@ -98,7 +82,6 @@
 - (id) initWithCoder:(NSCoder *)aDecoder {
     if (self = [super initWithCoder:aDecoder]) {
         _notif = [NSNotificationCenter defaultCenter];
-        _shouldShowSpinner = false;
         _shouldShowSmallClickButton = false;
         _eventHandler = ^(SAVideoPlayerEvent event) {};
         _clickHandler = ^(){};
@@ -114,7 +97,6 @@
 - (id) initWithFrame:(CGRect)frame {
     if (self = [super initWithFrame:frame]) {
         _notif = [NSNotificationCenter defaultCenter];
-        _shouldShowSpinner = false;
         _shouldShowSmallClickButton = false;
         _eventHandler = ^(SAVideoPlayerEvent event) {};
         _clickHandler = ^(){};
@@ -185,20 +167,11 @@
     _isThirdQuartileHandled =
     _isEndHandled =
     _is15sHandled = false;
-    
-    _isPlaybackBufferEmpty = false;
-    _currentReconnectTries = -1;
-    _isNetworkHavingProblems = false;
 }
 
 - (void) destroy {
     [self destroyPlayer];
     [self destroyChrome];
-    
-    if (_timer) {
-        [_timer invalidate];
-        _timer = NULL;
-    }
 }
 
 /**
@@ -263,33 +236,10 @@
     [self setup];
 }
 
-- (void) playWithMediaURL:(NSURL *)url {
-    
-    // handle error case
-    if (url == nil || url == (NSURL*)[NSNull null] || [[url absoluteString] isEqualToString:@""]) {
-        _eventHandler(Video_Error);
-        return;
-    }
-    
-    // if file isn't nil, then go forward and play it
-    
-    [self setup];
-    _mediaURL = url;
-    _playerItem = [AVPlayerItem playerItemWithURL:_mediaURL];
-    _player = [AVPlayer playerWithPlayerItem:_playerItem];
-    _playerLayer = [AVPlayerLayer playerLayerWithPlayer:_player];
-    _playerLayer.frame = _videoView.bounds;
-    [_videoView.layer addSublayer:_playerLayer];
-    [_player seekToTime:kCMTimeZero];
-    [_player play];
-    
-    [self setObservers];
-}
-
 - (void) playWithMediaFile:(NSString *)file {
     
     // handle error case
-    if (file == nil || file == (NSString*)[NSNull null] || [file isEqualToString:@""]) {
+    if (file == nil || file == (NSString*)[NSNull null] || [file isEqualToString:@""] || ![[NSFileManager defaultManager] fileExistsAtPath:file]) {
         _eventHandler(Video_Error);
         return;
     }
@@ -314,9 +264,6 @@
  * as for the player and player item
  */
 - (void) setObservers {
-    
-//    NSError *setCategoryErr;
-//    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&setCategoryErr];
     
     [_notif addObserver:self selector:@selector(playerItemDidReachEnd:) name:AV_END object:nil];
     [_notif addObserver:self selector:@selector(playerItemFailedToPlayEndTime:) name:AV_NOEND object:nil];
@@ -452,7 +399,6 @@
         if (_playerItem.status == AVPlayerItemStatusReadyToPlay) {
             [_player play];
             NSLog(@"[KVO] %@: Ready", AV_STATUS);
-            _isNetworkHavingProblems = false;
             
             // weak self so I don't have a retain cycle in the block
             __weak typeof (self) weakSelf = self;
@@ -496,14 +442,6 @@
                 }
             }];
         }
-        if (_playerItem.status == AVPlayerItemStatusFailed) {
-            NSLog(@"[KVO] %@: Failed", AV_STATUS);
-            _isNetworkHavingProblems = true;
-            if (!_timer) {
-                _timer = [NSTimer scheduledTimerWithTimeInterval:5 target:self selector:@selector(reconnectFunc) userInfo:nil repeats:YES];
-                [_timer fire];
-            }
-        }
         if (_playerItem.status == AVPlayerItemStatusUnknown) {
             NSLog(@"[KVO] %@: Unknown", AV_STATUS);
         }
@@ -511,48 +449,8 @@
     if (object == _playerItem && [keyPath isEqualToString:AV_FULL]) {
         NSLog(@"[KVO] %@ %d", AV_FULL, _playerItem.isPlaybackBufferFull);
     }
-    if (object == _playerItem && [keyPath isEqualToString:AV_EMPTY]) {
-        NSLog(@"[KVO] %@ %d", AV_EMPTY, _playerItem.isPlaybackBufferEmpty);
-        // if this gets called, then there is no more data in the buffer and we should pause the video
-        _isPlaybackBufferEmpty = true;
-        [_player pause];
-        
-        // start spinner
-        dispatch_async(dispatch_get_main_queue(), ^{
-            _shouldShowSpinner = YES;
-        });
-    }
     if (object == _playerItem && [keyPath isEqualToString:AV_KEEPUP]) {
         NSLog(@"[KVO] %@ %d", AV_KEEPUP, _playerItem.isPlaybackLikelyToKeepUp);
     }
 }
-
-/**
- * Unused method used to reconnect the video in acse it playes videos from
- * network. The way the SDK is architectured right now, it's not the case.
- */
-- (void) reconnectFunc {
-    if (_isNetworkHavingProblems) {
-        if (_currentReconnectTries < MAX_NR_RECONNECTS) {
-            _currentReconnectTries++;
-            NSLog(@"Trying to reconnect ... %ld / %d", (long)_currentReconnectTries, MAX_NR_RECONNECTS);
-            [self destroyPlayer];
-            [self setupPlayer];
-            [self bringSubviewToFront:_chrome];
-            [self playWithMediaURL:_mediaURL];
-        } else {
-            // destroy
-            [self destroy];
-            
-            // delegate
-            _eventHandler(Video_Error);
-        }
-    } else {
-        if (_timer) {
-            [_timer invalidate];
-            _timer = NULL;
-        }
-    }
-}
-
 @end

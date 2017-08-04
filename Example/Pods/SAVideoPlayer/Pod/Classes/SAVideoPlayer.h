@@ -43,13 +43,6 @@ typedef void (^saVideoPlayerDidReceiveClick)();
 @interface SAVideoPlayer : UIView
 
 /**
- * Method that plays a video from a remote location
- *
- * @param url remote URL location
- */
-- (void) playWithMediaURL:(NSURL *)url;
-
-/**
  * Method that plays a video from a local location
  *
  * @param file  local URL location

@@ -58,6 +58,8 @@
         
         _device = [jsonDictionary safeStringForKey:@"device" orDefault:_device];
         
+        _loadTime = [jsonDictionary safeIntForKey:@"loadTime" orDefault:_loadTime];
+        
         NSDictionary *creativeDict = [jsonDictionary safeDictionaryForKey:@"creative" orDefault:nil];
         if (creativeDict) {
             _creative = [[SACreative alloc] initWithJsonDictionary:creativeDict];
@@ -69,6 +71,7 @@
 
 - (id) initWithPlacementId: (NSInteger) placementId
          andJsonDictionary: (NSDictionary*) jsonDictionary {
+    
     if (self = [self initWithJsonDictionary:jsonDictionary]) {
         _placementId = placementId;
     }
@@ -134,7 +137,8 @@
              @"safe_ad_approved": @(_isSafeAdApproved),
              @"show_padlock": @(_isPadlockVisible),
              @"creative": nullSafe([_creative dictionaryRepresentation]),
-             @"device": nullSafe(_device)
+             @"device": nullSafe(_device),
+             @"loadTime": @(_loadTime)
              };
 }
 
@@ -159,6 +163,9 @@
     _isSafeAdApproved = false;
     _isPadlockVisible = false;
     _device = nil;
+    NSTimeInterval timeStamp = [[NSDate date] timeIntervalSince1970];
+    _loadTime = timeStamp * 1000;
+    
     
     // create creative
     _creative = [[SACreative alloc] init];
