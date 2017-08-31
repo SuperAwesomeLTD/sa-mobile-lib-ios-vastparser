@@ -131,6 +131,7 @@ static inline NSString* getStringFromSACreativeFormat (SACreativeFormat format) 
 @property (nonatomic, assign) SACreativeFormat              format;
 @property (nonatomic, assign) BOOL                          live;
 @property (nonatomic, assign) BOOL                          approved;
+@property (nonatomic, assign) BOOL                          bumper;
 @property (nonatomic, strong) NSString                      *payload;
 
 @property (nonatomic, strong) NSString                      *clickUrl;

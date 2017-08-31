@@ -46,6 +46,7 @@
         _payload = [jsonDictionary safeStringForKey:@"customPayload" orDefault:_payload];
         _live = [jsonDictionary safeBoolForKey:@"live" orDefault:_live];
         _approved = [jsonDictionary safeBoolForKey:@"approved" orDefault:_approved];
+        _bumper = [jsonDictionary safeBoolForKey:@"bumper" orDefault:_bumper];
         
         _clickUrl = [jsonDictionary safeStringForKey:@"click_url" orDefault:_clickUrl];
         if (!_clickUrl) {
@@ -137,6 +138,7 @@
              @"customPayload": nullSafe(_payload),
              @"live": @(_live),
              @"approved": @(_approved),
+             @"bumper": @(_bumper),
              @"click_url": nullSafe(_clickUrl),
              @"clickCounterUrl": nullSafe(_clickCounterUrl),
              @"impression_url": nullSafe(_impressionUrl),
@@ -159,6 +161,7 @@
     _format = SA_Invalid;
     _live = true;
     _approved = true;
+    _bumper = false;
     _payload = nil;
     _clickUrl = nil;
     _clickCounterUrl = nil;
