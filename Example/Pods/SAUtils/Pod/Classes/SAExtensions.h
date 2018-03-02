@@ -19,7 +19,7 @@
  * @param end   what to execute at the end of the enumeration operation
  */
 - (void) enumerateKeysAndObjectsUsingBlock:(nullable void (^)(id _Nonnull key, id _Nonnull obj, BOOL * _Nonnull end))block
-                                     atEnd:(nullable void (^)())end;
+                                     atEnd:(nullable void (^)(void))end;
 
 @end
 

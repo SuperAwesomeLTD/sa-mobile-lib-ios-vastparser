@@ -8,7 +8,7 @@
 
 @implementation NSDictionary (SAExtensions)
 
-- (void) enumerateKeysAndObjectsUsingBlock:(void (^)(id _Nonnull, id _Nonnull, BOOL * _Nonnull))block atEnd:(void (^)())end {
+- (void) enumerateKeysAndObjectsUsingBlock:(void (^)(id _Nonnull, id _Nonnull, BOOL * _Nonnull))block atEnd:(void (^)(void))end {
     [self enumerateKeysAndObjectsUsingBlock:block];
     end();
 }
