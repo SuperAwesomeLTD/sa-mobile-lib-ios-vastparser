@@ -2,10 +2,10 @@ platform :ios, '8.0'
 
 target 'SAVASTParser_Example' do
   pod 'SAVASTParser', :path => '../'
-  pod 'SAVideoPlayer'
 
   target 'SAVASTParser_Tests' do
       inherit! :search_paths
+      pod 'OHHTTPStubs'
   end  
 end
 

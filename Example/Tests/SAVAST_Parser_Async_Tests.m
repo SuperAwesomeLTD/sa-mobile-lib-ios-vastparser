@@ -11,17 +11,22 @@
 #import "SAVASTAd.h"
 #import "SAVASTMedia.h"
 #import "SAVASTEvent.h"
+#import "SAMockVASTServer.h"
 
 @interface SAVAST_Parser_Async_Tests : XCTestCase
+@property (nonatomic, strong) SAMockVASTServer *server;
 @end
 
 @implementation SAVAST_Parser_Async_Tests
 
 - (void)setUp {
+    _server = [[SAMockVASTServer alloc] init];
+    [_server start];
     [super setUp];
 }
 
 - (void)tearDown {
+    [_server shutdown];
     [super tearDown];
 }
 
@@ -32,7 +37,7 @@
     SAVASTParser *parser = [[SAVASTParser alloc] init];
     XCTAssertNotNil(parser);
     
-    NSString *vast = @"https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-ios-vastparser/master/Example/Tests/Datasource/VAST1.xml";
+    NSString *vast = @"https://my.mock.api/vast/vast1.xml";
     
     [parser parseVAST:vast withResponse:^(SAVASTAd *ad) {
         
@@ -83,7 +88,7 @@
     SAVASTParser *parser = [[SAVASTParser alloc] init];
     XCTAssertNotNil(parser);
     
-    NSString *vast = @"https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-ios-vastparser/master/Example/Tests/Datasource/VAST2.0.xml";
+    NSString *vast = @"https://my.mock.api/vast/vast2.0.xml";
     
     [parser parseVAST:vast withResponse:^(SAVASTAd *ad) {
         
@@ -136,7 +141,7 @@
     SAVASTParser *parser = [[SAVASTParser alloc] init];
     XCTAssertNotNil(parser);
     
-    NSString *vast = @"https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-ios-vastparser/master/Example/Tests/Datasource/VAST3.0.xml";
+    NSString *vast = @"https://my.mock.api/vast/vast3.0.xml";
     
     [parser parseVAST:vast withResponse:^(SAVASTAd *ad) {
         
@@ -166,7 +171,7 @@
     SAVASTParser *parser = [[SAVASTParser alloc] init];
     XCTAssertNotNil(parser);
     
-    NSString *vast = @"https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-ios-vastparser/master/Example/Tests/Datasource/VAST4.0.xml";
+    NSString *vast = @"https://my.mock.api/vast/vast4.0.xml";
     
     [parser parseVAST:vast withResponse:^(SAVASTAd *ad) {
         
@@ -256,7 +261,7 @@
     SAVASTParser *parser = [[SAVASTParser alloc] init];
     XCTAssertNotNil(parser);
     
-    NSString *vast = @"https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-ios-vastparser/master/Example/Tests/Datasource/VAST5.0.xml";
+    NSString *vast = @"https://my.mock.api/vast/vast5.0.xml";
     
     [parser parseVAST:vast withResponse:^(SAVASTAd *ad) {
         
@@ -299,8 +304,6 @@
             NSLog(@"Timeout Error: %@", error);
         }
     }];
-    
 }
-
 
 @end

@@ -3,7 +3,7 @@
    <Ad id="710743816">
       <Wrapper>
          <AdSystem>GDFP</AdSystem>
-         <VASTAdTagURI><![CDATA[https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-android-vastparser/master/samples/VAST5.3.xml]]></VASTAdTagURI>
+         <VASTAdTagURI><![CDATA[https://my.mock.api/vast/vast5.3.xml]]></VASTAdTagURI>
          <Creatives>
             <Creative id="57861870856" sequence="1">
                <Linear>

@@ -1,4 +1,17 @@
 PODS:
+  - OHHTTPStubs (6.1.0):
+    - OHHTTPStubs/Default (= 6.1.0)
+  - OHHTTPStubs/Core (6.1.0)
+  - OHHTTPStubs/Default (6.1.0):
+    - OHHTTPStubs/Core
+    - OHHTTPStubs/JSON
+    - OHHTTPStubs/NSURLSession
+    - OHHTTPStubs/OHPathHelpers
+  - OHHTTPStubs/JSON (6.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/NSURLSession (6.1.0):
+    - OHHTTPStubs/Core
+  - OHHTTPStubs/OHPathHelpers (6.1.0)
   - SAJsonParser (1.3.5)
   - SAModelSpace (1.0.0):
     - SAJsonParser (= 1.3.5)
@@ -9,32 +22,31 @@ PODS:
     - SAModelSpace (= 1.0.0)
     - SANetworking (= 1.0.0)
     - SAUtils (= 1.5.5)
-  - SAVideoPlayer (1.2.5)
 
 DEPENDENCIES:
+  - OHHTTPStubs
   - SAVASTParser (from `../`)
-  - SAVideoPlayer
 
 SPEC REPOS:
   https://github.com/CocoaPods/Specs.git:
+    - OHHTTPStubs
     - SAJsonParser
     - SAModelSpace
     - SANetworking
     - SAUtils
-    - SAVideoPlayer
 
 EXTERNAL SOURCES:
   SAVASTParser:
     :path: "../"
 
 SPEC CHECKSUMS:
+  OHHTTPStubs: 1e21c7d2c084b8153fc53d48400d8919d2d432d0
   SAJsonParser: a9fac712c99b71e36997010413862866f8246d5a
   SAModelSpace: 07140f87445b477fbb61e5016a51e9f4c02546c7
   SANetworking: 672cec0782244c2d780c3c58867e58e8ed2917ee
   SAUtils: 95e06baec2636bfe494d9f8a43ec4def6fb28229
   SAVASTParser: 25bd991cf9a3b1547bdf25fb9c50ec284e14004d
-  SAVideoPlayer: cc118f17151dfd227a3115a9d266e1cae12c1f3c
 
-PODFILE CHECKSUM: a1fe3b991a74b09bb2dcf7c66be3890b295b0604
+PODFILE CHECKSUM: b06f4787d31465c042840c65ed301b74742d9a07
 
 COCOAPODS: 1.5.0

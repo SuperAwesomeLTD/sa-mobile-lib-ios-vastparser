@@ -3,7 +3,7 @@
    <Ad id="710743816">
       <Wrapper>
          <AdSystem>GDFP</AdSystem>
-         <VASTAdTagURI><![CDATA[https://raw.githubusercontent.com/SuperAwesomeLTD/sa-mobile-lib-android-vastparser/master/samples/VAST5.2.xml]]></VASTAdTagURI>
+         <VASTAdTagURI><![CDATA[https://my.mock.api/vast/vast5.2.xml]]></VASTAdTagURI>
          <Impression><![CDATA[https://securepubads1.g.doubleclick.net/pcs/view?xai=AKAOjsudXNPU1mlGLHKCsMsWXvJMA-P1raTNHoNCCGGKsEIoO0K0_vK6yG4c9ljyzhu5FQMGdyEUicJLBQKCRyx_sEnoz5wFViWgNfaRwD6nyiCE8k9n0EqN-uXCYnkf8si43JdcyPU-SIy1yK4SJhlaq6gJNJxCmltUHLdLxlF1oURUOpiCjNjjL_fXgGzZKZTM7UDQXz41DRY79VWad5B28diJyvJZocrzSgF8P4saGHdOdEL6eHUA6mKF3vbh2FrKXZO2aatPeCBx&amp;sig=Cg0ArKJSzPG8w4_h1rfnEAE&amp;adurl=]]></Impression>
          <Impression><![CDATA[https://securepubads2.g.doubleclick.net/pcs/view?xai=AKAOjsudXNPU1mlGLHKCsMsWXvJMA-P1raTNHoNCCGGKsEIoO0K0_vK6yG4c9ljyzhu5FQMGdyEUicJLBQKCRyx_sEnoz5wFViWgNfaRwD6nyiCE8k9n0EqN-uXCYnkf8si43JdcyPU-SIy1yK4SJhlaq6gJNJxCmltUHLdLxlF1oURUOpiCjNjjL_fXgGzZKZTM7UDQXz41DRY79VWad5B28diJyvJZocrzSgF8P4saGHdOdEL6eHUA6mKF3vbh2FrKXZO2aatPeCBx&amp;sig=Cg0ArKJSzPG8w4_h1rfnEAE&amp;adurl=]]></Impression>
          <Creatives>
