@@ -12,14 +12,17 @@
 #import "SAVASTMedia.h"
 #import "SAVASTAd.h"
 #import "SAVASTEvent.h"
+#import "SATestUtils.h"
 
 @interface SAVAST_Parser_Local_Tests1 : XCTestCase
+@property (nonatomic, strong) SATestUtils *utils;
 @end
 
 @implementation SAVAST_Parser_Local_Tests1
 
 - (void)setUp {
     [super setUp];
+    _utils = [[SATestUtils alloc] init];
 }
 
 - (void)tearDown {
@@ -29,8 +32,7 @@
 - (void) testParseMediaXML1 {
     
     // given
-    NSString *fp1 = [[NSBundle mainBundle] pathForResource:@"xml4" ofType:@"xml"];
-    NSString *given = [NSString stringWithContentsOfFile:fp1 encoding:NSUTF8StringEncoding error:nil];
+    NSString *given = [_utils fixtureWithName:@"mock_media_files_response_1" ofType:@"xml"];
     
     SAXMLParser *xmlParser = [[SAXMLParser alloc] init];
     SAXMLElement *document = [xmlParser parseXMLString:given];
@@ -62,8 +64,7 @@
 - (void) testParseMediaXML2 {
     
     // given
-    NSString *fp1 = [[NSBundle mainBundle] pathForResource:@"xml5" ofType:@"xml"];
-    NSString *given = [NSString stringWithContentsOfFile:fp1 encoding:NSUTF8StringEncoding error:nil];
+    NSString *given = [_utils fixtureWithName:@"mock_media_files_response_2" ofType:@"xml"];
     
     SAXMLParser *xmlParser = [[SAXMLParser alloc] init];
     SAXMLElement *document = [xmlParser parseXMLString:given];

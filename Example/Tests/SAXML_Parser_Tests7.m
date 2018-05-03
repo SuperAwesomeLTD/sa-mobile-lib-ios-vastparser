@@ -8,16 +8,17 @@
 
 #import <XCTest/XCTest.h>
 #import "SAXMLParser.h"
+#import "SATestUtils.h"
 
 @interface SAXML_Parser_Tests7 : XCTestCase
-
+@property (nonatomic, strong) SATestUtils *utils;
 @end
 
 @implementation SAXML_Parser_Tests7
 
 - (void)setUp {
     [super setUp];
-    // Put setup code here. This method is called before the invocation of each test method in the class.
+    _utils = [[SATestUtils alloc] init];
 }
 
 - (void)tearDown {
@@ -28,8 +29,7 @@
 - (void) testInvalidXML1 {
     
     // given
-    NSString *fp1 = [[NSBundle mainBundle] pathForResource:@"xml3" ofType:@"xml"];
-    NSString *given = [NSString stringWithContentsOfFile:fp1 encoding:NSUTF8StringEncoding error:nil];
+    NSString *given = [_utils fixtureWithName:@"mock_xml_response_3" ofType:@"xml"];
     
     SAXMLParser *parser = [[SAXMLParser alloc] init];
     SAXMLElement *document = [parser parseXMLString:given];
