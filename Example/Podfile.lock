@@ -18,7 +18,7 @@ PODS:
     - SAUtils (= 1.5.5)
   - SANetworking (1.0.0)
   - SAUtils (1.5.5)
-  - SAVASTParser (1.7.4):
+  - SAVASTParser (1.7.5):
     - SAModelSpace (= 1.0.0)
     - SANetworking (= 1.0.0)
     - SAUtils (= 1.5.5)
@@ -45,7 +45,7 @@ SPEC CHECKSUMS:
   SAModelSpace: 07140f87445b477fbb61e5016a51e9f4c02546c7
   SANetworking: 672cec0782244c2d780c3c58867e58e8ed2917ee
   SAUtils: 95e06baec2636bfe494d9f8a43ec4def6fb28229
-  SAVASTParser: 25bd991cf9a3b1547bdf25fb9c50ec284e14004d
+  SAVASTParser: 9ae4b6b4ffb73f28e1bbae775e0a3e6c68acfb46
 
 PODFILE CHECKSUM: b06f4787d31465c042840c65ed301b74742d9a07
 

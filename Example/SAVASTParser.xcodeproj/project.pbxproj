@@ -20,6 +20,7 @@
 		1BE1BF111E66D0CD00C4B3B9 /* SAXML_Parser_Tests6.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE1BF101E66D0CD00C4B3B9 /* SAXML_Parser_Tests6.m */; };
 		1BE1BF131E66D0E700C4B3B9 /* SAXML_Parser_Tests7.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE1BF121E66D0E700C4B3B9 /* SAXML_Parser_Tests7.m */; };
 		1BE1BF151E66DC5100C4B3B9 /* SAVAST_Parser_Local_Tests2.m in Sources */ = {isa = PBXBuildFile; fileRef = 1BE1BF141E66DC5100C4B3B9 /* SAVAST_Parser_Local_Tests2.m */; };
+		5DE95CC13BFC268EC106F37F /* libPods-SAVASTParser_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B0C79BDCD31191F64AEBD19 /* libPods-SAVASTParser_Example.a */; };
 		6003F58E195388D20070C39A /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58D195388D20070C39A /* Foundation.framework */; };
 		6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F58F195388D20070C39A /* CoreGraphics.framework */; };
 		6003F592195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
@@ -33,9 +34,8 @@
 		6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6003F591195388D20070C39A /* UIKit.framework */; };
 		6003F5BA195388D20070C39A /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 6003F5B8195388D20070C39A /* InfoPlist.strings */; };
 		6003F5BC195388D20070C39A /* SAXML_Parser_Tests1.m in Sources */ = {isa = PBXBuildFile; fileRef = 6003F5BB195388D20070C39A /* SAXML_Parser_Tests1.m */; };
-		79212CCCC8A348771D3880EF /* libPods-SAVASTParser_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AB8DE4D37823D1411D28ABD4 /* libPods-SAVASTParser_Tests.a */; };
 		873B8AEB1B1F5CCA007FD442 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 873B8AEA1B1F5CCA007FD442 /* Main.storyboard */; };
-		9E86F2DC41BB55AC3E6CD875 /* libPods-SAVASTParser_Example.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 333A5B69F11D6DA8BB9B36E4 /* libPods-SAVASTParser_Example.a */; };
+		E34CE7FAA91396710E292AB4 /* libPods-SAVASTParser_Tests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D948E931F6F3C8CEB51FED0C /* libPods-SAVASTParser_Tests.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,7 +50,6 @@
 
 /* Begin PBXFileReference section */
 		056AA0CF45BAA9AD9FAB3C26 /* SAVASTParser.podspec */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = SAVASTParser.podspec; path = ../SAVASTParser.podspec; sourceTree = "<group>"; };
-		10B764EBBCA3CD399AD3BF3F /* Pods-SAVASTParser_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests.release.xcconfig"; sourceTree = "<group>"; };
 		1B1C43EB209B4B48003EE3DA /* fixtures.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = fixtures.bundle; sourceTree = "<group>"; };
 		1B1C43EE209B4B8B003EE3DA /* SATestUtils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SATestUtils.m; sourceTree = "<group>"; };
 		1B1C43EF209B4B8B003EE3DA /* SATestUtils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SATestUtils.h; sourceTree = "<group>"; };
@@ -67,8 +66,7 @@
 		1BE1BF101E66D0CD00C4B3B9 /* SAXML_Parser_Tests6.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAXML_Parser_Tests6.m; sourceTree = "<group>"; };
 		1BE1BF121E66D0E700C4B3B9 /* SAXML_Parser_Tests7.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAXML_Parser_Tests7.m; sourceTree = "<group>"; };
 		1BE1BF141E66DC5100C4B3B9 /* SAVAST_Parser_Local_Tests2.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SAVAST_Parser_Local_Tests2.m; sourceTree = "<group>"; };
-		333A5B69F11D6DA8BB9B36E4 /* libPods-SAVASTParser_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SAVASTParser_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		3E5F23527B6D31284688A44B /* Pods-SAVASTParser_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		5B0C79BDCD31191F64AEBD19 /* libPods-SAVASTParser_Example.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SAVASTParser_Example.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58A195388D20070C39A /* SAVASTParser_Example.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SAVASTParser_Example.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6003F58D195388D20070C39A /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		6003F58F195388D20070C39A /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -89,11 +87,13 @@
 		6003F5BB195388D20070C39A /* SAXML_Parser_Tests1.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SAXML_Parser_Tests1.m; sourceTree = "<group>"; };
 		606FC2411953D9B200FFA9A0 /* Tests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Tests-Prefix.pch"; sourceTree = "<group>"; };
 		873B8AEA1B1F5CCA007FD442 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
-		955DB75565C8F2EC57FD2A58 /* Pods-SAVASTParser_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests.debug.xcconfig"; sourceTree = "<group>"; };
-		AB8DE4D37823D1411D28ABD4 /* libPods-SAVASTParser_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SAVASTParser_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5218342DB2F43AF91A36A1A /* Pods-SAVASTParser_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example.release.xcconfig"; sourceTree = "<group>"; };
+		9CD3A4CDC3F154EBDA55A72B /* Pods-SAVASTParser_Example.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Example.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example.debug.xcconfig"; sourceTree = "<group>"; };
+		BA7C997999DAD9A2E6001544 /* Pods-SAVASTParser_Tests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Tests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests.debug.xcconfig"; sourceTree = "<group>"; };
 		D88B4854BEF932C9E3D2DA47 /* README.md */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		D948E931F6F3C8CEB51FED0C /* libPods-SAVASTParser_Tests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SAVASTParser_Tests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E381881076F5A098ECAFF0E3 /* LICENSE */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; name = LICENSE; path = ../LICENSE; sourceTree = "<group>"; };
+		F077368B626A407F39B9FD98 /* Pods-SAVASTParser_Tests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Tests.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Tests/Pods-SAVASTParser_Tests.release.xcconfig"; sourceTree = "<group>"; };
+		FA52FC525D067BCD5C117DD4 /* Pods-SAVASTParser_Example.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SAVASTParser_Example.release.xcconfig"; path = "Pods/Target Support Files/Pods-SAVASTParser_Example/Pods-SAVASTParser_Example.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,7 +104,7 @@
 				6003F590195388D20070C39A /* CoreGraphics.framework in Frameworks */,
 				6003F592195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F58E195388D20070C39A /* Foundation.framework in Frameworks */,
-				9E86F2DC41BB55AC3E6CD875 /* libPods-SAVASTParser_Example.a in Frameworks */,
+				5DE95CC13BFC268EC106F37F /* libPods-SAVASTParser_Example.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -115,7 +115,7 @@
 				6003F5B0195388D20070C39A /* XCTest.framework in Frameworks */,
 				6003F5B2195388D20070C39A /* UIKit.framework in Frameworks */,
 				6003F5B1195388D20070C39A /* Foundation.framework in Frameworks */,
-				79212CCCC8A348771D3880EF /* libPods-SAVASTParser_Tests.a in Frameworks */,
+				E34CE7FAA91396710E292AB4 /* libPods-SAVASTParser_Tests.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,7 +182,7 @@
 				6003F5B5195388D20070C39A /* Tests */,
 				6003F58C195388D20070C39A /* Frameworks */,
 				6003F58B195388D20070C39A /* Products */,
-				DCF13F975C22AAC57EC866FD /* Pods */,
+				836E891EC488FCB74663640C /* Pods */,
 			);
 			sourceTree = "<group>";
 		};
@@ -202,8 +202,8 @@
 				6003F58F195388D20070C39A /* CoreGraphics.framework */,
 				6003F591195388D20070C39A /* UIKit.framework */,
 				6003F5AF195388D20070C39A /* XCTest.framework */,
-				333A5B69F11D6DA8BB9B36E4 /* libPods-SAVASTParser_Example.a */,
-				AB8DE4D37823D1411D28ABD4 /* libPods-SAVASTParser_Tests.a */,
+				5B0C79BDCD31191F64AEBD19 /* libPods-SAVASTParser_Example.a */,
+				D948E931F6F3C8CEB51FED0C /* libPods-SAVASTParser_Tests.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -267,13 +267,13 @@
 			name = "Podspec Metadata";
 			sourceTree = "<group>";
 		};
-		DCF13F975C22AAC57EC866FD /* Pods */ = {
+		836E891EC488FCB74663640C /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				3E5F23527B6D31284688A44B /* Pods-SAVASTParser_Example.debug.xcconfig */,
-				D5218342DB2F43AF91A36A1A /* Pods-SAVASTParser_Example.release.xcconfig */,
-				955DB75565C8F2EC57FD2A58 /* Pods-SAVASTParser_Tests.debug.xcconfig */,
-				10B764EBBCA3CD399AD3BF3F /* Pods-SAVASTParser_Tests.release.xcconfig */,
+				9CD3A4CDC3F154EBDA55A72B /* Pods-SAVASTParser_Example.debug.xcconfig */,
+				FA52FC525D067BCD5C117DD4 /* Pods-SAVASTParser_Example.release.xcconfig */,
+				BA7C997999DAD9A2E6001544 /* Pods-SAVASTParser_Tests.debug.xcconfig */,
+				F077368B626A407F39B9FD98 /* Pods-SAVASTParser_Tests.release.xcconfig */,
 			);
 			name = Pods;
 			sourceTree = "<group>";
@@ -285,7 +285,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5BF195388D20070C39A /* Build configuration list for PBXNativeTarget "SAVASTParser_Example" */;
 			buildPhases = (
-				61A39E8321BE053EE53AF20C /* [CP] Check Pods Manifest.lock */,
+				AF4E5653DB9E3E2C5BA37B54 /* [CP] Check Pods Manifest.lock */,
 				6003F586195388D20070C39A /* Sources */,
 				6003F587195388D20070C39A /* Frameworks */,
 				6003F588195388D20070C39A /* Resources */,
@@ -303,7 +303,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6003F5C2195388D20070C39A /* Build configuration list for PBXNativeTarget "SAVASTParser_Tests" */;
 			buildPhases = (
-				F9F37F6CC6208E80A18C4242 /* [CP] Check Pods Manifest.lock */,
+				CD1920EA3746CF0A2422131B /* [CP] Check Pods Manifest.lock */,
 				6003F5AA195388D20070C39A /* Sources */,
 				6003F5AB195388D20070C39A /* Frameworks */,
 				6003F5AC195388D20070C39A /* Resources */,
@@ -375,7 +375,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		61A39E8321BE053EE53AF20C /* [CP] Check Pods Manifest.lock */ = {
+		AF4E5653DB9E3E2C5BA37B54 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -393,7 +393,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		F9F37F6CC6208E80A18C4242 /* [CP] Check Pods Manifest.lock */ = {
+		CD1920EA3746CF0A2422131B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -575,7 +575,7 @@
 		};
 		6003F5C0195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 3E5F23527B6D31284688A44B /* Pods-SAVASTParser_Example.debug.xcconfig */;
+			baseConfigurationReference = 9CD3A4CDC3F154EBDA55A72B /* Pods-SAVASTParser_Example.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -594,7 +594,7 @@
 		};
 		6003F5C1195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = D5218342DB2F43AF91A36A1A /* Pods-SAVASTParser_Example.release.xcconfig */;
+			baseConfigurationReference = FA52FC525D067BCD5C117DD4 /* Pods-SAVASTParser_Example.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
@@ -613,7 +613,7 @@
 		};
 		6003F5C3195388D20070C39A /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 955DB75565C8F2EC57FD2A58 /* Pods-SAVASTParser_Tests.debug.xcconfig */;
+			baseConfigurationReference = BA7C997999DAD9A2E6001544 /* Pods-SAVASTParser_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
@@ -637,7 +637,7 @@
 		};
 		6003F5C4195388D20070C39A /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10B764EBBCA3CD399AD3BF3F /* Pods-SAVASTParser_Tests.release.xcconfig */;
+			baseConfigurationReference = F077368B626A407F39B9FD98 /* Pods-SAVASTParser_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				FRAMEWORK_SEARCH_PATHS = (
