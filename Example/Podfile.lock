@@ -1,34 +1,34 @@
 PODS:
-  - OHHTTPStubs (6.1.0):
-    - OHHTTPStubs/Default (= 6.1.0)
-  - OHHTTPStubs/Core (6.1.0)
-  - OHHTTPStubs/Default (6.1.0):
+  - OHHTTPStubs (9.0.0):
+    - OHHTTPStubs/Default (= 9.0.0)
+  - OHHTTPStubs/Core (9.0.0)
+  - OHHTTPStubs/Default (9.0.0):
     - OHHTTPStubs/Core
     - OHHTTPStubs/JSON
     - OHHTTPStubs/NSURLSession
     - OHHTTPStubs/OHPathHelpers
-  - OHHTTPStubs/JSON (6.1.0):
+  - OHHTTPStubs/JSON (9.0.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/NSURLSession (6.1.0):
+  - OHHTTPStubs/NSURLSession (9.0.0):
     - OHHTTPStubs/Core
-  - OHHTTPStubs/OHPathHelpers (6.1.0)
-  - SAJsonParser (1.3.5)
-  - SAModelSpace (1.0.0):
-    - SAJsonParser (= 1.3.5)
-    - SAUtils (= 1.5.5)
-  - SANetworking (1.0.0)
-  - SAUtils (1.5.5)
-  - SAVASTParser (1.7.5):
-    - SAModelSpace (= 1.0.0)
-    - SANetworking (= 1.0.0)
-    - SAUtils (= 1.5.5)
+  - OHHTTPStubs/OHPathHelpers (9.0.0)
+  - SAJsonParser (1.3.6)
+  - SAModelSpace (1.0.1):
+    - SAJsonParser (= 1.3.6)
+    - SAUtils (= 1.5.6)
+  - SANetworking (1.0.1)
+  - SAUtils (1.5.6)
+  - SAVASTParser (1.7.6):
+    - SAModelSpace (= 1.0.1)
+    - SANetworking (= 1.0.1)
+    - SAUtils (= 1.5.6)
 
 DEPENDENCIES:
   - OHHTTPStubs
   - SAVASTParser (from `../`)
 
 SPEC REPOS:
-  https://github.com/CocoaPods/Specs.git:
+  https://github.com/cocoapods/specs.git:
     - OHHTTPStubs
     - SAJsonParser
     - SAModelSpace
@@ -40,13 +40,13 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  OHHTTPStubs: 1e21c7d2c084b8153fc53d48400d8919d2d432d0
-  SAJsonParser: a9fac712c99b71e36997010413862866f8246d5a
-  SAModelSpace: 07140f87445b477fbb61e5016a51e9f4c02546c7
-  SANetworking: 672cec0782244c2d780c3c58867e58e8ed2917ee
-  SAUtils: 95e06baec2636bfe494d9f8a43ec4def6fb28229
-  SAVASTParser: 9ae4b6b4ffb73f28e1bbae775e0a3e6c68acfb46
+  OHHTTPStubs: cb29d2a9d09a828ecb93349a2b0c64f99e0db89f
+  SAJsonParser: c23735f8778de1c6183e4eb8784ce37eb5ff4aa9
+  SAModelSpace: 9480742fad8b897dd4d149b6e4b6cb6ed9b560c4
+  SANetworking: 26e38d553c5479e4683b662572a391403016745f
+  SAUtils: c83387eb5fab5b27f4c270ecf129db1f9e069c4c
+  SAVASTParser: 6772ad180aa011b12181883e25aa0535c723b49c
 
 PODFILE CHECKSUM: b06f4787d31465c042840c65ed301b74742d9a07
 
-COCOAPODS: 1.5.0
+COCOAPODS: 1.7.5
